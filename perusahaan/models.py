@@ -4,17 +4,18 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
+class company_privileges(models.Model):
+    name = models.CharField(max_length=254)
+
+    def __str__(self):
+        return self.name
 class company(models.Model):
+    id_privilege = models.ForeignKey(company_privileges,on_delete=models.CASCADE)
     name = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
     location = models.TextField(max_length=256)
-
-    def __str__(self):
-        return self.name
-
-class company_privileges(models.Model):
-    name = models.CharField(max_length=254)
 
     def __str__(self):
         return self.name

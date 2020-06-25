@@ -12,4 +12,4 @@ class CompanyForm(forms.ModelForm):
 class company(forms.ModelForm):
     class Meta():
         model = company
-        fields = ('name','address','telp','location')
+        fields = ('id_privilege','name','address','telp','location')
