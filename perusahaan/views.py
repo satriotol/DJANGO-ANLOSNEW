@@ -12,7 +12,15 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+def special (request):
+    return HttpResponse("You are logged in")
 
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
+
+    
 class IndexPerusahaan(ListView):
     model = models.company
     template_name = 'index.html'
@@ -44,15 +52,15 @@ def registercompany(request):
         user_form = CompanyForm()
         profile_form = company()
 
-    return render(request,'perusahaan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
+    return render(request,'login.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
 def user_login(request):
     context_object_name = 'data_login'
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(email=email,password=password)
+        user = authenticate(username=username,password=password)
 
         if user:
             if user.is_active:
@@ -66,7 +74,8 @@ def user_login(request):
             print("Username: {} and Password {}".format(username,password))
             return HttpResponse("invalid login details supplied")
     else:
-        return render(request,'login/login.html',{'name' : request.user.username })
+        return render(request,'login.html',{'name' : request.user.username })
+
 # class BuatDataPerusahaan(CreateView):
 #     model = models.company
 #     fields = ('name','address','email','telp','location')
