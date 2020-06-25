@@ -1,11 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
 class company(models.Model):
     name = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
-    email = models.EmailField(max_length=254)
     telp = models.CharField(max_length=12)
     location = models.TextField(max_length=256)
 
