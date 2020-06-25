@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 
+
 # Create your views here.
 def special (request):
     return HttpResponse("You are logged in")

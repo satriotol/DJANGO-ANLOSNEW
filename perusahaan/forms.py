@@ -7,9 +7,9 @@ class CompanyForm(forms.ModelForm):
 
     class Meta():
         model = User
-        fields = ('username','email','password')
+        fields = ('username','email','password','groups')
 
 class company(forms.ModelForm):
     class Meta():
         model = company
-        fields = ('id_privilege','name','address','telp','location')
+        fields = ('name','address','telp','location')

@@ -11,7 +11,6 @@ class company_privileges(models.Model):
     def __str__(self):
         return self.name
 class company(models.Model):
-    id_privilege = models.ForeignKey(company_privileges,on_delete=models.CASCADE)
     name = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
