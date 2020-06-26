@@ -11,7 +11,7 @@ class company_privileges(models.Model):
     def __str__(self):
         return self.name
 class company(models.Model):
-    user = models.OneToOneField(User,default='',related_name="company",on_delete=models.CASCADE)
+    user = models.ForeignKey(User,default='',related_name="company",on_delete=models.CASCADE)
     name = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
