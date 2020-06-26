@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),
     path('register/',main_views.registercompany,name='create'),
+    path('profile/',main_views.ProfilePerusahaan.as_view(),name='profile'),
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),
 

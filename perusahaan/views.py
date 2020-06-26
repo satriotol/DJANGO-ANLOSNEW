@@ -53,7 +53,7 @@ def registercompany(request):
         user_form = CompanyForm()
         profile_form = company()
 
-    return render(request,'login.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
+    return render(request,'perusahaan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
 def user_login(request):
     context_object_name = 'data_login'
@@ -82,3 +82,8 @@ def user_login(request):
 #     fields = ('name','address','email','telp','location')
 #     template_name = 'perusahaan_form.html'
 #     success_url = reverse_lazy('index')
+
+class ProfilePerusahaan(ListView):
+    context_object_name = 'profilperusahaan'
+    model = models.company
+    template_name = 'profile.html'

@@ -1,0 +1,10 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block body_block %}
+{% if user.is_authenticated %}
+<div class="container">
+    <h1>Nama Lengkap {{user.company.name}}</h1>
+</div>
+{% endif %}
+
+{% endblock %}
