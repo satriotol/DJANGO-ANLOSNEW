@@ -4,7 +4,7 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 CreateView,UpdateView,
                                 DeleteView)
 from perusahaan import models
-from perusahaan.forms import company,CompanyForm
+from perusahaan.forms import company,CompanyForm,users
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -55,6 +55,35 @@ def registercompany(request):
 
     return render(request,'perusahaan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
+def registeruser(request):
+    registered = False
+    
+    if request.method == "POST":
+        user_form = CompanyForm(data=request.POST)
+        profile_form = users(data=request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            # if 'profile_pic' in request.FILES:
+            #     profile.profile_pic = request.FILES['profile_pic']
+
+            profile.save()
+
+            registered = True
+        else:
+            print(user_form.errors,profile_form.errors)
+    else:
+        user_form = CompanyForm()
+        profile_form = users()
+
+    return render(request,'karyawan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
+
 def user_login(request):
     context_object_name = 'data_login'
     if request.method == 'POST':
@@ -87,3 +116,8 @@ class ProfilePerusahaan(ListView):
     context_object_name = 'profilperusahaan'
     model = models.company
     template_name = 'profile.html'
+
+class ListKaryawan(ListView):
+    context_object_name = 'listkaryawan'
+    model = models.users
+    template_name = 'karyawan_list.html'

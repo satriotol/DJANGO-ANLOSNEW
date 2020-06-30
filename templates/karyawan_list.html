@@ -1,0 +1,25 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block body_block %}
+
+<div class="container">
+    <table class="display" id="table_id">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Nama</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telpon</th>
+                <th scope="col">Aksi</th>
+            </tr>
+        </thead>
+        {% for listkaryawan in listkaryawan %}
+        <tbody>
+            <tr class="text-center">
+                <td>{{listkaryawan.name}}</td>
+                <td>{{listkaryawan.email}}</td>
+                <td>{{listkaryawan.telp}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+</div>
+{% endblock %}
