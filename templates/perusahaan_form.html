@@ -9,7 +9,14 @@
         <br>
         <div class="row">
             <div class="col">
-                {{user_form.as_p}}
+                <input type="text" name="groups" id="id_groups" value="3">
+                <p><label for="id_username">Username:</label> <input type="text" name="username" maxlength="150"
+                        required="" id="id_username"></p>
+                <p><label for="id_email">Email address:</label> <input type="email" name="email" maxlength="254"
+                        id="id_email"></p>
+                <p><label for="id_password">Password:</label> <input type="password" name="password" required=""
+                        id="id_password"></p>
+                {% comment %} {{user_form.as_p}} {% endcomment %}
             </div>
             <div class="col">
                 {{profile_form.as_p}}

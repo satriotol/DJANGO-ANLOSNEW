@@ -4,14 +4,22 @@
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="text-center">
-            <h1>Data Perusahaan</h1>
+            <h1>Data Karyawan</h1>
         </div>
         <br>
         <div class="row">
             <div class="col">
-                {{user_form.as_p}}
+                <input type="text" name="groups" id="id_groups" value="4">
+                <p><label for="id_username">Username:</label> <input type="text" name="username" maxlength="150"
+                        required="" id="id_username"></p>
+                <p><label for="id_email">Email address:</label> <input type="email" name="email" maxlength="254"
+                        id="id_email"></p>
+                <p><label for="id_password">Password:</label> <input type="password" name="password" required=""
+                        id="id_password"></p>
+                {% comment %} {{user_form.as_p}} {% endcomment %}
             </div>
             <div class="col">
+                <input type="text" name="name" maxlength="254" required="" id="id_name" value="{{user.id}}">
                 {{profile_form.as_p}}
             </div>
         </div>

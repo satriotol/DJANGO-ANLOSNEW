@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 {% block body_block %}
 
+{% if user.is_authenticated %}
 <div class="container">
     <table class="display" id="table_id">
         <thead>
@@ -22,4 +23,6 @@
         </tbody>
         {% endfor %}
 </div>
+{% endif %}
+Anda Belum Login
 {% endblock %}
