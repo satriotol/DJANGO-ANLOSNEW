@@ -10,19 +10,23 @@
                 <th scope="col">Nama</th>
                 <th scope="col">Email</th>
                 <th scope="col">Telpon</th>
-                <th scope="col">Aksi</th>
+                <th scope="col">Id Company</th>
             </tr>
         </thead>
-        {% for listkaryawan in listkaryawan %}
+        {% for listkaryawan in listkaryawans%}
+        {% if user.company.id == listkaryawan.id_company %}
         <tbody>
             <tr class="text-center">
                 <td>{{listkaryawan.name}}</td>
                 <td>{{listkaryawan.email}}</td>
                 <td>{{listkaryawan.telp}}</td>
+                <td>{{listkaryawan.id_company}}</td>
             </tr>
         </tbody>
+        {% endif %}
         {% endfor %}
 </div>
-{% endif %}
+{% else %}
 Anda Belum Login
+{% endif %}
 {% endblock %}

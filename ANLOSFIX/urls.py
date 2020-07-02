@@ -26,6 +26,7 @@ urlpatterns = [
     path('registerkaryawan/',main_views.registeruser,name='create_karyawan'),
     path('profile/',main_views.ProfilePerusahaan.as_view(),name='profile'),
     path('list/',main_views.ListKaryawan.as_view(),name='listkaryawan'),
+    # path('<int:pk>/list/',main_views.DetailKaryawan.as_view(),name='listkaryawan'),
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),
 

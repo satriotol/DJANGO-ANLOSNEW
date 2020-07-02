@@ -115,9 +115,15 @@ def user_login(request):
 class ProfilePerusahaan(ListView):
     context_object_name = 'profilperusahaan'
     model = models.company
+    model = models.users
     template_name = 'profile.html'
 
 class ListKaryawan(ListView):
-    context_object_name = 'listkaryawan'
+    context_object_name = 'listkaryawans'
     model = models.users
     template_name = 'karyawan_list.html'
+
+# class DetailKaryawan(DetailView):
+#     context_object_name = 'listkaryawans'
+#     model = models.users
+#     template_name = 'karyawan_list.html'

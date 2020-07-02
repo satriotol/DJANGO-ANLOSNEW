@@ -4,6 +4,29 @@
 {% if user.is_authenticated %}
 <div class="container">
     <h1>Nama Lengkap {{user.company.name}}</h1>
+    <h2>COMPANY ID {{user.company.id}}</h2>
+    {% comment %} <table class="display" id="table_id">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Nama</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telpon</th>
+                <th scope="col">Id Company</th>
+            </tr>
+        </thead>
+        {% for profilperusahaan in profilperusahaan %}
+        {% if user.company.id == profilperusahaan.id_company %}
+        <tbody>
+            <tr class="text-center">
+                <td>{{profilperusahaan.name}}</td>
+                <td>{{profilperusahaan.email}}</td>
+                <td>{{profilperusahaan.telp}}</td>
+                <td>{{profilperusahaan.id_company}}</td>
+            </tr>
+        </tbody>
+        {% endif %}
+        {% endfor %}
+    </table> {% endcomment %}
 </div>
 {% endif %}
 

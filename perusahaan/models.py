@@ -21,10 +21,11 @@ class company(models.Model):
         return self.name
 
 class users(models.Model):
-    # id_company = models.ForeignKey(company,on_delete=models.CASCADE)
-    id_company = models.ManyToManyField(company)
+    # id_company = models.ForeignKey(company,on_delete=models.CASCADE,default='')
+    # id_company = models.ManyToManyField(company)
+    id_company = models.IntegerField()
     name = models.CharField(max_length=254)
-    email = models.EmailField()
+    # email = models.EmailField()
     telp = models.CharField(max_length=12)
 
     def __str__(self):
