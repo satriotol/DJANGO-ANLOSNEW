@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block body_block %}
 <div class="container">
+    {% if registered %}
+    <h1>Thank you for registering!</h1>
+    {% else %}
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="text-center">
@@ -20,8 +23,10 @@
             </div>
             <div class="col">
                 <input type="text" name="id_company" id="id_id_company" value="{{user.company.id}}">
-                <p><label for="id_name">Name:</label> <input type="text" name="name" maxlength="254" required="" id="id_name"></p>
-                <p><label for="id_telp">Telp:</label> <input type="text" name="telp" maxlength="12" required="" id="id_telp"></p>
+                <p><label for="id_name">Name:</label> <input type="text" name="name" maxlength="254" required=""
+                        id="id_name"></p>
+                <p><label for="id_telp">Telp:</label> <input type="text" name="telp" maxlength="12" required=""
+                        id="id_telp"></p>
                 {% comment %} {{profile_form.as_p}} {% endcomment %}
             </div>
         </div>
@@ -30,5 +35,6 @@
             <input type="submit" value="Submit">
         </div>
     </form>
+    {% endif %}
 </div>
 {% endblock %}

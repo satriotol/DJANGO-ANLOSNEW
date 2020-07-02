@@ -106,11 +106,6 @@ def user_login(request):
     else:
         return render(request,'login.html',{'name' : request.user.username })
 
-# class BuatDataPerusahaan(CreateView):
-#     model = models.company
-#     fields = ('name','address','email','telp','location')
-#     template_name = 'perusahaan_form.html'
-#     success_url = reverse_lazy('index')
 
 class ProfilePerusahaan(ListView):
     context_object_name = 'profilperusahaan'
@@ -122,8 +117,3 @@ class ListKaryawan(ListView):
     context_object_name = 'listkaryawans'
     model = models.users
     template_name = 'karyawan_list.html'
-
-# class DetailKaryawan(DetailView):
-#     context_object_name = 'listkaryawans'
-#     model = models.users
-#     template_name = 'karyawan_list.html'
