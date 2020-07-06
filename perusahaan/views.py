@@ -117,3 +117,15 @@ class ListKaryawan(ListView):
     context_object_name = 'listkaryawans'
     model = models.users
     template_name = 'karyawan_list.html'
+
+class ListKaryawanDeleteView(DeleteView):
+    context_object_name = 'listkaryawans'
+    model = models.users
+    template_name = 'karyawan_confirm_delete.html'
+    success_url = reverse_lazy('listkaryawan')
+
+class ListKaryawanUpdateView(UpdateView):
+    fields = ('name','telp')
+    model = models.users
+    template_name = 'karyawan_update.html'
+    success_url = reverse_lazy('listkaryawan')

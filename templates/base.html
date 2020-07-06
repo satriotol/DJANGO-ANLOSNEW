@@ -13,7 +13,7 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 
-    <title>Hello, world!</title>
+    <title>ANLOSIA</title>
 </head>
 <style>
     .bg-custom {
@@ -37,15 +37,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Home</a>
                 </li>
+                {% if perms.perusahaan %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'listkaryawan' %}">Karyawan</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="#">Reimbursement</a>
                 </li>
+                {% if perms.perusahaan %}
                 <li class="nav-item">
                     <a class="nav-link" href={% url 'profile' %}>Profile</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="#">Todo</a>
                 </li>
@@ -93,10 +97,12 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js">
     </script>
     <script>
-    $(document).ready(function () {
-        $('#table_id').DataTable();
-    });
-</script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                responsive: true
+            });
+        });
+    </script>
 </body>
 
 </html>
