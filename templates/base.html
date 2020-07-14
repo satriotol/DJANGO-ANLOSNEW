@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="{% static 'css/geolocation.css' %}">
 
     <title>ANLOSIA</title>
 </head>
@@ -103,6 +104,10 @@
             });
         });
     </script>
+    <script
+        src='https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry,drawing&amp;ext=.js&amp;key=AIzaSyC4NCAi9sAjWxAJ89h52Ot37vyoow9CZDI'>
+    </script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

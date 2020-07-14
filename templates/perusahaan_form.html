@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 {% block body_block %}
+<style>
+    #tool {
+        width: 100%;
+        display: inline-flex;
+    }
+
+    #map_canvas {
+        height: 300px;
+        width: 50%;
+        margin-right: 10px;
+        padding: 0px;
+    }
+
+    #info {
+        width: 50%;
+        float: left;
+        height: 270px;
+        overflow: scroll;
+    }
+</style>
 <div class="container">
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -19,7 +39,19 @@
                 {% comment %} {{user_form.as_p}} {% endcomment %}
             </div>
             <div class="col">
-                {{profile_form.as_p}}
+                <p><label for="id_name">Name:</label> <input type="text" name="name" maxlength="254" required=""
+                        id="id_name"></p>
+                <p><label for="id_address">Address:</label> <input type="text" name="address" maxlength="254"
+                        required="" id="id_address"></p>
+                <p><label for="id_telp">Telp:</label> <input type="text" name="telp" maxlength="12" required=""
+                        id="id_telp"></p>
+                {% comment %} <p><label for="id_location">Location:</label> <textarea name="location" cols="40"
+                        rows="10" maxlength="256" required="" id="id_location"></textarea></p> {% endcomment %}
+
+            </div>
+            <div id="tool">
+                <div id="map_canvas" style=" border: 2px solid #3872ac;"></div> <br>
+                <textarea name="location" id="info" cols="30" rows="10"></textarea>
             </div>
         </div>
         <br>
@@ -28,4 +60,5 @@
         </div>
     </form>
 </div>
+
 {% endblock body_block %}
