@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'ANLOSFIX.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'anlos-fix',
-        'USER': 'root',
-        'PASSWORD' : '',        
+        'NAME': 'heroku_66955b93dd92ab0',
+        'USER': 'b93db2bb2b6bb6',
+        'PASSWORD' : 'a34f142e',        
         'OPTIONS': {
             # Tell MySQLdb to connect with 'utf8mb4' character set
             'charset': 'utf8mb4',
