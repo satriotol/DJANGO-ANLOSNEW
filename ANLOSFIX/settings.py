@@ -28,7 +28,7 @@ SECRET_KEY = 'nalwhc(j+f-04aj$7md2-qd%hbp3n993r%&lymj-d-2h7kk3tn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['anlosiax.herokuapp.com']
+ALLOWED_HOSTS = ['']
 
 
 # Application definition
