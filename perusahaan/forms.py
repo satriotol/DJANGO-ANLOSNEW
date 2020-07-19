@@ -4,10 +4,21 @@ from perusahaan.models import company,users
 
 class CompanyForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta():
         model = User
         fields = ('username','email','password','groups')
+
+    def clean(self):
+        cleaned_data = super(CompanyForm, self).clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise forms.ValidationError(
+                "password and confirm_password does not match"
+            )
 
 class company(forms.ModelForm):
     class Meta():
