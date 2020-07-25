@@ -7,18 +7,22 @@
     <style>
         .col-sm-4.user {
             border-top-left-radius: 25px;
-            background: #5A1DBF;
-            color: white;
+            background: #355c7d;
+            color: #FFC300;
         }
 
         .col-sm-4.profile {
-            color: #5A1DBF;
+            color: #355c7d;
+            background: #FFC300;
+            border-bottom-right-radius: 25px;
         }
     </style>
     <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm-4 user py-5 px-5">
-            <form>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
                 <input type="hidden" name="groups" id="id_groups" value="4">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Username</label>
@@ -32,71 +36,34 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" class="form-control" required="" id="exampleInputPassword1 id_password">
+                    <input type="password" name="password" class="form-control" required=""
+                        id="exampleInputPassword1 id_password">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Confirm Password</label>
-                    <input type="password" class="form-control" name="confirm_password" id="exampleInputPassword1 id_confirm_password">
+                    <input type="password" class="form-control" name="confirm_password"
+                        id="exampleInputPassword1 id_confirm_password">
                 </div>
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
         </div>
         <div class="col-sm-4 profile py-5 px-5">
-            <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Full Name</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Telephone</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <input type="hidden" name="id_company" id="id_id_company" value="{{user.company.id}}">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Full Name</label>
+                <input type="text" class="form-control" id="id_name" name="name" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Telephone</label>
+                <input type="text" class="form-control" name="telp" id="id_telp">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Submit">
             </form>
-
         </div>
         <div class="col-sm-2"></div>
     </div>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="text-center">
-            <h1>Data Karyawan</h1>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col">
-                <input type="text" name="groups" id="id_groups" value="4">
-                <p><label for="id_username">Username:</label> <input type="text" name="username" maxlength="150"
-                        required="" id="id_username"></p>
-                <p><label for="id_email">Email address:</label> <input type="email" name="email" maxlength="254"
-                        id="id_email"></p>
-                <p><label for="id_password">Password:</label> <input type="password" name="password" required=""
-                        id="id_password"></p>
-                {% comment %} {{user_form.as_p}} {% endcomment %}
-            </div>
-            <div class="col">
-                <input type="text" name="id_company" id="id_id_company" value="{{user.company.id}}">
-                <p><label for="id_name">Name:</label> <input type="text" name="name" maxlength="254" required=""
-                        id="id_name"></p>
-                <p><label for="id_telp">Telp:</label> <input type="text" name="telp" maxlength="12" required=""
-                        id="id_telp"></p>
-                {% comment %} {{profile_form.as_p}} {% endcomment %}
-            </div>
-        </div>
-        <br>
-        <div class="text-center">
-            <input type="submit" value="Submit">
-        </div>
-    </form>
     {% endif %}
 </div>
 {% endblock %}
