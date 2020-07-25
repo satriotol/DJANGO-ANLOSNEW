@@ -1,0 +1,12 @@
+/* form */
+.col-sm-4.user {
+    border-top-left-radius: 25px;
+    background: #355c7d;
+    color: #FFC300;
+}
+
+.col-sm-4.profile {
+    color: #355c7d;
+    background: #FFC300;
+    border-bottom-right-radius: 25px;
+}
