@@ -28,6 +28,7 @@ urlpatterns = [
     path('list/',main_views.ListKaryawan.as_view(),name='listkaryawan'),
     path('delete/<int:pk>/',main_views.ListKaryawanDeleteView.as_view(),name="delete"),
     path('<int:pk>/update/',main_views.ListKaryawanUpdateView.as_view(),name='update'),
+    path('vacation/',main_views.ListVacation.as_view(),name='listvacation'),
     # path('<int:pk>/list/',main_views.DetailKaryawan.as_view(),name='listkaryawan'),
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),

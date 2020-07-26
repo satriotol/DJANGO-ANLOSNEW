@@ -129,3 +129,8 @@ class ListKaryawanUpdateView(UpdateView):
     model = models.users
     template_name = 'karyawan_update.html'
     success_url = reverse_lazy('listkaryawan')
+
+class ListVacation(ListView):
+    context_object_name = 'listvacations'
+    model = models.vacation
+    template_name = 'vacation_list.html'

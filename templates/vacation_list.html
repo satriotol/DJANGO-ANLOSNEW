@@ -1,0 +1,39 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block body_block %}
+
+{% if user.is_authenticated %}
+<div class="container">
+    <h1 class="text-center">Vacation</h1>
+    <table class="display" id="table_id">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Username</th>
+                <th scope="col">email</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Telpon</th>
+                <th scope="col">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for listkaryawan in listkaryawans%}
+            {% if user.company.id == listkaryawan.id_company %}
+            <tr class="text-center">
+                <td>{{listkaryawan.user}}</td>
+                <td>{{listkaryawan.user.email}}</td>
+                <td>{{listkaryawan.name}}</td>
+                <td>{{listkaryawan.telp}}</td>
+                <td><a class="btn btn-primary" href="{% url 'update' pk=listkaryawan.pk %}" role="button">Edit</a>
+                    <a class="btn btn-primary" href="#" role="button">Detail</a>
+                    <a class="btn btn-primary" href="{% url 'delete' pk=listkaryawan.pk %}" role="button">Delete</a>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+Anda Belum Login
+{% endif %}
+{% endblock %}
