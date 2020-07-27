@@ -91,7 +91,11 @@ def registeruser(request):
 def user_login(request):
     user = models.User.objects.all().values('username','password')
     # data = serializers.serialize('json', user)
-    data = json.dumps(list(user))
+    data = json.dumps({
+        "api_status": 1,
+        "api_message": 'success',
+        "data": list(user)
+    })
     
 
     context_object_name = 'data_login'
