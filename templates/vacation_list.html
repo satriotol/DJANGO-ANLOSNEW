@@ -8,27 +8,20 @@
     <table class="display" id="table_id">
         <thead>
             <tr class="text-center">
-                <th scope="col">Username</th>
-                <th scope="col">email</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Telpon</th>
-                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            {% for listkaryawan in listkaryawans%}
-            {% if user.company.id == listkaryawan.id_company %}
+            {% for listvacation in listvacations%}
             <tr class="text-center">
-                <td>{{listkaryawan.user}}</td>
-                <td>{{listkaryawan.user.email}}</td>
-                <td>{{listkaryawan.name}}</td>
+                <td>{{listvacation.start_day}}</td>
+                <td>{{listvacation.end_day}}</td>
+                <td>{{listvacation.user.name}}</td>
                 <td>{{listkaryawan.telp}}</td>
-                <td><a class="btn btn-primary" href="{% url 'update' pk=listkaryawan.pk %}" role="button">Edit</a>
-                    <a class="btn btn-primary" href="#" role="button">Detail</a>
-                    <a class="btn btn-primary" href="{% url 'delete' pk=listkaryawan.pk %}" role="button">Delete</a>
-                </td>
             </tr>
-            {% endif %}
             {% endfor %}
         </tbody>
     </table>

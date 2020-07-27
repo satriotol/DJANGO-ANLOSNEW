@@ -15,7 +15,7 @@ class company(models.Model):
     name = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
-    location = models.TextField(max_length=256)
+    location = models.TextField()
 
     def __str__(self):
         return self.name

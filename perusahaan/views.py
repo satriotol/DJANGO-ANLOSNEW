@@ -9,6 +9,12 @@ from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.core import serializers
+from django.core.serializers import serialize
+from django.core.serializers.json import DjangoJSONEncoder
+import json
+
 
 
 
@@ -20,8 +26,6 @@ def special (request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
-
-    
 class IndexPerusahaan(ListView):
     model = models.company
     template_name = 'index.html'
@@ -85,6 +89,11 @@ def registeruser(request):
     return render(request,'karyawan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
 def user_login(request):
+    user = models.User.objects.all().values('username','password')
+    # data = serializers.serialize('json', user)
+    data = json.dumps(list(user))
+    
+
     context_object_name = 'data_login'
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -95,7 +104,9 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
-                return HttpResponseRedirect(reverse('index'))
+                # return HttpResponseRedirect(reverse('index'))
+                # return JsonResponse(data,safe=False)
+                return HttpResponse(data)
 
             else:
                 return HttpResponse("Account Not Active")
