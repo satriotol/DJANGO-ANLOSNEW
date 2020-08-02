@@ -35,6 +35,7 @@ class users(models.Model):
 
 class presence(models.Model):
     id_user = models.IntegerField()
+    id_company = models.IntegerField()
     date_presence = models.DateField()
     start_presence = models.TimeField()
     end_presence = models.TimeField()
