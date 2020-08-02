@@ -28,4 +28,4 @@ class company(forms.ModelForm):
 class users(forms.ModelForm):
     class Meta():
         model = users
-        fields = ('id_company','name','telp')
+        fields = ('id_company','name','telp','profile_pic')

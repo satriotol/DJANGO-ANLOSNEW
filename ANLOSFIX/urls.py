@@ -34,4 +34,4 @@ urlpatterns = [
     path('api/login/',main_views.user_login,name='user_login_api'),
     path('logout/',main_views.user_logout,name='logout'),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

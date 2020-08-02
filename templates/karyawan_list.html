@@ -11,6 +11,7 @@
                 <th scope="col">email</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Telpon</th>
+                <th scope="col">Profile Pic</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -22,6 +23,11 @@
                 <td>{{listkaryawan.user.email}}</td>
                 <td>{{listkaryawan.name}}</td>
                 <td>{{listkaryawan.telp}}</td>
+                {% if listkaryawan.profile_pic %}
+                <td><img src="{{listkaryawan.profile_pic.url}}" alt="" class="img-thumbnail"></td>
+                {% else %}
+                <td>Tidak Ada Gambar</td>
+                {% endif %}
                 <td><a class="btn btn-primary" href="{% url 'update' pk=listkaryawan.pk %}" role="button">Edit</a>
                     <a class="btn btn-primary" href="#" role="button">Detail</a>
                     <a class="btn btn-primary" href="{% url 'delete' pk=listkaryawan.pk %}" role="button">Delete</a>

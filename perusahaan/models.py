@@ -28,6 +28,7 @@ class users(models.Model):
     name = models.CharField(max_length=254)
     # email = models.EmailField()
     telp = models.CharField(max_length=12)
+    profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
 
 
     def __str__(self):
