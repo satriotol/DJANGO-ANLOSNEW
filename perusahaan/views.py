@@ -125,6 +125,39 @@ def user_login(request):
     else:
         return render(request,'login.html',{'name' : request.user.username })
 
+@csrf_exempt
+def user_login_api(request):
+    username = request.GET.get('username')
+    password = request.GET.get('password')
+    user = models.User.objects.filter(username=username).values('username','password')
+    # data = serializers.serialize('json', user)
+    data = json.dumps({
+        "api_status": 1,
+        "api_message": 'success',
+        "data": list(user)
+    })
+    
+
+    context_object_name = 'data_login'
+    if request.method == 'GET':
+        user = authenticate(username=username,password=password)
+
+        if user:
+            if user.is_active:
+                login(request,user)
+                # return HttpResponseRedirect(reverse('index'))
+                # return JsonResponse(data,safe=False)
+                return HttpResponse(data)
+
+            else:
+                return HttpResponse("Account Not Active")
+        else:
+            print("Someone tried to login and failed!")
+            print("Username: {} and Password {}".format(username,password))
+            # return HttpResponse("invalid login details supplied")
+            return HttpResponse(data)
+    else:
+        return HttpResponse(data)
 
 class ProfilePerusahaan(ListView):
     context_object_name = 'profilperusahaan'

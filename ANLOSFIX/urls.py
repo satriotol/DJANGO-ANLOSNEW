@@ -31,7 +31,7 @@ urlpatterns = [
     path('vacation/',main_views.ListVacation.as_view(),name='listvacation'),
     # path('<int:pk>/list/',main_views.DetailKaryawan.as_view(),name='listkaryawan'),
     path('login/',main_views.user_login,name='user_login'),
-    path('api/login/',main_views.user_login,name='user_login_api'),
+    path('api/login/',main_views.user_login_api,name='user_login_api'),
     path('logout/',main_views.user_logout,name='logout'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
