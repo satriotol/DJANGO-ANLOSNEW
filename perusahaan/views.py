@@ -14,6 +14,8 @@ from django.core import serializers
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 import json
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 
@@ -88,6 +90,7 @@ def registeruser(request):
 
     return render(request,'karyawan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
+@csrf_exempt
 def user_login(request):
     user = models.User.objects.all().values('username','password')
     # data = serializers.serialize('json', user)
@@ -108,9 +111,9 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
-                return HttpResponseRedirect(reverse('index'))
+                # return HttpResponseRedirect(reverse('index'))
                 # return JsonResponse(data,safe=False)
-                # return HttpResponse(data)
+                return HttpResponse(data)
 
             else:
                 return HttpResponse("Account Not Active")
