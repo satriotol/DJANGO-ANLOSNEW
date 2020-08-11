@@ -92,12 +92,20 @@ def registeruser(request):
 
 @csrf_exempt
 def user_login(request):
-    user = models.User.objects.all().values('username','password')
+    user = models.User.objects.all().values('id','username','password')
+    company = models.company.objects.all().values('user','location')
     # data = serializers.serialize('json', user)
     data = json.dumps({
         "api_status": 1,
         "api_message": 'success',
-        "data": list(user)
+        # "data": list(user),
+        # "lokasi": list(company)
+        "data" : {
+            "data" : list(user),
+            "profile" : {
+                "data" : list(company),
+            }
+        }
     })
     
 
@@ -130,11 +138,13 @@ def user_login_api(request):
     username = request.GET.get('username')
     password = request.GET.get('password')
     user = models.User.objects.filter(username=username).values('username','password')
+    company = models.company.objects.values('location')
     # data = serializers.serialize('json', user)
     data = json.dumps({
         "api_status": 1,
         "api_message": 'success',
-        "data": list(user)
+        "data": list(user),
+        "data": list(company)
     })
     
 
@@ -155,9 +165,11 @@ def user_login_api(request):
             print("Someone tried to login and failed!")
             print("Username: {} and Password {}".format(username,password))
             # return HttpResponse("invalid login details supplied")
-            return HttpResponse(data)
+            # return HttpResponse(data)
+            return render(request,'login.html')
     else:
-        return HttpResponse(data)
+        return render(request,'login.html',{'name' : request.user.username })
+
 
 class ProfilePerusahaan(ListView):
     context_object_name = 'profilperusahaan'

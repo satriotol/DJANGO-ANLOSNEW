@@ -68,7 +68,6 @@ function initializeDrawer() {
     drawingManager.setMap(map)
 
     google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
-        document.getElementById('info').innerHTML;
         let vert = polygon.getPath();
         let pos = {
             latitude: [
@@ -82,8 +81,8 @@ function initializeDrawer() {
             let xy = vert.getAt(i)
             pos.latitude.push(xy.lat());
             pos.longitude.push(xy.lng());
-            document.getElementById('info').innerHTML += JSON.stringify(pos);
         }
+        document.getElementById('info').innerHTML += JSON.stringify(pos);
         polygonArray.push(polygon);
     });
 
