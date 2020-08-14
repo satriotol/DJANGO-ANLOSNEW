@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<!doctype html>
+{% block body_block %}
+<div class="jumbotron">
+    <h1>Please Login API</h1>
+    <form action="{% url 'user_login_api' %}" method="post">
+        {% csrf_token %}
+        <label for="username">Email:</label>
+        <input type="text" name="username" placeholder="Enter Username">
+        <label for="password">Password:</label>
+        <input type="password" name="password">
+        <input type="submit" value="Login">
+    </form>
+
+</div>
+{% endblock body_block %}
