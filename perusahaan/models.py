@@ -29,6 +29,7 @@ class users(models.Model):
     # email = models.EmailField()
     telp = models.CharField(max_length=12)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
+    location_office = models.TextField(default="")
 
 
     def __str__(self):
