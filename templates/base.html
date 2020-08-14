@@ -43,9 +43,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'listkaryawan' %}">Karyawan</a>
                 </li>
-                {% comment %} <li class="nav-item">
-                    <a class="nav-link" href="#">Reimbursement</a>
-                </li> {% endcomment %}
+
                 <li class="nav-item">
                     <a class="nav-link" href={% url 'profile' %}>Profile</a>
                 </li>
@@ -53,6 +51,9 @@
                     <a class="nav-link" href={% url 'listvacation' %}>Vacation</a>
                 </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'record_location' %}>Record Location</a>
+                </li>
                 {% comment %} <li class="nav-item">
                     <a class="nav-link" href="#">Todo</a>
                 </li> {% endcomment %}

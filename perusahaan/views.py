@@ -119,9 +119,9 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
-                # return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('index'))
                 # return JsonResponse(data,safe=False)
-                return HttpResponse(data)
+                # return HttpResponse(data)
 
             else:
                 return HttpResponse("Account Not Active")
@@ -135,21 +135,28 @@ def user_login(request):
 
 @csrf_exempt
 def user_login_api(request):
-    username = request.GET.get('username')
-    password = request.GET.get('password')
-    user = models.User.objects.filter(username=username).values('username','password')
-    company = models.company.objects.values('location')
+    user = models.User.objects.all().values('id','username','password')
+    company = models.company.objects.all().values('user','location')
     # data = serializers.serialize('json', user)
     data = json.dumps({
         "api_status": 1,
         "api_message": 'success',
-        "data": list(user),
-        "data": list(company)
+        # "data": list(user),
+        # "lokasi": list(company)
+        "data" : {
+            "data" : list(user),
+            "profile" : {
+                "data" : list(company),
+            }
+        }
     })
     
 
     context_object_name = 'data_login'
-    if request.method == 'GET':
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
         user = authenticate(username=username,password=password)
 
         if user:
@@ -165,10 +172,23 @@ def user_login_api(request):
             print("Someone tried to login and failed!")
             print("Username: {} and Password {}".format(username,password))
             # return HttpResponse("invalid login details supplied")
-            # return HttpResponse(data)
-            return render(request,'login.html')
+            return render(request,'login_api.html')
     else:
-        return render(request,'login.html',{'name' : request.user.username })
+        return render(request,'login_api.html',{'name' : request.user.username })
+
+
+@csrf_exempt
+def record_location(request):
+    company = models.company.objects.all().values('user_id','location')
+    data = json.dumps({
+        "api_status": 1,
+        "api_message": 'success',
+        "data" : {
+            "data" : list(company),
+        }
+    })
+    
+    return HttpResponse(data)
 
 
 class ProfilePerusahaan(ListView):

@@ -25,6 +25,7 @@ urlpatterns = [
     path('register/',main_views.registercompany,name='create'),
     path('registerkaryawan/',main_views.registeruser,name='create_karyawan'),
     path('profile/',main_views.ProfilePerusahaan.as_view(),name='profile'),
+    path('record_location/',main_views.record_location,name='record_location'),
     path('list/',main_views.ListKaryawan.as_view(),name='listkaryawan'),
     path('delete/<int:pk>/',main_views.ListKaryawanDeleteView.as_view(),name="delete"),
     path('<int:pk>/update/',main_views.ListKaryawanUpdateView.as_view(),name='update'),
