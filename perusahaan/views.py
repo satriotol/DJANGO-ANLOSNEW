@@ -179,12 +179,12 @@ def user_login_api(request):
 
 @csrf_exempt
 def record_location(request):
-    company = models.company.objects.all().values('user_id','location')
+    users = models.users.objects.all().values('id','id_company','location_office')
     data = json.dumps({
         "api_status": 1,
         "api_message": 'success',
         "data" : {
-            "data" : list(company),
+            "data" : list(users),
         }
     })
     

@@ -4,7 +4,6 @@
     {% if registered %}
     <h1>Thank you for registering!</h1>
     {% else %}
-    {% comment %} {{profile_form.as_p}} {% endcomment %}
     <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm-4 user py-5 px-5">
@@ -38,6 +37,8 @@
         </div>
         <div class="col-sm-4 profile py-5 px-5">
             <input type="hidden" name="id_company" id="id_id_company" value="{{user.company.id}}">
+            </label> <textarea type="hidden" name="location_office" cols="40"
+                    rows="10" required="" id="id_location_office" style="display:none;">{{user.company.location}}</textarea>
             <div class="form-group">
                 <label for="exampleInputEmail1">Full Name</label>
                 <input type="text" class="form-control" id="id_name" name="name" aria-describedby="emailHelp">
