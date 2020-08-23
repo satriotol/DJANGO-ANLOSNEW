@@ -4,7 +4,8 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 CreateView,UpdateView,
                                 DeleteView)
 from perusahaan import models
-from perusahaan.forms import company,CompanyForm,users
+from .models import users
+from perusahaan.forms import companyprofileform,CompanyForm,usersform
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -15,11 +16,45 @@ from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User, Group
+from rest_framework.decorators import api_view
+from rest_framework import viewsets
+from rest_framework import permissions
+from rest_framework import status
+from rest_framework import renderers
+from rest_framework.response import Response
+from perusahaan.serializers import UserSerializer,UsersSerializer
 
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
+@api_view(['GET','POST'])
+def record_location_list(request):
+    if request.method == 'GET':
+        user_obj = users.objects.all()
+        user_serializer = UsersSerializer(user_obj, many=True)
+        data =({
+            "api_status" : 1,
+            "api_message" : "success",
+            "data" : {
+                "data" : user_serializer.data
+            }
+        })
+        return Response(data)
 
+    elif request.method == 'POST':
+        user_serializer = UsersSerializer(data=request.data)
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response(user_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class RecordLocationViewSet(viewsets.ModelViewSet):
+    queryset = users.objects.all()
+    serializer_class = UsersSerializer
+    
 # Create your views here.
 def special (request):
     return HttpResponse("You are logged in")
@@ -37,7 +72,7 @@ def registercompany(request):
     
     if request.method == "POST":
         user_form = CompanyForm(data=request.POST)
-        profile_form = company(data=request.POST)
+        profile_form = companyprofileform(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
@@ -57,7 +92,7 @@ def registercompany(request):
             print(user_form.errors,profile_form.errors)
     else:
         user_form = CompanyForm()
-        profile_form = company()
+        profile_form = companyprofileform()
 
     return render(request,'perusahaan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
@@ -66,7 +101,7 @@ def registeruser(request):
     
     if request.method == "POST":
         user_form = CompanyForm(data=request.POST)
-        profile_form = users(data=request.POST)
+        profile_form = usersform(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
@@ -86,14 +121,14 @@ def registeruser(request):
             print(user_form.errors,profile_form.errors)
     else:
         user_form = CompanyForm()
-        profile_form = users()
+        profile_form = usersform()
 
     return render(request,'karyawan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
 @csrf_exempt
 def user_login(request):
     user = models.User.objects.all().values('id','username','password')
-    company = models.company.objects.all().values('user','location')
+    company = models.company.objects.all().values('user','latitude','longtitude')
     # data = serializers.serialize('json', user)
     data = json.dumps({
         "api_status": 1,

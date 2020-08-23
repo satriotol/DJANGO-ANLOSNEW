@@ -37,8 +37,10 @@
         </div>
         <div class="col-sm-4 profile py-5 px-5">
             <input type="hidden" name="id_company" id="id_id_company" value="{{user.company.id}}">
-            </label> <textarea type="hidden" name="location_office" cols="40"
-                    rows="10" required="" id="id_location_office" style="display:none;">{{user.company.location}}</textarea>
+            <textarea type="text" name="latitude_office" cols="40" rows="10" required=""
+                id="id_latitude_office" style="display : none">{{user.company.latitude}}</textarea>
+            <textarea type="text" name="longtitude_office" cols="40" rows="10" required=""
+                id="id_longtitude_office" style="display : none">{{user.company.longtitude}}</textarea>
             <div class="form-group">
                 <label for="exampleInputEmail1">Full Name</label>
                 <input type="text" class="form-control" id="id_name" name="name" aria-describedby="emailHelp">

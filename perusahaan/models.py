@@ -15,7 +15,8 @@ class company(models.Model):
     name = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
-    location = models.TextField()
+    latitude = models.TextField(default="")
+    longtitude = models.TextField(default="")
 
     def __str__(self):
         return self.name
@@ -29,7 +30,8 @@ class users(models.Model):
     # email = models.EmailField()
     telp = models.CharField(max_length=12)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
-    location_office = models.TextField(default="")
+    latitude_office = models.TextField(default="")
+    longtitude_office = models.TextField(default="")
 
 
     def __str__(self):

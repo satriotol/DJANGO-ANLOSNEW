@@ -20,12 +20,12 @@ class CompanyForm(forms.ModelForm):
                 "password and confirm_password does not match"
             )
 
-class company(forms.ModelForm):
+class companyprofileform(forms.ModelForm):
     class Meta():
         model = company
-        fields = ('name','address','telp','location')
+        fields = ('name','address','telp','latitude','longtitude')
 
-class users(forms.ModelForm):
+class usersform(forms.ModelForm):
     class Meta():
         model = users
-        fields = ('id_company','name','telp','profile_pic','location_office')
+        fields = ('id_company','name','telp','profile_pic','latitude_office','longtitude_office')

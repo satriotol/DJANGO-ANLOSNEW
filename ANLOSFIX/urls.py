@@ -18,15 +18,24 @@ from django.urls import path,include
 from perusahaan import views as main_views
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'user', main_views.UserViewSet),
+router.register(r'location', main_views.RecordLocationViewSet),
 
 urlpatterns = [
+    path('api/',include(router.urls)),
+    path('api/user/',main_views.UserViewSet),
+    path('api/location/',main_views.record_location_list),
+    # path('api/location/',main_views.record_location_api),
     path('admin/', admin.site.urls),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),
     path('register/',main_views.registercompany,name='create'),
     path('registerkaryawan/',main_views.registeruser,name='create_karyawan'),
     path('profile/',main_views.ProfilePerusahaan.as_view(),name='profile'),
     path('record_location/',main_views.record_location,name='record_location'),
-    path('api/record_location/',main_views.record_location,name='record_locationapi'),
+    # path('api/record_location/',main_views.record_location,name='record_locationapi'),
     path('list/',main_views.ListKaryawan.as_view(),name='listkaryawan'),
     path('delete/<int:pk>/',main_views.ListKaryawanDeleteView.as_view(),name="delete"),
     path('<int:pk>/update/',main_views.ListKaryawanUpdateView.as_view(),name='update'),

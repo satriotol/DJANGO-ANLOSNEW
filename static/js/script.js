@@ -73,16 +73,22 @@ function initializeDrawer() {
             latitude: [
 
             ],
-            longitude: [
+        }
+        let poslong = {
+            longtitude : [
 
-            ]
+            ],
         }
         for (var i = 0; i < polygon.getPath().getLength(); i++) {
             let xy = vert.getAt(i)
             pos.latitude.push(xy.lat());
-            pos.longitude.push(xy.lng());
+        }
+        for (var i = 0; i < polygon.getPath().getLength(); i++) {
+            let xy = vert.getAt(i)
+            poslong.longtitude.push(xy.lng());
         }
         document.getElementById('info').innerHTML += JSON.stringify(pos);
+        document.getElementById('infolong').innerHTML += JSON.stringify(poslong);
         polygonArray.push(polygon);
     });
 
