@@ -67,31 +67,45 @@ function initializeDrawer() {
     console.log(drawingManager)
     drawingManager.setMap(map)
 
+    // google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+    //     let vert = polygon.getPath();
+    //     let pos = {
+    //         latitude: [
+
+    //         ],
+    //     }
+    //     let poslong = {
+    //         longtitude : [
+
+    //         ],
+    //     }
+    //     for (var i = 0; i < polygon.getPath().getLength(); i++) {
+    //         let xy = vert.getAt(i)
+    //         pos.latitude.push(xy.lat());
+    //     }
+    //     for (var i = 0; i < polygon.getPath().getLength(); i++) {
+    //         let xy = vert.getAt(i)
+    //         poslong.longtitude.push(xy.lng());
+    //     }
+    //     document.getElementById('info').innerHTML += JSON.stringify(pos);
+    //     document.getElementById('infolong').innerHTML += JSON.stringify(poslong);
+    //     polygonArray.push(polygon);
+    // });
     google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
         let vert = polygon.getPath();
-        let pos = {
-            latitude: [
-
-            ],
-        }
-        let poslong = {
-            longtitude : [
-
-            ],
-        }
-        for (var i = 0; i < polygon.getPath().getLength(); i++) {
+        let pos = []
+        let poslong = []
+        for (let i = 0; i < polygon.getPath().getLength(); i++) {
             let xy = vert.getAt(i)
-            pos.latitude.push(xy.lat());
-        }
-        for (var i = 0; i < polygon.getPath().getLength(); i++) {
-            let xy = vert.getAt(i)
-            poslong.longtitude.push(xy.lng());
+            let lat = xy.lat()
+            let long = xy.lng()
+            pos.push(lat)
+            poslong.push(long)
         }
         document.getElementById('info').innerHTML += JSON.stringify(pos);
         document.getElementById('infolong').innerHTML += JSON.stringify(poslong);
         polygonArray.push(polygon);
     });
-
 }
 
 // Initialize the drawer tool
