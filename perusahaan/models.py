@@ -43,7 +43,6 @@ class presence(models.Model):
     date_presence = models.DateField()
     start_presence = models.TimeField()
     end_presence = models.TimeField()
-    location = models.TextField(max_length=256)
 
 class vacation (models.Model):
     id_user = models.ForeignKey(users,on_delete=models.CASCADE)

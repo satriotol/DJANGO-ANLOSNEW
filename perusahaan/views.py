@@ -7,7 +7,7 @@ from perusahaan import models
 from .models import users
 from perusahaan.forms import companyprofileform,CompanyForm,usersform
 from django.contrib.auth import authenticate,login,logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -168,48 +168,16 @@ def user_login(request):
     else:
         return render(request,'login.html',{'name' : request.user.username })
 
-@csrf_exempt
 def user_login_api(request):
     user = models.User.objects.all().values('id','username','password')
-    company = models.company.objects.all().values('user','location')
-    # data = serializers.serialize('json', user)
-    data = json.dumps({
-        "api_status": 1,
-        "api_message": 'success',
-        # "data": list(user),
-        # "lokasi": list(company)
+    data = {
+        "api_status" : 1,
+        "api_message" : "success",
         "data" : {
             "data" : list(user),
-            "profile" : {
-                "data" : list(company),
-            }
         }
-    })
-    
-
-    context_object_name = 'data_login'
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(username=username,password=password)
-
-        if user:
-            if user.is_active:
-                login(request,user)
-                # return HttpResponseRedirect(reverse('index'))
-                # return JsonResponse(data,safe=False)
-                return HttpResponse(data)
-
-            else:
-                return HttpResponse("Account Not Active")
-        else:
-            print("Someone tried to login and failed!")
-            print("Username: {} and Password {}".format(username,password))
-            # return HttpResponse("invalid login details supplied")
-            return render(request,'login_api.html')
-    else:
-        return render(request,'login_api.html',{'name' : request.user.username })
+    }
+    return JsonResponse(data)
 
 
 @csrf_exempt

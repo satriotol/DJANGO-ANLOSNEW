@@ -22,12 +22,14 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'user', main_views.UserViewSet),
-router.register(r'location', main_views.RecordLocationViewSet),
+# router.register(r'location', main_views.RecordLocationViewSet),
 
 urlpatterns = [
+    # api
     path('api/',include(router.urls)),
     path('api/user/',main_views.UserViewSet),
     path('api/location/',main_views.record_location_list),
+    
     # path('api/location/',main_views.record_location_api),
     path('admin/', admin.site.urls),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),
@@ -42,7 +44,7 @@ urlpatterns = [
     path('vacation/',main_views.ListVacation.as_view(),name='listvacation'),
     # path('<int:pk>/list/',main_views.DetailKaryawan.as_view(),name='listkaryawan'),
     path('login/',main_views.user_login,name='user_login'),
-    path('api/login/',main_views.user_login_api,name='user_login_api'),
+    path('api/login/',main_views.user_login_api),
     path('logout/',main_views.user_logout,name='logout'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
