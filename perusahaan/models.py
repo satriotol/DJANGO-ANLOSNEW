@@ -15,24 +15,18 @@ class company(models.Model):
     name = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
-    latitude = models.TextField(default="")
-    longtitude = models.TextField(default="")
+    location = models.TextField(default="")
 
     def __str__(self):
         return self.name
 
 class users(models.Model):
-    # id_company = models.ForeignKey(company,on_delete=models.CASCADE,default='')
-    # id_company = models.ManyToManyField(company)
     user = models.OneToOneField(User,related_name="users",on_delete=models.CASCADE,default="")
     id_company = models.IntegerField()
     name = models.CharField(max_length=254)
-    # email = models.EmailField()
     telp = models.CharField(max_length=12)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
-    latitude_office = models.TextField(default="")
-    longtitude_office = models.TextField(default="")
-
+    location = models.TextField(default="")
 
     def __str__(self):
         return self.name

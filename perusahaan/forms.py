@@ -23,9 +23,9 @@ class CompanyForm(forms.ModelForm):
 class companyprofileform(forms.ModelForm):
     class Meta():
         model = company
-        fields = ('name','address','telp','latitude','longtitude')
+        fields = ('name','address','telp','location')
 
 class usersform(forms.ModelForm):
     class Meta():
         model = users
-        fields = ('id_company','name','telp','profile_pic','latitude_office','longtitude_office')
+        fields = ('id_company','name','telp','profile_pic','location')
