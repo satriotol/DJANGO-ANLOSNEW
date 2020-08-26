@@ -29,7 +29,7 @@
                 <td>Tidak Ada Gambar</td>
                 {% endif %}
                 <td><a class="btn btn-primary" href="{% url 'update' pk=listkaryawan.pk %}" role="button">Edit</a>
-                    <a class="btn btn-primary" href="#" role="button">Detail</a>
+                    <a class="btn btn-primary" href="{% url 'detail' pk=listkaryawan.pk %}" role="button">Detail</a>
                     <a class="btn btn-primary" href="{% url 'delete' pk=listkaryawan.pk %}" role="button">Delete</a>
                 </td>
             </tr>

@@ -38,9 +38,7 @@ def record_location_list(request):
         data =({
             "api_status" : 1,
             "api_message" : "success",
-            "data" : {
-                "data" : user_serializer.data
-            }
+            "data" : user_serializer.data
         })
         return Response(data)
 
@@ -168,18 +166,6 @@ def user_login(request):
     else:
         return render(request,'login.html',{'name' : request.user.username })
 
-def user_login_api(request):
-    user = models.User.objects.all().values('id','username','password')
-    data = {
-        "api_status" : 1,
-        "api_message" : "success",
-        "data" : {
-            "data" : list(user),
-        }
-    }
-    return JsonResponse(data)
-
-
 @csrf_exempt
 def record_location(request):
     users = models.users.objects.all().values('id','id_company','location_office')
@@ -204,6 +190,10 @@ class ListKaryawan(ListView):
     context_object_name = 'listkaryawans'
     model = models.users
     template_name = 'karyawan_list.html'
+
+class DetailKaryawan(DetailView):
+    model = models.users
+    template_name = 'karyawan_detail.html'
 
 class ListKaryawanDeleteView(DeleteView):
     context_object_name = 'listkaryawans'
