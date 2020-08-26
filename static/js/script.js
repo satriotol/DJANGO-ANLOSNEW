@@ -91,19 +91,31 @@ function initializeDrawer() {
     //     document.getElementById('infolong').innerHTML += JSON.stringify(poslong);
     //     polygonArray.push(polygon);
     // });
+    // google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+    //     let vert = polygon.getPath();
+    //     let pos = []
+    //     let poslong = []
+    //     for (let i = 0; i < polygon.getPath().getLength(); i++) {
+    //         let xy = vert.getAt(i)
+    //         let lat = xy.lat()
+    //         let long = xy.lng()
+    //         pos.push(lat)
+    //         poslong.push(long)
+    //     }
+    //     document.getElementById('info').innerHTML += JSON.stringify(pos);
+    //     document.getElementById('infolong').innerHTML += JSON.stringify(poslong);
+    //     polygonArray.push(polygon);
+    // });
     google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
         let vert = polygon.getPath();
         let pos = []
-        let poslong = []
         for (let i = 0; i < polygon.getPath().getLength(); i++) {
             let xy = vert.getAt(i)
             let lat = xy.lat()
             let long = xy.lng()
-            pos.push(lat)
-            poslong.push(long)
+            pos.push([lat, long])
         }
         document.getElementById('info').innerHTML += JSON.stringify(pos);
-        document.getElementById('infolong').innerHTML += JSON.stringify(poslong);
         polygonArray.push(polygon);
     });
 }
