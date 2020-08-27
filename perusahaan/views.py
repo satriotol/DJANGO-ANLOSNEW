@@ -24,7 +24,7 @@ from rest_framework import status
 from rest_framework import renderers
 from rest_framework import generics
 from rest_framework.response import Response
-from perusahaan.serializers import UserSerializer,UsersSerializer
+from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer
 
 
 
@@ -37,7 +37,7 @@ class UserViewSet(viewsets.ModelViewSet):
 def record_location_list(request):
     if request.method == 'GET':
         user_obj = users.objects.all()
-        user_serializer = UsersSerializer(user_obj, many=True)
+        user_serializer = UsersLocationSerializer(user_obj, many=True)
         data =({
             "api_status" : 1,
             "api_message" : "success",
@@ -46,15 +46,37 @@ def record_location_list(request):
         return Response(data)
 
     elif request.method == 'POST':
-        user_serializer = UsersSerializer(data=request.data)
+        user_serializer = UsersLocationSerializer(data=request.data)
         if user_serializer.is_valid():
             user_serializer.save()
             return Response(user_serializer.data, status=status.HTTP_201_CREATED)
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET','PUT'])
+def record_location_detail(request,pk):
+    try:
+        user_obj = users.objects.get(pk=pk)
+    except users.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        user_serializer = UsersLocationSerializer(user_obj)
+        return Response(user_serializer.data)
+
+    elif request.method == 'PUT':
+        user_serializer = UsersLocationSerializer(user_obj, data=request.data)
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response(user_serializer.data)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        user_obj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class RecordLocationViewSet(viewsets.ModelViewSet):
     queryset = users.objects.all()
-    serializer_class = UsersSerializer
+    serializer_class = UserProfileSerializer
     
 # Create your views here.
 def special (request):

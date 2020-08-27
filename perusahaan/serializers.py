@@ -6,17 +6,19 @@ from .models import users
 #     class Meta:
 #         model = Group
 #         fields = ['url', 'name']
-
-class UsersSerializer(serializers.ModelSerializer):
-    # user = serializers.StringRelatedField()
+class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = users
-        # fields = ['id','id_company','location','user']
         fields = ['id_company','name','telp','profile_pic','start_work','end_work','location','record_location']
+
+class UsersLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = users
+        fields = ['id','id_company','location','record_location']
 
 
 class UserSerializer(serializers.ModelSerializer):
-    users = UsersSerializer(read_only=True)
+    users = UserProfileSerializer(read_only=True)
     class Meta:
         model = User
         fields = ['id','url', 'username','email','users']

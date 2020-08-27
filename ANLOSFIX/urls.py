@@ -28,6 +28,7 @@ urlpatterns = [
     # api
     path('api/',include(router.urls)),
     path('api/location/',main_views.record_location_list),
+    path('api/location/<int:pk>',main_views.record_location_detail, name='record_location_detail'),
     # path('api/login/<int:pk>/',main_views.UserViewSet,name='user-detail'),
     
     # url
@@ -47,3 +48,4 @@ urlpatterns = [
     path('logout/',main_views.user_logout,name='logout'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
