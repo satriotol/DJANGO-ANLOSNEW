@@ -22,13 +22,16 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework import renderers
+from rest_framework import generics
 from rest_framework.response import Response
 from perusahaan.serializers import UserSerializer,UsersSerializer
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 @api_view(['GET','POST'])
 def record_location_list(request):
@@ -126,7 +129,7 @@ def registeruser(request):
 @csrf_exempt
 def user_login(request):
     user = models.User.objects.all().values('id','username','password')
-    company = models.company.objects.all().values('user','latitude','longtitude')
+    company = models.company.objects.all().values('user','location')
     # data = serializers.serialize('json', user)
     data = json.dumps({
         "api_status": 1,

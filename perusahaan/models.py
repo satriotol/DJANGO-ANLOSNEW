@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
-
-
 class company_privileges(models.Model):
     name = models.CharField(max_length=254)
 
