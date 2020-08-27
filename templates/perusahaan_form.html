@@ -41,12 +41,17 @@
                 {% comment %} {{user_form.as_p}} {% endcomment %}
             </div>
             <div class="col">
+                {% comment %} {{profile_form.as_p}} {% endcomment %}
                 <p><label for="id_name">Name:</label> <input type="text" name="name" maxlength="254" required=""
                         id="id_name"></p>
                 <p><label for="id_address">Address:</label> <input type="text" name="address" maxlength="254"
                         required="" id="id_address"></p>
                 <p><label for="id_telp">Telp:</label> <input type="text" name="telp" maxlength="12" required=""
                         id="id_telp"></p>
+                <p><label for="id_start_work">Start work:</label> <input type="time" step="2" name="start_work"
+                        required="" id="id_start_work"></p>
+                <p><label for="id_end_work">End work:</label> <input type="time" step="2" name="end_work" required=""
+                        id="id_end_work"></p>
                 {% comment %} <p><label for="id_location">Location:</label> <textarea name="location" cols="40"
                         rows="10" maxlength="256" required="" id="id_location"></textarea></p> {% endcomment %}
 
@@ -54,7 +59,8 @@
             <div id="tool">
                 <div id="map_canvas" style=" border: 2px solid #3872ac;"></div> <br>
                 <textarea name="location" id="info" cols="30" rows="10"></textarea>
-\            </div>
+                \
+            </div>
         </div>
         <br>
         <div class="text-center">

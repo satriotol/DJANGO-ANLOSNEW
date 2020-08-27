@@ -23,7 +23,7 @@ class CompanyForm(forms.ModelForm):
 class companyprofileform(forms.ModelForm):
     class Meta():
         model = company
-        fields = ('name','address','telp','location')
+        fields = ('name','address','telp','location','start_work','end_work')
 
 class usersform(forms.ModelForm):
     class Meta():
