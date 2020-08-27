@@ -27,8 +27,8 @@ router.register(r'login', main_views.UserViewSet),
 urlpatterns = [
     # api
     path('api/',include(router.urls)),
-    # path('api/login/',main_views.user_list),
     path('api/location/',main_views.record_location_list),
+    # path('api/login/<int:pk>/',main_views.UserViewSet,name='user-detail'),
     
     # url
     path('admin/', admin.site.urls),
