@@ -18,16 +18,30 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User, Group
 from rest_framework.decorators import api_view
-from rest_framework import viewsets
-from rest_framework import permissions
-from rest_framework import status
-from rest_framework import renderers
-from rest_framework import generics
+from rest_framework import viewsets,permissions,status,renderers,generics
 from rest_framework.response import Response
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer
+# from shapely import geometry
 
 
+# def check_polygon(request):
+#     # users = models.users.objects.all().values('location')
+#     users = models.users.objects.values_list('location', flat=True)
 
+#     position = users
+#     # position = [[-7.05294243391212,110.43200829993961],[-7.0531607107313,110.43192246925113],[-7.053394958910614,110.43223896991489],[-7.053134091612514,110.43231943618534]]
+
+#     Point_X = -7.05304243391212
+#     Point_Y = 110.43200829993961
+
+#     line = geometry.LineString(position)
+#     point = geometry.Point(Point_X, Point_Y)
+#     polygon = geometry.Polygon(line)
+
+#     # print(polygon.contains(point))
+
+#     return HttpResponse(polygon.contains(point))
+#     # return HttpResponse(position)
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -111,6 +125,7 @@ def registercompany(request):
             profile.save()
 
             registered = True
+            return render(request,'login.html')
         else:
             print(user_form.errors,profile_form.errors)
     else:

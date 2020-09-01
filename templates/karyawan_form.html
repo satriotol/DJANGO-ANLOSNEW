@@ -39,9 +39,9 @@
             <input type="hidden" name="id_company" id="id_id_company" value="{{user.company.id}}">
             <textarea type="text" name="location" cols="40" rows="10" required="" id="id_location"
                 style="display : none">{{user.company.location}}</textarea>
-            <p><label for="id_start_work">Start work:</label> <input type="time" step="2" name="start_work" required=""
+            <p><label for="id_start_work">Start work:</label> <input type="time" value="{{user.company.start_work|time:"H:i:s"}}" step="2" name="start_work" required=""
                     id="id_start_work"></p>
-            <p><label for="id_end_work">End work:</label> <input type="time" step="2" name="end_work" required=""
+            <p><label for="id_end_work">End work:</label> <input type="time" value="{{user.company.end_work|time:"H:i:s"}}" step="2" name="end_work" required=""
                     id="id_end_work"></p>
             <div class="form-group">
                 <label for="exampleInputEmail1">Full Name</label>

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import users
+from .models import users,company
 
 # class GroupSerializer(serializers.HyperlinkedModelSerializer):
 #     class Meta:
@@ -17,12 +17,18 @@ class UsersLocationSerializer(serializers.ModelSerializer):
         fields = ['id','id_company','location','record_location']
         read_only_fields = ['id_company']
 
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = company
+        fields = ['id','start_work','end_work']
+
 
 class UserSerializer(serializers.ModelSerializer):
     users = UserProfileSerializer(read_only=True)
+    company = CompanySerializer(read_only=True)
     class Meta:
         model = User
-        fields = ['id','url', 'username','email','users']
+        fields = ['id','url', 'username','email','users','company']
 
 
 # class UserSerializer(serializers.ModelSerializer):
