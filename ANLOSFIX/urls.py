@@ -33,7 +33,7 @@ urlpatterns = [
     
     # url
     path('admin/', admin.site.urls),
-    
+    # path('cek/',main_views.check_polygon),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),
     path('register/',main_views.registercompany,name='create'),
     path('registerkaryawan/',main_views.registeruser,name='create_karyawan'),

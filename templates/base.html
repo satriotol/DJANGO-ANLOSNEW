@@ -22,8 +22,24 @@
         background-color: #355c7d;
     }
 
-    a.nav-link {
-        color: white !important;
+    .navbar-light .navbar-nav .nav-link {
+        color: white;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .footer.bg-custom {
+        border-top: 4px solid #5FA6E3;
+    }
+
+    .active {
+        background-color: white;
+        color: #355c7d;
+        border-radius: 5px;
     }
 </style>
 
@@ -86,6 +102,12 @@
     {% endif %}
     {% block body_block %}
     {% endblock body_block %}
+
+    <div class="footer bg-custom">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati aspernatur, accusantium quas veritatis
+            libero perspiciatis, cupiditate necessitatibus, unde reprehenderit itaque facilis exercitationem animi
+            dolores qui neque? Ut dolores saepe hic!</p>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
