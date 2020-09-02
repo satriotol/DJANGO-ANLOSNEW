@@ -38,8 +38,8 @@ class presence(models.Model):
     id_user = models.IntegerField()
     id_company = models.IntegerField()
     date_presence = models.DateField()
-    start_presence = models.TimeField()
-    end_presence = models.TimeField()
+    start_presence = models.TimeField(null=True)
+    end_presence = models.TimeField(null=True)
 
 class vacation (models.Model):
     id_user = models.ForeignKey(users,on_delete=models.CASCADE)

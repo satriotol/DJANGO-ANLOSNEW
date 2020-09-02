@@ -1,11 +1,22 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import users,company
+from .models import users,company,presence
 
 # class GroupSerializer(serializers.HyperlinkedModelSerializer):
 #     class Meta:
 #         model = Group
 #         fields = ['url', 'name']
+
+class PresenceStartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = presence
+        fields = ['id','id_user','id_company','date_presence','start_presence']
+
+class PresenceEndSerializer(serializers.ModelSerializer):
+    start_presence = PresenceStartSerializer(read_only=True)
+    class Meta:
+        model = presence
+        fields = ['start_presence','end_presence']
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = users

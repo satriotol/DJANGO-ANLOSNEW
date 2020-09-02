@@ -4,7 +4,7 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 CreateView,UpdateView,
                                 DeleteView)
 from perusahaan import models
-from .models import users
+from .models import users,presence
 from perusahaan.forms import companyprofileform,CompanyForm,usersform
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -20,7 +20,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework.decorators import api_view
 from rest_framework import viewsets,permissions,status,renderers,generics
 from rest_framework.response import Response
-from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer
+from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceStartSerializer,PresenceEndSerializer
 # from shapely import geometry
 
 
@@ -45,6 +45,14 @@ from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLoc
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class PresenceStartViewSet(viewsets.ModelViewSet):
+    queryset = presence.objects.all()
+    serializer_class = PresenceStartSerializer
+
+class PresenceEndViewSet(viewsets.ModelViewSet):
+    queryset = presence.objects.all()
+    serializer_class = PresenceEndSerializer
 
 
 @api_view(['GET','POST'])

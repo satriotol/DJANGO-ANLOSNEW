@@ -22,7 +22,8 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'login', main_views.UserViewSet),
-# router.register(r'location', main_views.RecordLocationViewSet),
+router.register(r'presence/start', main_views.PresenceStartViewSet),
+router.register(r'presence/end', main_views.PresenceEndViewSet),
 
 urlpatterns = [
     # api

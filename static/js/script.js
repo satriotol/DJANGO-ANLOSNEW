@@ -111,11 +111,11 @@ function initializeDrawer() {
         let pos = []
         for (let i = 0; i < polygon.getPath().getLength(); i++) {
             let xy = vert.getAt(i)
-            let lat = xy.lat()
-            let long = xy.lng()
+            let lat = +xy.lat().toFixed(6);
+            let long = +xy.lng().toFixed(6);
             pos.push([lat, long])
         }
-        document.getElementById('info').innerHTML += JSON.stringify(pos);
+        document.getElementById('info').innerHTML = JSON.stringify(pos);
         polygonArray.push(polygon);
     });
 }

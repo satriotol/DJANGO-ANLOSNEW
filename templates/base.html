@@ -12,8 +12,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/geolocation.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -24,24 +26,33 @@
         background-color: #355c7d;
     }
 
+    nav.navbar.navbar-expand-lg.navbar-light.bg-custom {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
     .navbar-light .navbar-nav .nav-link {
         color: white;
     }
 
+    a.nav-link.sign-up {
+        background-color: white;
+        color: #355c7d !important;
+        border: 1px white solid;
+    }
+
+    a.nav-link.login {
+        border: 1px white solid;
+    }
+
+
     .footer {
-        position: fixed;
         bottom: 0;
         width: 100%;
     }
 
     .footer.bg-custom {
         border-top: 4px solid #5FA6E3;
-    }
-
-    .active {
-        background-color: white;
-        color: #355c7d;
-        border-radius: 5px;
     }
 </style>
 
@@ -88,10 +99,10 @@
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'create' %}">Sign Up</a>
+                    <a class="nav-link sign-up" href="{% url 'create' %}">Sign Up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'user_login' %}">Login</a>
+                    <a class="nav-link login" href="{% url 'user_login' %}">Login</a>
                 </li>
                 {% endif %}
             </ul>
