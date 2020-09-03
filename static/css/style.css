@@ -1,3 +1,77 @@
+/* utama */
+body {
+    font-family: 'Lato';
+    font-size: 16px;
+
+}
+
+.bg-custom {
+    background-color: #355c7d;
+    color: white;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #355C7D;
+    border-color: #355C7D;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #1F364A;
+    border-color: #1F364A;
+}
+
+/* navbar */
+.active{
+    border-bottom : 2px solid white;
+    color: white !important;
+}
+.nav-link.hover:hover{
+    color : #5FA6E3 !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #1F364A;
+    color: white;
+}
+
+nav.navbar.navbar-expand-lg.navbar-light.bg-custom {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: white;
+}
+
+a.nav-link {
+    font-weight: bold;
+}
+
+a.nav-link.sign-up {
+    background-color: white;
+    color: #355c7d !important;
+    border: 1px white solid;
+}
+
+a.nav-link.login {
+    border: 1px white solid;
+}
+
+/* footer */
+.footer {
+    bottom: 0;
+    width: 100%;
+}
+
+.footer.bg-custom {
+    border-top: 10px solid #5FA6E3;
+}
+
 /* form */
 .col-sm-4.user {
     border-top-left-radius: 25px;

@@ -18,42 +18,12 @@
         href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/geolocation.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
     <title>ANLOSIA</title>
 </head>
 <style>
-    .bg-custom {
-        background-color: #355c7d;
-    }
 
-    nav.navbar.navbar-expand-lg.navbar-light.bg-custom {
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-
-    .navbar-light .navbar-nav .nav-link {
-        color: white;
-    }
-
-    a.nav-link.sign-up {
-        background-color: white;
-        color: #355c7d !important;
-        border: 1px white solid;
-    }
-
-    a.nav-link.login {
-        border: 1px white solid;
-    }
-
-
-    .footer {
-        bottom: 0;
-        width: 100%;
-    }
-
-    .footer.bg-custom {
-        border-top: 4px solid #5FA6E3;
-    }
 </style>
 
 <body>
@@ -64,62 +34,66 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Home</a>
-                </li>
-                {% if perms.perusahaan %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'listkaryawan' %}">Karyawan</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href={% url 'profile' %}>Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href={% url 'listvacation' %}>Vacation</a>
-                </li>
-                {% endif %}
-                {% comment %} <li class="nav-item">
-                    <a class="nav-link" href={% url 'record_location' %}>Record Location</a>
-                </li> {% endcomment %}
-                {% comment %} <li class="nav-item">
-                    <a class="nav-link" href="#">Todo</a>
-                </li> {% endcomment %}
-                {% if perms.perusahaan %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'create_karyawan' %}">Buat Karyawan</a>
-                </li>
-                {% endif %}
-            </ul>
-            <ul class="nav navbar-nav navbar-right ml-auto">
-                {% if user.is_authenticated  %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">LOG OUT</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link sign-up" href="{% url 'create' %}">Sign Up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link login" href="{% url 'user_login' %}">Login</a>
-                </li>
-                {% endif %}
-            </ul>
+            <div class="container">
+                <ul class="navbar-nav mr-auto">
+                    {% comment %} <a href="" class="navbar-brand">
+                        <img src="{% static 'logowhite.png' %}" width="50" height="50">
+                    </a> {% endcomment %}
+                    <li class="nav-item p-2">
+                        <a class="nav-link hover {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+                            href="{% url 'index' %}">Home</a>
+                    </li>
+                    {% if perms.perusahaan %}
+                    <li class="nav-item p-2">
+                        <a class="nav-link hover {% if request.resolver_match.url_name == 'listkaryawan' %}active{% endif %}"
+                            href="{% url 'listkaryawan' %}">Karyawan</a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a class="nav-link hover {% if request.resolver_match.url_name == 'listvacation' %}active{% endif %}"
+                            href={% url 'listvacation' %}>Vacation</a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a class="nav-link hover {% if request.resolver_match.url_name == 'create_karyawan' %}active{% endif %}"
+                            href="{% url 'create_karyawan' %}">Buat Karyawan</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="nav navbar-nav navbar-right ml-auto">
+                    {% if user.is_authenticated  %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{user.company.name}}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'profile' %}"><span class="fa fa-user-circle"></span>
+                                Profil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}"><span class="fa fa-sign-out"></span>
+                                Keluar</a>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link sign-up" href="{% url 'create' %}">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link login" href="{% url 'user_login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
-    {% comment %} {% if perms.perusahaan %}
-    Anda adalah Admin
-    {% else %}
-    Anda adalah Karyawan
-    {% endif %} {% endcomment %}
     {% block body_block %}
     {% endblock body_block %}
 
     <div class="footer bg-custom">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati aspernatur, accusantium quas veritatis
-            libero perspiciatis, cupiditate necessitatibus, unde reprehenderit itaque facilis exercitationem animi
-            dolores qui neque? Ut dolores saepe hic!</p>
+        <div class="container">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati aspernatur, accusantium quas veritatis
+                libero perspiciatis, cupiditate necessitatibus, unde reprehenderit itaque facilis exercitationem animi
+                dolores qui neque? Ut dolores saepe hic!</p>
+        </div>
     </div>
 
     <!-- Optional JavaScript -->
