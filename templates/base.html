@@ -108,11 +108,11 @@
             </ul>
         </div>
     </nav>
-    {% if perms.perusahaan %}
+    {% comment %} {% if perms.perusahaan %}
     Anda adalah Admin
     {% else %}
     Anda adalah Karyawan
-    {% endif %}
+    {% endif %} {% endcomment %}
     {% block body_block %}
     {% endblock body_block %}
 

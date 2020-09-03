@@ -7,6 +7,7 @@ from perusahaan import models
 from .models import users,presence
 from perusahaan.forms import companyprofileform,CompanyForm,usersform
 from django.contrib.auth import authenticate,login,logout
+from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -135,6 +136,7 @@ def registercompany(request):
             registered = True
             return render(request,'login.html')
         else:
+            
             print(user_form.errors,profile_form.errors)
     else:
         user_form = CompanyForm()
@@ -173,23 +175,6 @@ def registeruser(request):
 
 @csrf_exempt
 def user_login(request):
-    user = models.User.objects.all().values('id','username','password')
-    company = models.company.objects.all().values('user','location')
-    # data = serializers.serialize('json', user)
-    data = json.dumps({
-        "api_status": 1,
-        "api_message": 'success',
-        # "data": list(user),
-        # "lokasi": list(company)
-        "data" : {
-            "data" : list(user),
-            "profile" : {
-                "data" : list(company),
-            }
-        }
-    })
-    
-
     context_object_name = 'data_login'
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -210,7 +195,10 @@ def user_login(request):
             print("Someone tried to login and failed!")
             print("Username: {} and Password {}".format(username,password))
             # return HttpResponse("invalid login details supplied")
-            return render(request,'login.html')
+            messages.info(request, 'Username atau Password Yang Anda Inputkan Salah')
+            return HttpResponseRedirect('/login/')
+            # return render(request,'login.html')
+
     else:
         return render(request,'login.html',{'name' : request.user.username })
 

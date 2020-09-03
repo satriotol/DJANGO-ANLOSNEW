@@ -3,6 +3,13 @@
 {% block body_block %}
 <div class="jumbotron">
     <h1>Please Login</h1>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger text-center" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
     <form action="{% url 'user_login' %}" method="post">
         {% csrf_token %}
         <label for="username">Email:</label>
