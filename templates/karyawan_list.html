@@ -3,6 +3,21 @@
 {% block body_block %}
 
 {% if user.is_authenticated %}
+<style>
+    img.img-thumbnail {
+        max-width: 75%;
+    }
+
+    @media (max-width: 768px) {
+        img.img-thumbnail {
+            max-width: 50%;
+        }
+    }
+
+    .dt-buttons {
+        text-align: center !important;
+    }
+</style>
 <div class="container">
     <h1 class="text-center">KARYAWAN</h1>
     <table class="table table-striped table-bordered nowrap" id="table_id">

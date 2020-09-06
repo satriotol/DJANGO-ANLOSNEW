@@ -13,10 +13,10 @@ class PresenceStartSerializer(serializers.ModelSerializer):
         fields = ['id','id_user','id_company','date_presence','start_presence']
 
 class PresenceEndSerializer(serializers.ModelSerializer):
-    start_presence = PresenceStartSerializer(read_only=True)
+    mulai = PresenceStartSerializer(read_only=True)
     class Meta:
         model = presence
-        fields = ['start_presence','end_presence']
+        fields = ['mulai','end_presence']
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = users
