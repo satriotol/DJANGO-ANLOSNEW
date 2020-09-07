@@ -22,8 +22,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'login', main_views.UserViewSet),
-router.register(r'presence/start', main_views.PresenceStartViewSet),
-router.register(r'presence/end', main_views.PresenceEndViewSet),
+router.register(r'presence', main_views.PresenceViewSet),
 
 urlpatterns = [
     # api
@@ -36,6 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('cek/',main_views.check_polygon),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),
+    path('pengaturan/<int:pk>/',main_views.EditUser.as_view(),name='edituser'),
     path('register/',main_views.registercompany,name='create'),
     path('registerkaryawan/',main_views.registeruser,name='create_karyawan'),
     path('profile/',main_views.ProfilePerusahaan.as_view(),name='profile'),
@@ -44,7 +44,7 @@ urlpatterns = [
     path('delete/<int:pk>/',main_views.ListKaryawanDeleteView.as_view(),name="delete"),
     path('<int:pk>/update/',main_views.ListKaryawanUpdateView.as_view(),name='update'),
     path('vacation/',main_views.ListVacation.as_view(),name='listvacation'),
-    path('<int:pk>/list/',main_views.DetailKaryawan.as_view(),name='detail'),
+    path('list/<int:pk>/',main_views.DetailKaryawan.as_view(),name='detail'),
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),
 

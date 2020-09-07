@@ -21,7 +21,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework.decorators import api_view
 from rest_framework import viewsets,permissions,status,renderers,generics
 from rest_framework.response import Response
-from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceStartSerializer,PresenceEndSerializer
+from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer
 # from shapely import geometry
 
 
@@ -47,13 +47,9 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class PresenceStartViewSet(viewsets.ModelViewSet):
+class PresenceViewSet(viewsets.ModelViewSet):
     queryset = presence.objects.all()
-    serializer_class = PresenceStartSerializer
-
-class PresenceEndViewSet(viewsets.ModelViewSet):
-    queryset = presence.objects.all()
-    serializer_class = PresenceEndSerializer
+    serializer_class = PresenceSerializer
 
 
 @api_view(['GET','POST'])
@@ -215,6 +211,11 @@ def record_location(request):
     
     return HttpResponse(data)
 
+class EditUser(UpdateView):
+    context_object_name = 'listusers'
+    model = models.User
+    fields = ['username','password']
+    template_name = 'user_update.html'
 
 class ProfilePerusahaan(ListView):
     context_object_name = 'profilperusahaan'

@@ -62,6 +62,10 @@ a.nav-link.login {
     border: 1px white solid;
 }
 
+span.fa{
+    margin-right: 10px;
+}
+
 /* footer */
 .footer {
     bottom: 0;
