@@ -21,7 +21,6 @@ from django.conf.urls.static import static
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'login', main_views.UserViewSet),
 router.register(r'presence', main_views.PresenceViewSet),
 
 urlpatterns = [
@@ -29,11 +28,11 @@ urlpatterns = [
     path('api/',include(router.urls)),
     path('api/location/',main_views.record_location_list),
     path('api/location/<int:pk>',main_views.record_location_detail, name='record_location_detail'),
-    # path('api/login/<int:pk>/',main_views.UserViewSet,name='user-detail'),
+    path('api/login/',main_views.UserListView.as_view()),
+    path('api/login/<int:pk>/',main_views.UserDetail.as_view()),
     
     # url
     path('admin/', admin.site.urls),
-    # path('cek/',main_views.check_polygon),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),
     path('pengaturan/<int:pk>/',main_views.EditUser.as_view(),name='edituser'),
     path('register/',main_views.registercompany,name='create'),

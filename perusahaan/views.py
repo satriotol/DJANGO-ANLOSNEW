@@ -11,39 +11,35 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import JsonResponse
 from django.core import serializers
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User, Group
 from rest_framework.decorators import api_view
 from rest_framework import viewsets,permissions,status,renderers,generics
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import rest_framework as filters
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer
+from rest_framework import filters
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+
+
 # from shapely import geometry
 
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['username','password','email']
 
-# def check_polygon(request):
-#     # users = models.users.objects.all().values('location')
-#     users = models.users.objects.values_list('location', flat=True)
-
-#     position = users
-#     # position = [[-7.05294243391212,110.43200829993961],[-7.0531607107313,110.43192246925113],[-7.053394958910614,110.43223896991489],[-7.053134091612514,110.43231943618534]]
-
-#     Point_X = -7.05304243391212
-#     Point_Y = 110.43200829993961
-
-#     line = geometry.LineString(position)
-#     point = geometry.Point(Point_X, Point_Y)
-#     polygon = geometry.Polygon(line)
-
-#     # print(polygon.contains(point))
-
-#     return HttpResponse(polygon.contains(point))
-#     # return HttpResponse(position)
-class UserViewSet(viewsets.ModelViewSet):
+class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -93,6 +89,7 @@ def record_location_detail(request,pk):
         user_obj.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class RecordLocationViewSet(viewsets.ModelViewSet):
     queryset = users.objects.all()
     serializer_class = UserProfileSerializer
@@ -104,11 +101,12 @@ def special (request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('user_login'))
+
 class IndexPerusahaan(ListView):
     model = models.company
     template_name = 'index.html'
-
+    
 def registercompany(request):
     registered = False
     
@@ -217,18 +215,24 @@ class EditUser(UpdateView):
     fields = ['username','password']
     template_name = 'user_update.html'
 
-class ProfilePerusahaan(ListView):
+class ProfilePerusahaan(LoginRequiredMixin,ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     context_object_name = 'profilperusahaan'
     model = models.company
     model = models.users
     template_name = 'profile.html'
 
-class ListKaryawan(ListView):
+class ListKaryawan(LoginRequiredMixin,ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     context_object_name = 'listkaryawans'
     model = models.users
     template_name = 'karyawan_list.html'
 
-class DetailKaryawan(DetailView):
+class DetailKaryawan(LoginRequiredMixin,DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = models.users
     template_name = 'karyawan_detail.html'
 
