@@ -20,9 +20,10 @@ class company(models.Model):
     def __str__(self):
         return self.name
 
-class users(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(User,related_name="users",on_delete=models.CASCADE,default="")
     id_company = models.IntegerField()
+    is_company = models.IntegerField()
     name = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)

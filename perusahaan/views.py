@@ -4,7 +4,7 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 CreateView,UpdateView,
                                 DeleteView)
 from perusahaan import models
-from .models import users,presence
+from .models import users,presence,company
 from perusahaan.forms import companyprofileform,CompanyForm,usersform
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -29,9 +29,12 @@ from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLoc
 from rest_framework import filters
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+# import django_filters
+
 
 
 # from shapely import geometry
+    
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
@@ -103,10 +106,16 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('user_login'))
 
-class IndexPerusahaan(ListView):
-    model = models.company
+class IndexPerusahaan(TemplateView):
+    model = models.users
     template_name = 'index.html'
     
+    # def get_context_data(self, **kwargs):
+    #     context = super(IndexPerusahaan, self).get_context_data(**kwargs)
+    #     context['users'] = company.objects.all()
+    #     return context
+
+
 def registercompany(request):
     registered = False
     
