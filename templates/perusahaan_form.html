@@ -85,6 +85,10 @@
         background-color: #2e59d9;
     }
 </style>
+<div>
+    {% comment %} {{user_form.as_p}}
+    {{profile_form.as_p}} {% endcomment %}
+</div>
 <div class="container">
 
     <div class="card o-hidden border-0 shadow-lg my-5">
@@ -105,11 +109,11 @@
                                         oninput="this.className = 'form-control form-control-user'" id="id_name"
                                         placeholder="Name">
                                 </div>
-                                <div class="form-group">
+                                {% comment %} <div class="form-group">
                                     <input type="text" name="address" class="form-control form-control-user"
                                         oninput="this.className = 'form-control form-control-user'" id="id_address"
                                         placeholder="Address">
-                                </div>
+                                </div> {% endcomment %}
                                 <div class="form-group">
                                     <input type="text" name="telp" class="form-control form-control-user"
                                         oninput="this.className = 'form-control form-control-user'" id="id_telp"
@@ -135,6 +139,8 @@
                                 </div>
                             </div>
                             <div class="tab">
+                                <input type="hidden" name="groups" id="id_groups" value="1">
+                                <input type="hidden" name="is_company" value="1" id="id_is_company">
                                 <div class="form-group">
                                     <input type="text" name="username" class="form-control form-control-user"
                                         oninput="this.className = 'form-control form-control-user'" id="id_username"
@@ -143,7 +149,7 @@
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user"
                                         oninput="this.className = 'form-control form-control-user'" name="email"
-                                        id="email" placeholder="Email Address">
+                                        id="id_email" placeholder="Email Address">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -168,8 +174,7 @@
                                         onclick="nextPrev(-1)">Previous</button>
                                     <button type="button" id="nextBtn" onclick="nextPrev(1)"
                                         class="btn btn-primary btn-user">Next</button>
-                                    <input type="submit" id="submitBtn" class="btn btn-primary btn-user"
-                                        Value="Submit">
+                                    <input type="submit" id="submitBtn" class="btn btn-primary btn-user" Value="Submit">
                                 </div>
                             </div>
                             <div style="text-align:center;margin-top:40px;">

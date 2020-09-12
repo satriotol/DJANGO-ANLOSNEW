@@ -1,11 +1,12 @@
 <!doctype html>
 {% extends 'base.html' %}
-{% block body_block %}
+{% block index_block %}
 
 {% if user.is_authenticated %}
 <style>
     img.img-thumbnail {
         max-width: 75%;
+        max-height: 250px;
     }
 
     @media (max-width: 768px) {
@@ -33,7 +34,7 @@
         </thead>
         <tbody>
             {% for listkaryawan in listkaryawans%}
-            {% if user.company.id == listkaryawan.id_company %}
+            {% if user.users.id == listkaryawan.id_company %}
             <tr class="text-center">
                 <td>{{listkaryawan.user}}</td>
                 <td>{{listkaryawan.user.email}}</td>

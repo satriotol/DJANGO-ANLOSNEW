@@ -15,7 +15,7 @@ class PresenceSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = users
-        fields = ['id_company','name','telp','profile_pic','start_work','end_work','location','record_location']
+        fields = ['id','id_company','is_company','name','telp','profile_pic','start_work','end_work','location','record_location']
 
 class UsersLocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,17 +23,10 @@ class UsersLocationSerializer(serializers.ModelSerializer):
         fields = ['id','id_company','location','record_location']
         read_only_fields = ['id_company']
 
-class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = company
-        fields = ['id','start_work','end_work']
-
-
 class UserSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedRelatedField(view_name = 'user-detail',read_only=True)
     users = UserProfileSerializer(read_only=True)
-    company = CompanySerializer(read_only=True)
     class Meta:
         model = User
-        fields = ['id','url','password','username','email','users','company']
+        fields = ['id','url','username','email','users']
     validate_password = make_password

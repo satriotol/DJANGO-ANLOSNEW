@@ -5,12 +5,13 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 DeleteView)
 from perusahaan import models
 from .models import users,presence,company
-from perusahaan.forms import companyprofileform,CompanyForm,usersform
+from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg, Count, Min, Sum
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse
 from django.core import serializers
@@ -29,6 +30,7 @@ from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLoc
 from rest_framework import filters
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Count
 # import django_filters
 
 
@@ -106,14 +108,16 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('user_login'))
 
-class IndexPerusahaan(TemplateView):
+class IndexPerusahaan(ListView):
     model = models.users
+    context_object_name = 'listkaryawans'
     template_name = 'index.html'
     
-    # def get_context_data(self, **kwargs):
-    #     context = super(IndexPerusahaan, self).get_context_data(**kwargs)
-    #     context['users'] = company.objects.all()
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(IndexPerusahaan, self).get_context_data(**kwargs)
+        context['userslist'] = users.objects.annotate(total=Count('id_company')).filter(is_company=1)
+        context['companylist'] = users.objects.annotate(total=Count('id_company')).filter(is_company=0)
+        return context
 
 
 def registercompany(request):
@@ -121,7 +125,7 @@ def registercompany(request):
     
     if request.method == "POST":
         user_form = CompanyForm(data=request.POST)
-        profile_form = companyprofileform(data=request.POST)
+        profile_form = usercompanyprofileform(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
@@ -139,42 +143,44 @@ def registercompany(request):
             registered = True
             return render(request,'login.html')
         else:
-            
             print(user_form.errors,profile_form.errors)
     else:
         user_form = CompanyForm()
-        profile_form = companyprofileform()
+        profile_form = usercompanyprofileform()
 
     return render(request,'perusahaan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
 def registeruser(request):
-    registered = False
-    
-    if request.method == "POST":
-        user_form = CompanyForm(data=request.POST)
-        profile_form = usersform(data=request.POST)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-            if 'profile_pic' in request.FILES:
-                profile.profile_pic = request.FILES['profile_pic']
-
-            profile.save()
-
-            registered = True
-        else:
-            print(user_form.errors,profile_form.errors)
+    if not request.user.is_authenticated:
+        return render(request,'login.html')
     else:
-        user_form = CompanyForm()
-        profile_form = usersform()
+        registered = False
+        
+        if request.method == "POST":
+            user_form = CompanyForm(data=request.POST)
+            profile_form = usersform(data=request.POST)
 
-    return render(request,'karyawan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
+            if user_form.is_valid() and profile_form.is_valid():
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()
+
+                profile = profile_form.save(commit=False)
+                profile.user = user
+
+                if 'profile_pic' in request.FILES:
+                    profile.profile_pic = request.FILES['profile_pic']
+
+                profile.save()
+
+                registered = True
+            else:
+                print(user_form.errors,profile_form.errors)
+        else:
+            user_form = CompanyForm()
+            profile_form = usersform()
+
+        return render(request,'karyawan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
 @csrf_exempt
 def user_login(request):
@@ -245,19 +251,19 @@ class DetailKaryawan(LoginRequiredMixin,DetailView):
     model = models.users
     template_name = 'karyawan_detail.html'
 
-class ListKaryawanDeleteView(DeleteView):
+class ListKaryawanDeleteView(LoginRequiredMixin,DeleteView):
     context_object_name = 'listkaryawans'
     model = models.users
     template_name = 'karyawan_confirm_delete.html'
     success_url = reverse_lazy('listkaryawan')
 
-class ListKaryawanUpdateView(UpdateView):
+class ListKaryawanUpdateView(LoginRequiredMixin,UpdateView):
     fields = ('name','telp')
     model = models.users
     template_name = 'karyawan_update.html'
     success_url = reverse_lazy('listkaryawan')
 
-class ListVacation(ListView):
+class ListVacation(LoginRequiredMixin,ListView):
     context_object_name = 'listvacations'
     model = models.vacation
     template_name = 'vacation_list.html'
