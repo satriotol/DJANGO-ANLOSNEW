@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'perusahaan',
     'rest_framework',
     'django_filters',
+    'django_cleanup',
 ]
 
 REST_FRAMEWORK = {

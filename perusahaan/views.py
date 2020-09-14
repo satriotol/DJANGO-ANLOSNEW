@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 CreateView,UpdateView,
                                 DeleteView)
 from perusahaan import models
-from .models import users,presence,company
-from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform
+from .models import users,presence,company,ImageDatasetModel
+from django.views.generic.edit import FormView
+from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform,ImageDatasetForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -13,7 +15,6 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count, Min, Sum
 from django.utils.decorators import method_decorator
-from django.http import JsonResponse
 from django.core import serializers
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
@@ -31,18 +32,40 @@ from rest_framework import filters
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Count
-# import django_filters
 
 
 
-# from shapely import geometry
-    
+class ImageFieldView(CreateView):
+    form_class = ImageDatasetForm
+    model = models.users
+    context_object_name = 'listkaryawans'
+    template_name = 'upload.html'
+    success_url = reverse_lazy('upload')
+
+    def get_context_data(self, **kwargs):
+        context = super(ImageFieldView, self).get_context_data(**kwargs)
+        context['userslist'] = users.objects.all()
+        return context
+
+# class ImageFieldView(View):
+#     def get(self, request):
+#         photo_list = ImageDatasetModel.objects.all()
+#         return render(self.request, 'upload.html',{'photos':photo_list})
+
+#     def post(self,request):
+#         form = ImageDatasetForm(self.request.POST, self.request.FILES)
+#         if form.is_valid():
+#             photo  = form.save()
+#             data = {'is_valid': True, 'name':photo.file.name, 'url':photo.file.url}
+#         else:
+#             data = {'is_valid': False}
+#         return JsonResponse(data)
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['username','password','email']
+    filterset_fields = ['username','email']
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
@@ -188,26 +211,20 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(username=username,password=password)
-
         if user:
             if user.is_active:
                 login(request,user)
                 return HttpResponseRedirect(reverse('index'))
                 # return JsonResponse(data,safe=False)
                 # return HttpResponse(data)
-
             else:
                 return HttpResponse("Account Not Active")
         else:
             print("Someone tried to login and failed!")
             print("Username: {} and Password {}".format(username,password))
-            # return HttpResponse("invalid login details supplied")
             messages.info(request, 'Username atau Password Yang Anda Inputkan Salah')
             return HttpResponseRedirect('/login/')
-            # return render(request,'login.html')
-
     else:
         return render(request,'login.html',{'name' : request.user.username })
 

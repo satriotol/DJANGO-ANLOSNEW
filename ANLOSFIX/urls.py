@@ -31,6 +31,9 @@ urlpatterns = [
     path('api/login/',main_views.UserListView.as_view()),
     path('api/login/<int:pk>/',main_views.UserDetail.as_view()),
     
+    #tester
+    path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
+
     # url
     path('admin/', admin.site.urls),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import os
 
 
 # Create your models here.
@@ -46,3 +47,15 @@ class vacation (models.Model):
     id_user = models.ForeignKey(users,on_delete=models.CASCADE)
     start_day = models.DateField()
     end_day = models.DateField()
+
+def get_upload_path(instance, filename):
+    return os.path.join(
+        "image_field/%s" % instance.user.id,filename)
+
+class ImageDatasetModel (models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default="")
+    file = models.FileField(upload_to=get_upload_path,default="")
+    file2 = models.FileField(upload_to=get_upload_path,default="")
+    file3 = models.FileField(upload_to=get_upload_path,default="")
+    file4 = models.FileField(upload_to=get_upload_path,null=True,blank=True)
+    file5 = models.FileField(upload_to=get_upload_path,null=True,blank=True)

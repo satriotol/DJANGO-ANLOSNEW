@@ -1,6 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
-from perusahaan.models import company,users
+from perusahaan.models import company,users,ImageDatasetModel
+
+class ImageDatasetForm(forms.ModelForm):
+    # ImageField = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+    class Meta():
+        model = ImageDatasetModel
+        fields = ('user','file','file2','file3','file4','file5')
 
 class CompanyForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
