@@ -49,7 +49,7 @@ class ImageFieldView(CreateView):
 @api_view(['GET','POST'])
 def UserListView(request):
     if request.method == 'POST':
-        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name")
+        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__location")
         # user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values("name","id_company")
         data = {}
         data['api_status'] = 1
