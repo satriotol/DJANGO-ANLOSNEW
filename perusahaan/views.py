@@ -46,6 +46,14 @@ class ImageFieldView(CreateView):
         context['userslist'] = users.objects.all()
         return context
 
+class ProfileKaryawan(DetailView):
+    model = models.ImageDatasetModel
+    template_name = 'profile_karyawan.html'
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['ImageDatasetModel'] = ImageDatasetModel.objects.all().values()
+    #     return context
+
 @api_view(['GET','POST'])
 def UserListView(request):
     if request.method == 'POST':

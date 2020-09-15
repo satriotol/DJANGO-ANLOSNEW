@@ -42,8 +42,12 @@ urlpatterns = [
     path('<int:pk>/update/',main_views.ListKaryawanUpdateView.as_view(),name='update'),
     path('vacation/',main_views.ListVacation.as_view(),name='listvacation'),
     path('list/<int:pk>/',main_views.DetailKaryawan.as_view(),name='detail'),
+    path('profile/<int:pk>',main_views.ProfileKaryawan.as_view(),name='profile_karyawan'),
+
+    # auth
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),
+    
     path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
