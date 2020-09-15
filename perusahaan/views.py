@@ -19,22 +19,21 @@ from django.core import serializers
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.hashers import check_password
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User, Group
+from rest_framework import viewsets,permissions,status,renderers,generics,filters
 from rest_framework.decorators import api_view
-from rest_framework import viewsets,permissions,status,renderers,generics
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer
-from rest_framework import filters
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
 from django.db.models import Count
 
-
-
+        
 class ImageFieldView(CreateView):
     form_class = ImageDatasetForm
     model = models.users
@@ -47,25 +46,30 @@ class ImageFieldView(CreateView):
         context['userslist'] = users.objects.all()
         return context
 
-# class ImageFieldView(View):
-#     def get(self, request):
-#         photo_list = ImageDatasetModel.objects.all()
-#         return render(self.request, 'upload.html',{'photos':photo_list})
+@api_view(['GET','POST'])
+def UserListView(request):
+    if request.method == 'POST':
+        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name")
+        user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values("name","id_company")
+        data = {}
+        data['api_status'] = 1
+        data['api_message'] = 'success'
 
-#     def post(self,request):
-#         form = ImageDatasetForm(self.request.POST, self.request.FILES)
-#         if form.is_valid():
-#             photo  = form.save()
-#             data = {'is_valid': True, 'name':photo.file.name, 'url':photo.file.url}
-#         else:
-#             data = {'is_valid': False}
-#         return JsonResponse(data)
+        if(check_password(request.POST.get('password'),list(user)[0]["password"])):
+            data['data'] = list(user)
+            data['user_profile'] = list(user_profile)
+        else:
+            data["api_message"] = "password salah"
 
-class UserListView(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['username','email']
+        return JsonResponse(data, safe=False)
+    # elif request.method == 'GET':
+    #     user = User.objects.filter(username=request.POST.get('username')).values("username","password","email", "id")
+    #     user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values()
+    #     data = {}
+    #     data['data'] = list(user)
+    #     data['user_profile'] = list(user_profile)
+    #     return JsonResponse(data)
+        
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
@@ -74,7 +78,6 @@ class UserDetail(generics.RetrieveAPIView):
 class PresenceViewSet(viewsets.ModelViewSet):
     queryset = presence.objects.all()
     serializer_class = PresenceSerializer
-
 
 @api_view(['GET','POST'])
 def record_location_list(request):

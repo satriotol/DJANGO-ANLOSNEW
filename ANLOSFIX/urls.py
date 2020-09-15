@@ -28,12 +28,7 @@ urlpatterns = [
     path('api/',include(router.urls)),
     path('api/location/',main_views.record_location_list),
     path('api/location/<int:pk>',main_views.record_location_detail, name='record_location_detail'),
-    path('api/login/',main_views.UserListView.as_view()),
-    path('api/login/<int:pk>/',main_views.UserDetail.as_view()),
-    
-    #tester
-    path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
-
+    path('api/login/',main_views.UserListView),
     # url
     path('admin/', admin.site.urls),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),
@@ -49,6 +44,7 @@ urlpatterns = [
     path('list/<int:pk>/',main_views.DetailKaryawan.as_view(),name='detail'),
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),
+    path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
