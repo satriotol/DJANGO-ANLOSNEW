@@ -50,14 +50,14 @@ class ImageFieldView(CreateView):
 def UserListView(request):
     if request.method == 'POST':
         user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name")
-        user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values("name","id_company")
+        # user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values("name","id_company")
         data = {}
         data['api_status'] = 1
         data['api_message'] = 'success'
 
         if(check_password(request.POST.get('password'),list(user)[0]["password"])):
             data['data'] = list(user)
-            data['user_profile'] = list(user_profile)
+            # data['user_profile'] = list(user_profile)
         else:
             data["api_message"] = "password salah"
 
