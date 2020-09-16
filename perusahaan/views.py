@@ -55,6 +55,7 @@ def perolehCitradanLabel(lintasan):
     for foldercitra in daftarFolderCitra:
         daftarBerkas = os.listdir(foldercitra)
         for berkas in daftarBerkas:
+            # berkasCitra = foldercitra + "//" + berkas
             berkasCitra = foldercitra + "\\" + berkas
             print("Pemrosesan berkas citra", berkasCitra)
 
@@ -69,7 +70,7 @@ def perolehCitradanLabel(lintasan):
                 daftarSampelWajah.append(
                     citra[y : y + h, x : x + w])
                 daftarIdWAJAH.append(idWajah)
-                
+    
     return daftarSampelWajah, daftarIdWAJAH
 daftarWajah, daftarIdWAJAH = perolehCitradanLabel("media/image_field")
 pengenalwajah.train(daftarWajah, np.array(daftarIdWAJAH))
@@ -100,7 +101,7 @@ def prediksiWajah(namaBerkas):
         (255,0,0),2)
         wajah = abuAbu[y:y+h, x:x+w]
         labelId, konfiden = pengenalWajah.predict(wajah)
-        if konfiden <50:
+        if konfiden <30:
             cv2.putText(citra,"(%s) %.0f"%
                 (labelId,konfiden),
                 (x,y-2),

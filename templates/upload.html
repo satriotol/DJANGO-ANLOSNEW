@@ -6,7 +6,7 @@
         {% csrf_token %}
         <div>
             <p><label for="id_user">User:</label> <select name="user" id="id_user">
-                    <option value="{{user.users.id}}">{{user.users.name}}</option>
+                    <option value="{{user.id}}">{{user.users.name}}</option>
                 </select></p>
             <p><label for="id_file">File:</label> <input type="file" name="file" required="" id="id_file"></p>
             <p><label for="id_file2">File2:</label> <input type="file" name="file2" required="" id="id_file2">

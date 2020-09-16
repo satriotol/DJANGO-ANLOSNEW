@@ -89,8 +89,12 @@
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file.url}}" alt="">
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file2.url}}" alt="">
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file3.url}}" alt="">
+                    {% if user.imagedatasetmodel.file4 %}
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file4.url}}" alt="">
+                    {% endif %}
+                    {% if user.imagedatasetmodel.file5 %}
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file5.url}}" alt="">
+                    {% endif %}
                 </div>
             </div>
         </div>
