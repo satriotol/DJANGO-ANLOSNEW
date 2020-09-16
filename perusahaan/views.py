@@ -5,7 +5,7 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 CreateView,UpdateView,
                                 DeleteView)
 from perusahaan import models
-from .models import users,presence,company,ImageDatasetModel
+from .models import users,presence,company,ImageDatasetModel,FaceRecognitionModel
 from django.views.generic.edit import FormView
 from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform,ImageDatasetForm
 from django.contrib.auth import authenticate,login,logout
@@ -33,6 +33,103 @@ from django_filters import rest_framework as filters
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer
 from django.db.models import Count
 
+#face recognition
+import numpy as np
+import os
+import cv2
+# end of vendor
+
+
+# face recognition
+# pelatihan
+pengenalwajah = cv2.face.LBPHFaceRecognizer_create()
+detektor = cv2.CascadeClassifier("haarcascade/haarcascade_frontalface_default.xml")
+
+def perolehCitradanLabel(lintasan):
+    daftarFolderCitra = [os.path.join(lintasan, f)\
+        for f in os.listdir(lintasan)]
+
+    daftarSampelWajah =[]
+    daftarIdWAJAH =[]
+
+    for foldercitra in daftarFolderCitra:
+        daftarBerkas = os.listdir(foldercitra)
+        for berkas in daftarBerkas:
+            berkasCitra = foldercitra + "\\" + berkas
+            print("Pemrosesan berkas citra", berkasCitra)
+
+            citra = cv2.imread(berkasCitra, 0)
+
+            idWajah = os.path.basename(foldercitra)
+            idWajah = int(idWajah)
+
+            daftarWajah = detektor.detectMultiScale(citra)
+
+            for(x,y,w,h) in daftarWajah:
+                daftarSampelWajah.append(
+                    citra[y : y + h, x : x + w])
+                daftarIdWAJAH.append(idWajah)
+                
+    return daftarSampelWajah, daftarIdWAJAH
+daftarWajah, daftarIdWAJAH = perolehCitradanLabel("media/image_field")
+pengenalwajah.train(daftarWajah, np.array(daftarIdWAJAH))
+pengenalwajah.save(("pelatihan.yml"))
+
+# end of pelatihan
+# ================================================
+# prediksi
+pengenalWajah = cv2.face.LBPHFaceRecognizer_create()
+detektor = cv2.CascadeClassifier("haarcascade/haarcascade_frontalface_default.xml")
+def prediksiWajah(namaBerkas):
+    face_recognition = "media/"+FaceRecognitionModel.objects.values_list("image",flat=True).order_by('-created_at')[0]
+    namaBerkas = face_recognition
+    citra = cv2.imread(namaBerkas)
+
+    if citra is None:
+        print("Tidak dapat membaca berkas citra")
+        return
+
+    abuAbu = cv2.cvtColor(citra, cv2.COLOR_BGR2GRAY)
+    daftarwajah = detektor.detectMultiScale(
+        abuAbu,scaleFactor= 1.3,minNeighbors= 5)
+    if daftarwajah is None:
+        print("wajah tidak terdeteksi")
+        return
+    for(x,y,w,h) in daftarwajah:
+        cv2.rectangle(citra, (x,y),(x+w,y+h),
+        (255,0,0),2)
+        wajah = abuAbu[y:y+h, x:x+w]
+        labelId, konfiden = pengenalWajah.predict(wajah)
+        if konfiden <50:
+            cv2.putText(citra,"(%s) %.0f"%
+                (labelId,konfiden),
+                (x,y-2),
+                cv2.FONT_HERSHEY_PLAIN,
+                1,(0,255,0)),
+            data = ({
+                "status" : "sukses",
+                "konfiden" : konfiden,
+                "id" : labelId,
+            })
+        else:
+            cv2.putText(citra,"Data Tidak Terdaftar",(x,y-2),
+            cv2.FONT_HERSHEY_PLAIN,1,
+            (0,255,0))
+            data = ({
+                "status" : "Wajah Tidak Terdeteksi",
+            })
+    # cv2.imshow("Hasil",citra)
+    # cv2.waitKey(0)
+    # print(konfiden)
+    return JsonResponse(data)
+
+pengenalWajah.read("pelatihan.yml")
+# prediksiWajah("media/image_field/9/IMG-20200907-WA0068.jpg")
+# end of prediksi
+
+# end of face recognition
+
+
         
 class ImageFieldView(CreateView):
     form_class = ImageDatasetForm
@@ -49,15 +146,12 @@ class ImageFieldView(CreateView):
 class ProfileKaryawan(DetailView):
     model = models.ImageDatasetModel
     template_name = 'profile_karyawan.html'
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['ImageDatasetModel'] = ImageDatasetModel.objects.all().values()
-    #     return context
+
 
 @api_view(['GET','POST'])
 def UserListView(request):
     if request.method == 'POST':
-        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__location")
+        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__location","users__start_work","users__end_work")
         # user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values("name","id_company")
         data = {}
         data['api_status'] = 1

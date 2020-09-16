@@ -47,8 +47,11 @@ urlpatterns = [
     # auth
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),
-    
+
     path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
+
+    #face_recognition
+    path("facerecognition/",main_views.prediksiWajah),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

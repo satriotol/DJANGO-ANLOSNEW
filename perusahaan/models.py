@@ -59,3 +59,7 @@ class ImageDatasetModel (models.Model):
     file3 = models.FileField(upload_to=get_upload_path,default="")
     file4 = models.FileField(upload_to=get_upload_path,null=True,blank=True)
     file5 = models.FileField(upload_to=get_upload_path,null=True,blank=True)
+
+class FaceRecognitionModel (models.Model):
+    image = models.ImageField(upload_to='FaceRecognition_Dataset')
+    created_at = models.DateTimeField(auto_now_add=True)
