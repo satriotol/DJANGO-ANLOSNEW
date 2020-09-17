@@ -30,7 +30,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
-from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer
+from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer,UploadFaceSerializer
 from django.db.models import Count
 
 #face recognition
@@ -113,11 +113,11 @@ def prediksiWajah(namaBerkas):
                 "id" : labelId,
             })
         else:
-            cv2.putText(citra,"Data Tidak Terdaftar",(x,y-2),
-            cv2.FONT_HERSHEY_PLAIN,1,
-            (0,255,0))
+            # cv2.putText(citra,"Data Tidak Terdaftar",(x,y-2),
+            # cv2.FONT_HERSHEY_PLAIN,1,
+            # (0,255,0))
             data = ({
-                "status" : "Wajah Tidak Terdeteksi",
+                "status" : "Data Tidak Terdaftar",
             })
     # cv2.imshow("Hasil",citra)
     # cv2.waitKey(0)
@@ -127,6 +127,15 @@ def prediksiWajah(namaBerkas):
 pengenalWajah.read("pelatihan.yml")
 # prediksiWajah("media/image_field/9/IMG-20200907-WA0068.jpg")
 # end of prediksi
+
+# upload face
+
+class UploadFaceView(viewsets.ModelViewSet):
+    queryset = FaceRecognitionModel.objects.all()
+    serializer_class = UploadFaceSerializer
+
+
+# end of upload face
 
 # end of face recognition
 

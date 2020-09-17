@@ -22,6 +22,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'presence', main_views.PresenceViewSet),
+router.register(r'upload', main_views.UploadFaceView),
 
 urlpatterns = [
     # api
@@ -51,7 +52,7 @@ urlpatterns = [
     path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
 
     #face_recognition
-    path("facerecognition/",main_views.prediksiWajah),
+    path("api/facerecognition/",main_views.prediksiWajah),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
