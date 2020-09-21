@@ -66,11 +66,11 @@ def perolehCitradanLabel(lintasan):
 
             daftarWajah = detektor.detectMultiScale(citra)
 
+
             for(x,y,w,h) in daftarWajah:
                 daftarSampelWajah.append(
                     citra[y : y + h, x : x + w])
                 daftarIdWAJAH.append(idWajah)
-    
     return daftarSampelWajah, daftarIdWAJAH
 daftarWajah, daftarIdWAJAH = perolehCitradanLabel("media/image_field")
 pengenalwajah.train(daftarWajah, np.array(daftarIdWAJAH))
@@ -101,7 +101,7 @@ def prediksiWajah(namaBerkas):
         (255,0,0),2)
         wajah = abuAbu[y:y+h, x:x+w]
         labelId, konfiden = pengenalWajah.predict(wajah)
-        if konfiden <30:
+        if konfiden <75:
             cv2.putText(citra,"(%s) %.0f"%
                 (labelId,konfiden),
                 (x,y-2),
@@ -120,6 +120,8 @@ def prediksiWajah(namaBerkas):
             data = ({
                 "api_status" : 0,
                 "message" : "Wajah Tidak Cocok/Akurat, Coba Ulangi",
+                "konfiden" : konfiden,
+                "id" : labelId,
             })
         return JsonResponse(data)
     else:
