@@ -108,7 +108,8 @@ def prediksiWajah(namaBerkas):
                 cv2.FONT_HERSHEY_PLAIN,
                 1,(0,255,0)),
             data = ({
-                "status" : "sukses",
+                "api_status" : 1,
+                "message" : "sukses",
                 "konfiden" : konfiden,
                 "id" : labelId,
             })
@@ -117,12 +118,16 @@ def prediksiWajah(namaBerkas):
             # cv2.FONT_HERSHEY_PLAIN,1,
             # (0,255,0))
             data = ({
-                "status" : "Data Tidak Terdaftar",
+                "api_status" : 0,
+                "message" : "Wajah Tidak Cocok/Akurat, Coba Ulangi",
             })
-    # cv2.imshow("Hasil",citra)
-    # cv2.waitKey(0)
-    # print(konfiden)
-    return JsonResponse(data)
+        return JsonResponse(data)
+    else:
+        data = ({
+            "api_status" : 0,
+            "message" : "Data Wajah Tidak Terdaftar, Coba Ulangi"
+        })
+        return JsonResponse(data)
 
 pengenalWajah.read("pelatihan.yml")
 # prediksiWajah("media/image_field/9/IMG-20200907-WA0068.jpg")
