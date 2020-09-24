@@ -35,6 +35,8 @@ class PresenceModel(models.Model):
     date_presence = models.DateField()
     start_presence = models.TimeField(null=True)
     end_presence = models.TimeField(null=True)
+    def __str__(self):
+        return self.id_user.username
 
 
 class vacation (models.Model):

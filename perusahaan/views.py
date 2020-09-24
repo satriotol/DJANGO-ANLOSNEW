@@ -392,8 +392,8 @@ class DetailKaryawan(LoginRequiredMixin,DetailView):
 
 class RekapPresensiList(LoginRequiredMixin,ListView):
     login_url = '/login/'
-    context_object_name = 'presences'
     redirect_field_name = 'redirect_to'
+    context_object_name = 'presences'
     model = models.PresenceModel
     template_name = 'presence_list.html'
 

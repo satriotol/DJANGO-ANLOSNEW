@@ -30,7 +30,7 @@
         </thead>
         <tbody>
             {% for presence in presences%}
-            {% comment %} {% if user.company.id == listkaryawan.id_company_id %} {% endcomment %}
+            {% if user.company.id == presence.id_company_id %}
             <tr class="text-center">
                 <td>{{presence.id_user}}</td>
                 <td>{{presence.id_company}}</td>
@@ -38,7 +38,7 @@
                 <td>{{presence.start_presence}}</td>
                 <td>{{presence.end_presence}}</td>
             </tr>
-            {% comment %} {% endif %} {% endcomment %}
+            {% endif %}
             {% endfor %}
         </tbody>
     </table>
