@@ -25,7 +25,7 @@
         <thead>
             <tr class="text-center">
                 <th scope="col">Username</th>
-                <th scope="col">email</th>
+                <th scope="col">E-mail</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Telpon</th>
                 <th scope="col">Profile Pic</th>
@@ -34,7 +34,7 @@
         </thead>
         <tbody>
             {% for listkaryawan in listkaryawans%}
-            {% if user.users.id == listkaryawan.id_company %}
+            {% if user.company.id == listkaryawan.id_company_id %}
             <tr class="text-center">
                 <td>{{listkaryawan.user}}</td>
                 <td>{{listkaryawan.user.email}}</td>

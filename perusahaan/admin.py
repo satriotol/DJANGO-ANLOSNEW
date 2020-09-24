@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import company,company_privileges,users,vacation,presence,ImageDatasetModel,FaceRecognitionModel
+from .models import company,users,vacation,presence,ImageDatasetModel,FaceRecognitionModel
 
 # Register your models here.
 admin.site.register(company)

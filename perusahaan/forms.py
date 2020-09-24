@@ -7,7 +7,7 @@ class ImageDatasetForm(forms.ModelForm):
 
     class Meta():
         model = ImageDatasetModel
-        fields = ('user','file','file2','file3','file4','file5')
+        fields = ('user','file','file2','file3','file4','file5','file6','file7','file8','file9','file10')
 
 class CompanyForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

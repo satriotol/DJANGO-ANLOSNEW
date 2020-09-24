@@ -119,6 +119,11 @@
                                         oninput="this.className = 'form-control form-control-user'" id="id_telp"
                                         placeholder="Phone Number">
                                 </div>
+                                <div class="form-group">
+                                    <input type="text" name="address" class="form-control form-control-user"
+                                        oninput="this.className = 'form-control form-control-user'" id="id_address"
+                                        placeholder="Address">
+                                </div>
                             </div>
                             <div class="tab">
                                 <div class="form-group">
@@ -140,7 +145,8 @@
                             </div>
                             <div class="tab">
                                 <input type="hidden" name="groups" id="id_groups" value="1">
-                                <input type="hidden" name="is_company" value="1" id="id_is_company">
+                                {% comment %} <input type="hidden" name="is_company" value="1" id="id_is_company">
+                                {% endcomment %}
                                 <div class="form-group">
                                     <input type="text" name="username" class="form-control form-control-user"
                                         oninput="this.className = 'form-control form-control-user'" id="id_username"

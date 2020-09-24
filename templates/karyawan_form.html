@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block body_block %}
-{{profile_form.as_p}}
+{% block index_block %}
+{% comment %} {{profile_form.as_p}} {% endcomment %}
 <div class="container">
     {% if registered %}
     <h1>Thank you for registering!</h1>
@@ -38,14 +38,14 @@
         </div>
         <div class="col-sm-4 profile py-5 px-5">
             <input type="hidden" name="is_company" value="0" id="id_is_company">
-            <input type="hidden" name="id_company" id="id_id_company" value="{{user.users.id}}">
+            <input type="hidden" name="id_company" id="id_id_company" value="{{user.company.id}}">
             <textarea type="text" name="location" cols="40" rows="10" required="" id="id_location"
-                style="display : none">{{user.users.location}}</textarea>
+                style="display : none">{{user.company.location}}</textarea>
             <p><label for="id_start_work">Start work:</label> <input type="time"
-                    value="{{user.users.start_work|time:"H:i:s"}}" step="2" name="start_work" required=""
+                    value="{{user.company.start_work|time:"H:i:s"}}" step="2" name="start_work" required=""
                     id="id_start_work"></p>
             <p><label for="id_end_work">End work:</label> <input type="time"
-                    value="{{user.users.end_work|time:"H:i:s"}}" step="2" name="end_work" required="" id="id_end_work">
+                    value="{{user.company.end_work|time:"H:i:s"}}" step="2" name="end_work" required="" id="id_end_work">
             </p>
             <div class="form-group">
                 <label for="exampleInputEmail1">Full Name</label>

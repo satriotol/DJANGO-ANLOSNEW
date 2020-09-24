@@ -40,18 +40,16 @@ import cv2
 # end of vendor
 
 
-# face recognition
+# # face recognition
 # pelatihan
 pengenalwajah = cv2.face.LBPHFaceRecognizer_create()
 detektor = cv2.CascadeClassifier("haarcascade/haarcascade_frontalface_default.xml")
-
-def perolehCitradanLabel(lintasan):
-    daftarFolderCitra = [os.path.join(lintasan, f)\
-        for f in os.listdir(lintasan)]
-
+def perolehCitradanLabel(request):
+    daftarFolderCitra = [os.path.join("media/image_field/", f)\
+        for f in os.listdir("media/image_field/")]
+        
     daftarSampelWajah =[]
     daftarIdWAJAH =[]
-
     for foldercitra in daftarFolderCitra:
         daftarBerkas = os.listdir(foldercitra)
         for berkas in daftarBerkas:
@@ -134,6 +132,8 @@ def prediksiWajah(namaBerkas):
 pengenalWajah.read("pelatihan.yml")
 # prediksiWajah("media/image_field/9/IMG-20200907-WA0068.jpg")
 # end of prediksi
+
+# end of face recogniition
 
 # upload face
 
@@ -253,15 +253,16 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('user_login'))
 
-class IndexPerusahaan(ListView):
+class IndexPerusahaan(LoginRequiredMixin,ListView):
+    login_url = '/login/'
     model = models.users
     context_object_name = 'listkaryawans'
     template_name = 'index.html'
     
     def get_context_data(self, **kwargs):
         context = super(IndexPerusahaan, self).get_context_data(**kwargs)
-        context['userslist'] = users.objects.annotate(total=Count('id_company')).filter(is_company=1)
-        context['companylist'] = users.objects.annotate(total=Count('id_company')).filter(is_company=0)
+        context['companylist'] = company.objects.annotate(total=Count('id'))
+        context['userslist'] = users.objects.annotate(total=Count('id_company')).filter(is_company=0)
         return context
 
 
@@ -270,7 +271,7 @@ def registercompany(request):
     
     if request.method == "POST":
         user_form = CompanyForm(data=request.POST)
-        profile_form = usercompanyprofileform(data=request.POST)
+        profile_form = companyprofileform(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
@@ -291,7 +292,7 @@ def registercompany(request):
             print(user_form.errors,profile_form.errors)
     else:
         user_form = CompanyForm()
-        profile_form = usercompanyprofileform()
+        profile_form = companyprofileform()
 
     return render(request,'perusahaan_form.html',{'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
