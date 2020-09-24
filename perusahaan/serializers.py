@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import users,company,presence,FaceRecognitionModel
+from .models import users,company,PresenceModel,FaceRecognitionModel
 from django.contrib.auth.hashers import make_password
 
 # class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,7 +14,7 @@ class UploadFaceSerializer(serializers.ModelSerializer):
 
 class PresenceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = presence
+        model = PresenceModel
         fields = ['url','id','id_user','id_company','date_presence','start_presence','end_presence']
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:

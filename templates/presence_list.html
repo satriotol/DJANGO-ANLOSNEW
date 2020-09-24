@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block index_block %}
+<style>
+    img.img-thumbnail {
+        max-width: 75%;
+        max-height: 250px;
+    }
+
+    @media (max-width: 768px) {
+        img.img-thumbnail {
+            max-width: 50%;
+        }
+    }
+
+    .dt-buttons {
+        text-align: center !important;
+    }
+</style>
+<div class="container">
+    <h1 class="text-center">PRESENSI</h1>
+    <table class="table table-striped table-bordered nowrap" id="table_id">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Karyawan</th>
+                <th scope="col">Id_Company</th>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Jam Masuk</th>
+                <th scope="col">Jam Pulang</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for presence in presences%}
+            {% comment %} {% if user.company.id == listkaryawan.id_company_id %} {% endcomment %}
+            <tr class="text-center">
+                <td>{{presence.id_user}}</td>
+                <td>{{presence.id_company}}</td>
+                <td>{{presence.date_presence}}</td>
+                <td>{{presence.start_presence}}</td>
+                <td>{{presence.end_presence}}</td>
+            </tr>
+            {% comment %} {% endif %} {% endcomment %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

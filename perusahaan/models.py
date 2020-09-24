@@ -14,7 +14,7 @@ class company(models.Model):
     end_work = models.TimeField(null=True)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 class users(models.Model):
     user = models.OneToOneField(User,related_name="users",on_delete=models.CASCADE,default="")
@@ -29,13 +29,13 @@ class users(models.Model):
 
     def __str__(self):
         return self.name
-
-class presence(models.Model):
-    id_user = models.IntegerField()
-    id_company = models.IntegerField()
+class PresenceModel(models.Model):
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_company = models.ForeignKey(company, on_delete=models.CASCADE)
     date_presence = models.DateField()
     start_presence = models.TimeField(null=True)
     end_presence = models.TimeField(null=True)
+
 
 class vacation (models.Model):
     id_user = models.ForeignKey(users,on_delete=models.CASCADE)

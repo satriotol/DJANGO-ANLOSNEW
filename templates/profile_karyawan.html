@@ -86,9 +86,15 @@
                     <h6 class="m-0 font-weight-bold text-primary">Dataset Wajah</h6>
                 </div>
                 <div class="card-body text-center">
+                    {% if user.imagedatasetmodel.file %}
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file.url}}" alt="">
+                    {% endif %}
+                    {% if user.imagedatasetmodel.file2 %}
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file2.url}}" alt="">
+                    {% endif %}
+                    {% if user.imagedatasetmodel.file3 %}
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file3.url}}" alt="">
+                    {% endif %}
                     {% if user.imagedatasetmodel.file4 %}
                     <img class="img-thumbnail" src="{{user.imagedatasetmodel.file4.url}}" alt="">
                     {% endif %}
@@ -98,7 +104,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

@@ -5,7 +5,7 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 CreateView,UpdateView,
                                 DeleteView)
 from perusahaan import models
-from .models import users,presence,company,ImageDatasetModel,FaceRecognitionModel
+from .models import users,company,ImageDatasetModel,FaceRecognitionModel, PresenceModel
 from django.views.generic.edit import FormView
 from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform,ImageDatasetForm
 from django.contrib.auth import authenticate,login,logout
@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Avg, Count, Min, Sum
+from django.db.models import Count
 from django.utils.decorators import method_decorator
 from django.core import serializers
 from django.core.serializers import serialize
@@ -31,7 +31,6 @@ from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer,UploadFaceSerializer
-from django.db.models import Count
 
 #face recognition
 import numpy as np
@@ -195,7 +194,7 @@ class UserDetail(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
 class PresenceViewSet(viewsets.ModelViewSet):
-    queryset = presence.objects.all()
+    queryset = PresenceModel.objects.all()
     serializer_class = PresenceSerializer
 
 @api_view(['GET','POST'])
@@ -390,6 +389,13 @@ class DetailKaryawan(LoginRequiredMixin,DetailView):
     redirect_field_name = 'redirect_to'
     model = models.users
     template_name = 'karyawan_detail.html'
+
+class RekapPresensiList(LoginRequiredMixin,ListView):
+    login_url = '/login/'
+    context_object_name = 'presences'
+    redirect_field_name = 'redirect_to'
+    model = models.PresenceModel
+    template_name = 'presence_list.html'
 
 class ListKaryawanDeleteView(LoginRequiredMixin,DeleteView):
     context_object_name = 'listkaryawans'

@@ -44,6 +44,8 @@ urlpatterns = [
     path('vacation/',main_views.ListVacation.as_view(),name='listvacation'),
     path('list/<int:pk>/',main_views.DetailKaryawan.as_view(),name='detail'),
     path('profile/<int:pk>',main_views.ProfileKaryawan.as_view(),name='profile_karyawan'),
+    # presensce
+    path("presence/",main_views.RekapPresensiList .as_view(), name="presence"),
 
     # auth
     path('login/',main_views.user_login,name='user_login'),

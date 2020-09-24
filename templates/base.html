@@ -52,9 +52,9 @@
                     <i class="fas fa-fw fa-users"></i>
                     <span>Karyawan</span></a>
             </li>
-            <li class="nav-item {% if request.resolver_match.url_name == 'listkaryawan' %}active{% endif %}">
-                <a class="nav-link" href="{% url 'listkaryawan' %}">
-                    <i class="fas fa-fw fa-users"></i>
+            <li class="nav-item {% if request.resolver_match.url_name == 'presence' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'presence' %}">
+                    <i class="fas fa-fw fa-calendar"></i>
                     <span>Rekap Presensi</span></a>
             </li>
 
