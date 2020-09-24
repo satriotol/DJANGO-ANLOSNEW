@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'ANLOSFIX.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'anlos-fix',
+        'NAME': 'anlos',
         'USER': 'root',
         'PASSWORD' : '',        
         'OPTIONS': {
