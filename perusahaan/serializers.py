@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import users,company,PresenceModel,FaceRecognitionModel
+from .models import users,company,PresenceModel,FaceRecognitionModel, VacationModel
 from django.contrib.auth.hashers import make_password
 
 # class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,3 +34,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id','url','username','password','email','users']
     validate_password = make_password
+
+class VacationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VacationModel
+        fields = ['id_user','id_company','start_day','end_day','vacation_type','message','vacation_status']
+        read_only_fields = ['vacation_status']

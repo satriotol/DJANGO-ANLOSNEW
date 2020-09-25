@@ -23,6 +23,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'presence', main_views.PresenceViewSet),
 router.register(r'upload', main_views.UploadFaceView),
+router.register(r'vacation', main_views.VacationViewSet),
 
 urlpatterns = [
     # api
@@ -48,6 +49,7 @@ urlpatterns = [
 
     # cuti
     path("cuti/",main_views.ListVacation.as_view(),name="cuti_pending"),
+    path("cuti/<int:pk>/",main_views.UpdateVacation.as_view(),name="update_cuti"),
 
     # auth
     path('login/',main_views.user_login,name='user_login'),

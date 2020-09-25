@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block index_block %}
+<div class="container">
+    <div class="row">
+        <div class="col-xl-5 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Data Karyawan</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 10rem;"
+                            src="{{vacationmodel.id_user.users.profile_pic.url}}" alt="">
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Nama</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{vacationmodel.id_user.users.name}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Perusahaan</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{vacationmodel.id_user.users.id_company}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Alamat Perusahaan</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{vacationmodel.id_user.users.id_company.address}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Jam Masuk</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{vacationmodel.id_user.users.start_work}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Jam Masuk</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{vacationmodel.id_user.users.end_work}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-7 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Detail Pengajuan Cuti</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <h5 class="font-weight-bold">Lama Cuti</h5>
+                        <p>{{vacationmodel.start_day}} - {{vacationmodel.end_day}}</p>
+                        <h5 class="font-weight-bold">Jenis Cuti</h5>
+                        <p>{{vacationmodel.vacation_type}}</p>
+                        <h5 class="font-weight-bold">Pesan</h5>
+                        <p>"{{vacationmodel.message}}"</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Finalisasi Keputusan</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post">{% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Send message">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock index_block %}

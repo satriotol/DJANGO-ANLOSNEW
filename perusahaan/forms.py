@@ -1,6 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
-from perusahaan.models import company,users,ImageDatasetModel
+from perusahaan.models import company,users,ImageDatasetModel,VacationModel
+
+
+class VacationForm(forms.ModelForm):
+    class Meta():
+        model = VacationModel
+        fields= ('vacation_status',)
 
 class ImageDatasetForm(forms.ModelForm):
     # ImageField = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))

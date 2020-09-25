@@ -5,9 +5,9 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                                 CreateView,UpdateView,
                                 DeleteView)
 from perusahaan import models
-from .models import users,company,ImageDatasetModel,FaceRecognitionModel, PresenceModel
+from .models import users,company,ImageDatasetModel,FaceRecognitionModel, PresenceModel, VacationModel
 from django.views.generic.edit import FormView
-from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform,ImageDatasetForm
+from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform,ImageDatasetForm, VacationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -30,7 +30,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
-from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer,UploadFaceSerializer
+from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer,UploadFaceSerializer, VacationSerializer
 
 #face recognition
 import numpy as np
@@ -417,9 +417,22 @@ class ListKaryawanUpdateView(LoginRequiredMixin,UpdateView):
     template_name = 'karyawan_update.html'
     success_url = reverse_lazy('listkaryawan')
 
+# vacation
 class ListVacation(LoginRequiredMixin,ListView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     context_object_name = 'vacationpendings'
     model = models.VacationModel
     template_name = 'vacation_list.html'
+
+class UpdateVacation(LoginRequiredMixin,UpdateView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = models.VacationModel
+    template_name = 'vacation_update.html'
+    form_class = VacationForm
+    success_url = reverse_lazy('cuti_pending')
+
+class VacationViewSet(viewsets.ModelViewSet):
+    queryset = VacationModel.objects.all()
+    serializer_class = VacationSerializer
