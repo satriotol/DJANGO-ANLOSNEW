@@ -57,6 +57,30 @@
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Rekap Presensi</span></a>
             </li>
+            <li class="nav-item">
+                <a class="
+                {% if request.resolver_match.url_name == 'cuti_pending' %} 
+                nav-link
+                {% else %}
+                nav-link collapsed
+                {% endif %} " href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                    aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-plane"></i>
+                    <span>Cuti</span>
+                </a>
+                <div id="collapseTwo" class="{% if request.resolver_match.url_name == 'cuti_pending' %} 
+                collapse show
+                {% else %}
+                collapse
+                {% endif %} " aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Status</h6>
+                        <a class="collapse-item" href="{% url 'cuti_pending' %}">Pending</a>
+                        <a class="collapse-item" href="cards.html">Accepted</a>
+                        <a class="collapse-item" href="cards.html">Rejected</a>
+                    </div>
+                </div>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -171,10 +195,6 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -283,6 +303,13 @@
     </script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap.min.js"></script>
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#table_polos').DataTable({
+                responsive: true,
+            });
+        });
     </script>
     <script>
         $(document).ready(function () {

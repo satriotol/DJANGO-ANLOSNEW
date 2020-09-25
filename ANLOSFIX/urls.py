@@ -41,11 +41,13 @@ urlpatterns = [
     path('list/',main_views.ListKaryawan.as_view(),name='listkaryawan'),
     path('delete/<int:pk>/',main_views.ListKaryawanDeleteView.as_view(),name="delete"),
     path('<int:pk>/update/',main_views.ListKaryawanUpdateView.as_view(),name='update'),
-    path('vacation/',main_views.ListVacation.as_view(),name='listvacation'),
     path('list/<int:pk>/',main_views.DetailKaryawan.as_view(),name='detail'),
     path('profile/<int:pk>',main_views.ProfileKaryawan.as_view(),name='profile_karyawan'),
     # presensce
-    path("presence/",main_views.RekapPresensiList .as_view(), name="presence"),
+    path("presence/",main_views.RekapPresensiList.as_view(), name="presence"),
+
+    # cuti
+    path("cuti/",main_views.ListVacation.as_view(),name="cuti_pending"),
 
     # auth
     path('login/',main_views.user_login,name='user_login'),

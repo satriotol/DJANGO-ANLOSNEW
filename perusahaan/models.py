@@ -35,14 +35,36 @@ class PresenceModel(models.Model):
     date_presence = models.DateField()
     start_presence = models.TimeField(null=True)
     end_presence = models.TimeField(null=True)
+    durasi_kerja = models.DurationField(null=True)
     def __str__(self):
         return self.id_user.username
 
 
-class vacation (models.Model):
-    id_user = models.ForeignKey(users,on_delete=models.CASCADE)
+class VacationModel (models.Model):
+    SAKIT = 'SAKIT'
+    IJIN = 'IJIN'
+    LAIN = 'LAIN'
+    VACATION_CHOICE = [
+        (SAKIT, 'SAKIT'),
+        (IJIN, 'IJIN'),
+        (LAIN, 'LAIN'),
+    ]
+    PENDING = 'PENDING'
+    ACCEPTED = 'ACCEPTED'
+    REJECTED = 'REJECTED'
+    STATUS_CHOICE =[
+        (PENDING,'PENDING'),
+        (ACCEPTED,'ACCEPTED'),
+        (REJECTED,'REJECTED'),
+    ]
+
+    id_user = models.ForeignKey(User,on_delete=models.CASCADE)
+    id_company = models.ForeignKey(company,on_delete=models.CASCADE)
     start_day = models.DateField()
     end_day = models.DateField()
+    vacation_type = models.CharField(choices=VACATION_CHOICE,max_length=5)
+    message = models.TextField(max_length=500)
+    vacation_status = models.CharField(choices=STATUS_CHOICE,max_length=8,default="PENDING")
 
 def get_upload_path(instance, filename):
     return os.path.join(

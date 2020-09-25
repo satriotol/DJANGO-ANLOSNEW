@@ -261,7 +261,9 @@ class IndexPerusahaan(LoginRequiredMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super(IndexPerusahaan, self).get_context_data(**kwargs)
         context['companylist'] = company.objects.annotate(total=Count('id'))
+        # context['companylist'] = company.objects.values_list("id",flat=True)
         context['userslist'] = users.objects.annotate(total=Count('id_company')).filter(is_company=0)
+        # context['userslist'] = users.objects.values_list("id_company_id",flat=True)
         return context
 
 
@@ -390,6 +392,12 @@ class DetailKaryawan(LoginRequiredMixin,DetailView):
     model = models.users
     template_name = 'karyawan_detail.html'
 
+    
+    def get_context_data(self, **kwargs):
+        context = super(DetailKaryawan, self).get_context_data(**kwargs)
+        context['presencelist'] = PresenceModel.objects.all()
+        return context
+
 class RekapPresensiList(LoginRequiredMixin,ListView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
@@ -410,6 +418,8 @@ class ListKaryawanUpdateView(LoginRequiredMixin,UpdateView):
     success_url = reverse_lazy('listkaryawan')
 
 class ListVacation(LoginRequiredMixin,ListView):
-    context_object_name = 'listvacations'
-    model = models.vacation
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    context_object_name = 'vacationpendings'
+    model = models.VacationModel
     template_name = 'vacation_list.html'
