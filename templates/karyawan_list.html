@@ -45,9 +45,9 @@
                 {% else %}
                 <td>Tidak Ada Gambar</td>
                 {% endif %}
-                <td><a class="btn btn-primary" href="{% url 'update' pk=listkaryawan.pk %}" role="button">Edit</a>
+                <td>
                     <a class="btn btn-primary" href="{% url 'detail' pk=listkaryawan.pk %}" role="button">Detail</a>
-                    <a class="btn btn-primary" href="{% url 'delete' pk=listkaryawan.pk %}" role="button">Delete</a>
+                    <a class="btn btn-danger" href="{% url 'delete' pk=listkaryawan.user.id %}" role="button">Delete</a>
                 </td>
             </tr>
             {% endif %}

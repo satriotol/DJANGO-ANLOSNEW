@@ -22,7 +22,6 @@
         <thead>
             <tr class="text-center">
                 <th scope="col">Karyawan</th>
-                <th scope="col">Id_Company</th>
                 <th scope="col">Tanggal</th>
                 <th scope="col">Jam Masuk</th>
                 <th scope="col">Jam Pulang</th>
@@ -33,7 +32,6 @@
             {% if user.company.id == presence.id_company_id %}
             <tr class="text-center">
                 <td>{{presence.id_user}}</td>
-                <td>{{presence.id_company}}</td>
                 <td>{{presence.date_presence}}</td>
                 <td>{{presence.start_presence}}</td>
                 <td>{{presence.end_presence}}</td>

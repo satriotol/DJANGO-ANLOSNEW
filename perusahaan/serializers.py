@@ -38,5 +38,5 @@ class UserSerializer(serializers.ModelSerializer):
 class VacationSerializer(serializers.ModelSerializer):
     class Meta:
         model = VacationModel
-        fields = ['id_user','id_company','start_day','end_day','vacation_type','message','vacation_status']
+        fields = ['id','id_user','id_company','start_day','end_day','vacation_type','message','vacation_status']
         read_only_fields = ['vacation_status']

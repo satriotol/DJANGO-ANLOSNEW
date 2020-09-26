@@ -11,7 +11,14 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <img class="img-fluid mt-3 mb-4" style="width: 25rem;" src="{{users.profile_pic.url}}" alt="">
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col">
+                            <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 25rem;"
+                                src="{{users.profile_pic.url}}" alt="">
+                        </div>
+                        <div class="col"></div>
+                    </div>
                     <br>
                     <div class="row">
                         <div class="col">
@@ -54,6 +61,68 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Dataset Wajah</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    {% if users.user.imagedatasetmodel %}
+                    <div class="row">
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file.url}}" alt="">
+                        </div>
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file2.url}}" alt="">
+                        </div>
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file3.url}}" alt="">
+                        </div>
+                        {% if users.user.imagedatasetmodel.file4 %}
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file4.url}}" alt="">
+                        </div>
+                        {% endif %}
+                        {% if users.user.imagedatasetmodel.file5 %}
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file5.url}}" alt="">
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if users.user.imagedatasetmodel.file6 %}
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file6.url}}" alt="">
+                        </div>
+                        {% endif %}
+                        {% if users.user.imagedatasetmodel.file7 %}
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file7.url}}" alt="">
+                        </div>
+                        {% endif %}
+                        {% if users.user.imagedatasetmodel.file8 %}
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file8.url}}" alt="">
+                        </div>
+                        {% endif %}
+                        {% if users.user.imagedatasetmodel.file9 %}
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file9.url}}" alt="">
+                        </div>
+                        {% endif %}
+                        {% if users.user.imagedatasetmodel.file10 %}
+                        <div class="col">
+                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file10.url}}" alt="">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <h6>Belum ada dataset yang diunggah</h6>
+                    {% endif %}
+                </div>
             </div>
         </div>
         <div class="col-xl-7 col-lg-6">
@@ -95,58 +164,10 @@
                 </div>
             </div>
             <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Dataset Wajah</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    {% if users.user.imagedatasetmodel %}
-                    <div class="row">
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file2.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file3.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file4.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file5.url}}" alt="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file6.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file7.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file8.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file9.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{users.user.imagedatasetmodel.file10.url}}" alt="">
-                        </div>
-                    </div>
-                    {% else %}
-                    <h6>Belum ada dataset yang diunggah</h6>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Presensi</h6>
                 </div>
                 <div class="card-body">
-                    {{presence.date_presence}}
                     <table class="table table-striped table-bordered nowrap" id="table_polos">
                         <thead>
                             <tr class="text-center">
@@ -162,6 +183,35 @@
                                 <td>{{presence.date_presence}}</td>
                                 <td>{{presence.start_presence}}</td>
                                 <td>{{presence.end_presence}}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Cuti</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered nowrap" id="table_polos">
+                        <thead>
+                            <tr class="text-center">
+                                <th scope="col">Status</th>
+                                <th scope="col">Tanggal Awal</th>
+                                <th scope="col">Tanggal Akhir</th>
+                                <th scope="col">Alasan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vacation in vacationlist  %}
+                            {% if vacation.id_user_id == users.user.id %}
+                            <tr class="text-center">
+                                <td>{{vacation.vacation_status}}</td>
+                                <td>{{vacation.start_day}}</td>
+                                <td>{{vacation.start_day}}</td>
+                                <td>{{vacation.vacation_type}}</td>
                             </tr>
                             {% endif %}
                             {% endfor %}

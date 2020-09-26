@@ -1,27 +1,107 @@
 {% extends 'base.html' %}
 {% block index_block %}
 <div class="container">
-<form action="/upload/" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
-
-    {% comment %} <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div>
-            <p><label for="id_user">User:</label> <select name="user" id="id_user">
-                    <option value="{{user.id}}">{{user.users.name}}</option>
-                </select></p>
-            <p><label for="id_file">File:</label> <input type="file" name="file" required="" id="id_file"></p>
-            <p><label for="id_file2">File2:</label> <input type="file" name="file2" required="" id="id_file2">
-            </p>
-            <p><label for="id_file3">File3:</label> <input type="file" name="file3" required="" id="id_file3">
-            </p>
-            <p><label for="id_file4">File4:</label> <input type="file" name="file4" id="id_file4"></p>
-            <p><label for="id_file5">File5:</label> <input type="file" name="file5" id="id_file5"></p>
+    <div class="row">
+        <div class="col-xl-5 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col">
+                            <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 10rem;"
+                                src="{{user.users.profile_pic.url}}" alt="">
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Nama</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{user.users.name}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Perusahaan</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{user.users.id_company}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Alamat Perusahaan</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{user.users.id_company.address}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Jam Masuk</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{user.users.start_work}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Jam Masuk</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{user.users.end_work}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <input type="submit" value="Submit">
-    </form> {% endcomment %}
+        <div class="col-xl-7 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Data Akun</h6>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div>
+                            <div>
+                                <input type="text" name="user" id="id_user" value="{{user.id}}" style="display: none; color:red;">
+                                <p><label for="id_file" style="font-weight: bold;">*File:</label> <input type="file"
+                                        name="file" required="" id="id_file"></p>
+                                <p><label for="id_file2" style="font-weight: bold;">*File2:</label> <input type="file"
+                                        name="file2" required="" id="id_file2"></p>
+                                <p><label for="id_file3" style="font-weight: bold;">*File3:</label> <input type="file"
+                                        name="file3" required="" id="id_file3"></p>
+                                <p><label for="id_file4">File4:</label> <input type="file" name="file4" id="id_file4">
+                                </p>
+                                <p><label for="id_file5">File5:</label> <input type="file" name="file5" id="id_file5">
+                                </p>
+                                <p><label for="id_file6">File6:</label> <input type="file" name="file6" id="id_file6">
+                                </p>
+                                <p><label for="id_file7">File7:</label> <input type="file" name="file7" id="id_file7">
+                                </p>
+                                <p><label for="id_file8">File8:</label> <input type="file" name="file8" id="id_file8">
+                                </p>
+                                <p><label for="id_file9">File9:</label> <input type="file" name="file9" id="id_file9">
+                                </p>
+                                <p><label for="id_file10">File10:</label> <input type="file" name="file10"
+                                        id="id_file10"></p>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <input class="btn btn-primary" type="submit" value="Submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock index_block %}

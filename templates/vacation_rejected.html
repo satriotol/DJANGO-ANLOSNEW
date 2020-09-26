@@ -11,22 +11,18 @@
                 <th scope="col">Akhir Cuti</th>
                 <th scope="col">Jenis Cuti</th>
                 <th scope="col">Status</th>
-                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
             {% for vacationpending in vacationpendings%}
             {% if user.company.id == vacationpending.id_company_id %}
-            {% if vacationpending.vacation_status == "PENDING" %}
+            {% if vacationpending.vacation_status == "REJECTED" %}
             <tr class="text-center">
                 <td>{{vacationpending.id_user.users.name}}</td>
                 <td>{{vacationpending.start_day}}</td>
                 <td>{{vacationpending.end_day}}</td>
                 <td>{{vacationpending.vacation_type}}</td>
-                <td class="alert-warning">{{vacationpending.vacation_status}}</td>
-                <td>
-                    <a class="btn btn-primary" href="{% url 'update_cuti' pk=vacationpending.pk %}" role="button">Detail</a>
-                </td>
+                <td class="alert-danger">{{vacationpending.vacation_status}}</td>
             </tr>
             {% endif %}
             {% endif %}

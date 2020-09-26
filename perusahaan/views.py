@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (View,TemplateView,ListView,DetailView,
@@ -8,8 +8,9 @@ from perusahaan import models
 from .models import users,company,ImageDatasetModel,FaceRecognitionModel, PresenceModel, VacationModel
 from django.views.generic.edit import FormView
 from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform,ImageDatasetForm, VacationForm
-from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -37,6 +38,22 @@ import os
 import cv2
 # end of vendor
 
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('user_login')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {
+        'form': form
+    })
 
 # # face recognition
 # pelatihan
@@ -395,6 +412,7 @@ class DetailKaryawan(LoginRequiredMixin,DetailView):
     def get_context_data(self, **kwargs):
         context = super(DetailKaryawan, self).get_context_data(**kwargs)
         context['presencelist'] = PresenceModel.objects.all()
+        context['vacationlist'] = VacationModel.objects.all()
         return context
 
 class RekapPresensiList(LoginRequiredMixin,ListView):
@@ -406,7 +424,7 @@ class RekapPresensiList(LoginRequiredMixin,ListView):
 
 class ListKaryawanDeleteView(LoginRequiredMixin,DeleteView):
     context_object_name = 'listkaryawans'
-    model = models.users
+    model = models.User
     template_name = 'karyawan_confirm_delete.html'
     success_url = reverse_lazy('listkaryawan')
 
@@ -423,6 +441,20 @@ class ListVacation(LoginRequiredMixin,ListView):
     context_object_name = 'vacationpendings'
     model = models.VacationModel
     template_name = 'vacation_list.html'
+
+class ListVacationAccepted(LoginRequiredMixin,ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    context_object_name = 'vacationpendings'
+    model = models.VacationModel
+    template_name = 'vacation_accept.html'
+
+class ListVacationRejected(LoginRequiredMixin,ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    context_object_name = 'vacationpendings'
+    model = models.VacationModel
+    template_name = 'vacation_rejected.html'
 
 class UpdateVacation(LoginRequiredMixin,UpdateView):
     login_url = '/login/'

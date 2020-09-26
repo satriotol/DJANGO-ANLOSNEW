@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
-{% block body_block %}
-<h1>Delete {{listkaryawans.name}}?</h1>
-<form action="" method="post">
-    {% csrf_token %}
-    <input name="" id="" class="btn btn-danger" type="submit" value="Delete">
-    {% comment %} <a href="{% url 'detail' pk=data.pk %}">Cancel</a> {% endcomment %}
-</form>
+{% block index_block %}
+<div class="container">
+    <h3>{{listkaryawans.users.name}}</h3>
+    <p>Apakah anda yakin ingin menghapus user ini ?</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input name="" id="" class="btn btn-danger" type="submit" value="Hapus">
+    </form>
+</div>
 
-{% endblock body_block %}
+{% endblock index_block %}
