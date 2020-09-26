@@ -10803,13 +10803,13 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+  background: url(https://images.unsplash.com/photo-1529539795054-3c162aab037a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80);
   background-position: center;
   background-size: cover;
 }
 
 .bg-register-image {
-  background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
+  background: url("https://www.luxefinalyzer.com/storage/images/service/1579863631change.jpg");
   background-position: center;
   background-size: cover;
 }

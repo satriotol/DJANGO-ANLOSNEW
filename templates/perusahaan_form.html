@@ -8,7 +8,7 @@
 
     #map_canvas {
         height: 300px;
-        width: 50%;
+        width: 100%;
         margin-right: 10px;
         padding: 0px;
     }
@@ -99,7 +99,7 @@
                 <div class="col-lg-7">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Buat Akun Perusahaan Anda!</h1>
                         </div>
                         <form class="user" id="regForm" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
@@ -127,11 +127,13 @@
                             </div>
                             <div class="tab">
                                 <div class="form-group">
+                                    <h6 class="text-center">Jam Masuk</h6>
                                     <input type="time" name="start_work" step="2" class="form-control form-control-user"
                                         oninput="this.className = 'form-control form-control-user'" id="id_start_work"
                                         placeholder="Start Work">
                                 </div>
                                 <div class="form-group">
+                                    <h6 class="text-center">Jam Pulang</h6>
                                     <input type="time" name="end_work" step="2" class="form-control form-control-user"
                                         oninput="this.className = 'form-control form-control-user'" id="id_end_work"
                                         placeholder="End Work">
@@ -140,7 +142,7 @@
                             <div class="tab">
                                 <div id="tool">
                                     <div id="map_canvas" style=" border: 2px solid #3872ac;"></div> <br>
-                                    <textarea name="location" id="info" cols="30" rows="10"></textarea>
+                                    <textarea name="location" id="info" cols="30" rows="10" style="display:none;"></textarea>
                                 </div>
                             </div>
                             <div class="tab">
@@ -191,9 +193,6 @@
                             </div>
                         </form>
                         <hr>
-                        <div class="text-center">
-                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                        </div>
                         <div class="text-center">
                             <a class="small" href="{% url 'user_login' %}">Already have an account? Login!</a>
                         </div>

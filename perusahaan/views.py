@@ -29,7 +29,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
-from django_filters import rest_framework as filters
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer,UploadFaceSerializer, VacationSerializer
 
 #face recognition
@@ -436,3 +435,5 @@ class UpdateVacation(LoginRequiredMixin,UpdateView):
 class VacationViewSet(viewsets.ModelViewSet):
     queryset = VacationModel.objects.all()
     serializer_class = VacationSerializer
+    filter_backends = [DjangoFilterBackend,]
+    filter_fields  = ["id_user",]
