@@ -176,7 +176,7 @@ class ImageFieldView(CreateView):
         return context
 
 class ProfileKaryawan(DetailView):
-    model = models.ImageDatasetModel
+    model = models.User
     template_name = 'profile_karyawan.html'
 
 
@@ -212,6 +212,8 @@ class UserDetail(generics.RetrieveAPIView):
 class PresenceViewSet(viewsets.ModelViewSet):
     queryset = PresenceModel.objects.all()
     serializer_class = PresenceSerializer
+    filter_backends = [DjangoFilterBackend,]
+    filter_fields  = ["id_user",]
 
 @api_view(['GET','POST'])
 def record_location_list(request):
@@ -392,8 +394,13 @@ class ProfilePerusahaan(LoginRequiredMixin,ListView):
     redirect_field_name = 'redirect_to'
     context_object_name = 'profilperusahaan'
     model = models.company
-    model = models.users
     template_name = 'profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfilePerusahaan, self).get_context_data(**kwargs)
+        context['presencelist'] = PresenceModel.objects.all()
+        context['vacationlist'] = VacationModel.objects.all()
+        return context
 
 class ListKaryawan(LoginRequiredMixin,ListView):
     login_url = '/login/'
@@ -411,6 +418,7 @@ class DetailKaryawan(LoginRequiredMixin,DetailView):
     
     def get_context_data(self, **kwargs):
         context = super(DetailKaryawan, self).get_context_data(**kwargs)
+        context['userslist'] = users.objects.all()
         context['presencelist'] = PresenceModel.objects.all()
         context['vacationlist'] = VacationModel.objects.all()
         return context

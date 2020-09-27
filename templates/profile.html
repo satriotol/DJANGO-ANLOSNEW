@@ -1,32 +1,161 @@
 <!doctype html>
 {% extends 'base.html' %}
-{% block body_block %}
+{% block index_block %}
 {% if user.is_authenticated %}
 <div class="container">
-    <h1>Nama Lengkap {{user.company.name}}</h1>
-    <h2>COMPANY ID {{user.company.id}}</h2>
-    {% comment %} <table class="display" id="table_id">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">Nama</th>
-                <th scope="col">Email</th>
-                <th scope="col">Telpon</th>
-                <th scope="col">Id Company</th>
-            </tr>
-        </thead>
-        {% for profilperusahaan in profilperusahaan %}
-        {% if user.company.id == profilperusahaan.id_company %}
-        <tbody>
-            <tr class="text-center">
-                <td>{{profilperusahaan.name}}</td>
-                <td>{{profilperusahaan.email}}</td>
-                <td>{{profilperusahaan.telp}}</td>
-                <td>{{profilperusahaan.id_company}}</td>
-            </tr>
-        </tbody>
-        {% endif %}
-        {% endfor %}
-    </table> {% endcomment %}
+    <div class="row">
+        <div class="col-xl-5 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col">
+                            <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 25rem;"
+                                src="/media/profile_pics/indrak.PNG" alt="">
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Nama</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{user.company.name}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Alamat Perusahaan</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{user.company.address}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Jam Masuk</h5>
+                        </div>
+                        <div class="col">
+                            <h5>7 a.m.</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="font-weight-bold">Jam Masuk</h5>
+                        </div>
+                        <div class="col">
+                            <h5>6 p.m.</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-7 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">About</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="my-3 row">
+                        <div class="col-sm-2">
+                            <h6 class="font-weight-bold">Telepon</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>{{user.company.telp}}</h6>
+                        </div>
+                        <div class="col-sm-2">
+                            <h6 class="font-weight-bold">Email</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>{{user.email}}</h6>
+                        </div>
+                    </div>
+                    <div class="my-3 row">
+                        <div class="col-sm-2">
+                            <h6 class="font-weight-bold">Login Terakhir</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>{{user.last_login}}</h6>
+                        </div>
+                        <div class="col-sm-2">
+                            <h6 class="font-weight-bold">Tanggal Daftar</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>{{user.date_joined}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Presensi</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered nowrap" id="table_polos">
+                        <thead>
+                            <tr class="text-center">
+                                <th scope="col">Nama</th>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Jam Masuk</th>
+                                <th scope="col">Jam Keluar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for presence in presencelist  %}
+                            {% if user.company.id == presence.id_company_id %}
+                            <tr class="text-center">
+                                <td>{{presence.id_user.users}}</td>
+                                <td>{{presence.date_presence}}</td>
+                                <td>{{presence.start_presence}}</td>
+                                <td>{{presence.end_presence}}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Cuti</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered nowrap" id="table_polos2">
+                        <thead>
+                            <tr class="text-center">
+                                <th scope="col">Nama</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Tanggal Awal</th>
+                                <th scope="col">Tanggal Akhir</th>
+                                <th scope="col">Alasan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vacation in vacationlist  %}
+                            {% if user.company.id == vacation.id_company_id %}
+                            <tr class="text-center">
+                                <td>{{vacation.id_user.users}}</td>
+                                <td>{{vacation.vacation_status}}</td>
+                                <td>{{vacation.start_day}}</td>
+                                <td>{{vacation.start_day}}</td>
+                                <td>{{vacation.vacation_type}}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endif %}
 
