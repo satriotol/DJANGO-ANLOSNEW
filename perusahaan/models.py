@@ -10,6 +10,7 @@ class company(models.Model):
     address = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
     location = models.TextField(default="")
+    profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
     start_work = models.TimeField(null=True)
     end_work = models.TimeField(null=True)
 

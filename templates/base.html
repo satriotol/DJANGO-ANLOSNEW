@@ -179,19 +179,16 @@
                                 {% endif %}
                                 {% if user.users.profile_pic %}
                                 <img class="img-profile rounded-circle" src="{{user.users.profile_pic.url}}">
+                                {% elif user.company.profile_pic %}
+                                <img class="img-profile rounded-circle" src="{{user.company.profile_pic.url}}">
                                 {% else %}
-                                <img class="img-profile rounded-circle"
-                                    src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                                <img class="img-profile rounded-circle" src="{% static 'user.jpg' %}">
                                 {% endif %}
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{% url 'profile_perusahaan' pk=user.id %}">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'edituser' pk=user.company.pk %}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
@@ -314,6 +311,13 @@
     <script>
         $(document).ready(function () {
             $('#table_polos2').DataTable({
+                responsive: true,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#table_polos3').DataTable({
                 responsive: true,
             });
         });

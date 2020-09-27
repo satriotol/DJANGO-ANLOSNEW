@@ -1,7 +1,62 @@
 {% extends 'base.html' %}
-{% block body_block %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
-{% endblock body_block %}
+{% block index_block %}
+<div class="container">
+    <div class="row">
+        {% if perms.perusahaan %}
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col">
+                            {% if user.company.profile_pic %}
+                            <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 25rem;"
+                                src="{{user.company.profile_pic.url}}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <form method="post" action='' enctype="multipart/form-data">{% csrf_token %}
+                        <p>
+                            {% if user.company.profile_pic %}
+                            <label for="id_profile_pic">Profile pic:</label> Currently: <a
+                                href="/media/profile_pics/Screenshot_1.jpg">profile_pics/Screenshot_1.jpg</a>
+                            <input type="checkbox" name="profile_pic-clear" id="profile_pic-clear_id">
+                            <label for="profile_pic-clear_id">Clear</label><br>
+                            {% endif %}
+                            Change:
+                            <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic"></p>
+                        <p><label for="id_name">Name:</label> <input type="text" name="name" value="Kost"
+                                maxlength="254" required="" id="id_name"></p>
+                        <p><label for="id_address">Address:</label> <input type="text" name="address"
+                                value="Pandean Lamper 2/69B" maxlength="254" required="" id="id_address"></p>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Jam Kerja</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <p><label for="id_start_work">Start work:</label> <input type="text" name="start_work"
+                            value="08:00:00" required="" id="id_start_work"></p>
+                    <p><label for="id_end_work">End work:</label> <input type="text" name="end_work" value="19:00:00"
+                            required="" id="id_end_work"></p>
+                    <input type="submit" value="Save">
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock index_block %}

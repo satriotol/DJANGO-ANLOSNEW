@@ -183,7 +183,7 @@ class ProfileKaryawan(DetailView):
 @api_view(['GET','POST'])
 def UserListView(request):
     if request.method == 'POST':
-        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__location","users__start_work","users__end_work")
+        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__telp","users__profile_pic","users__location","users__start_work","users__end_work")
         # user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values("name","id_company")
         data = {}
         data['api_status'] = 1
@@ -278,10 +278,8 @@ class IndexPerusahaan(LoginRequiredMixin,ListView):
     
     def get_context_data(self, **kwargs):
         context = super(IndexPerusahaan, self).get_context_data(**kwargs)
-        context['companylist'] = company.objects.annotate(total=Count('id'))
-        # context['companylist'] = company.objects.values_list("id",flat=True)
-        context['userslist'] = users.objects.annotate(total=Count('id_company')).filter(is_company=0)
-        # context['userslist'] = users.objects.values_list("id_company_id",flat=True)
+        context['presencelist'] = PresenceModel.objects.all()
+        context['vacationlist'] = VacationModel.objects.all()
         return context
 
 
@@ -385,9 +383,10 @@ def record_location(request):
 
 class EditUser(UpdateView):
     context_object_name = 'listusers'
-    model = models.User
-    fields = ['username','password']
+    model = models.company
+    fields = ['name','address','start_work','end_work','profile_pic']
     template_name = 'user_update.html'
+    success_url = reverse_lazy('index')
 
 class ProfilePerusahaan(LoginRequiredMixin,ListView):
     login_url = '/login/'
@@ -408,6 +407,11 @@ class ListKaryawan(LoginRequiredMixin,ListView):
     context_object_name = 'listkaryawans'
     model = models.users
     template_name = 'karyawan_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ListKaryawan, self).get_context_data(**kwargs)
+        context['karyawanlist'] = users.objects.values_list("id_company_id",flat=True)
+        return context
 
 class DetailKaryawan(LoginRequiredMixin,DetailView):
     login_url = '/login/'
