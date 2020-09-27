@@ -24,7 +24,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class UsersLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = users
-        fields = ['id','id_company','location','record_location']
+        fields = ['user_id','id_company','location']
         read_only_fields = ['id_company']
 
 class UserSerializer(serializers.ModelSerializer):
