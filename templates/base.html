@@ -100,18 +100,19 @@
             <hr class="sidebar-divider d-none d-md-block">
             {% else %}
             <!-- Divider -->
+            {% if user.imagedatasetmodel %}
+            {% else %}
             <hr class="sidebar-divider">
-
             <div class="sidebar-heading">
                 Addons
             </div>
-
             <!-- Nav Item - Tambah Karyawan -->
             <li class="nav-item {% if request.resolver_match.url_name == 'upload' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'upload' %}">
                     <i class="fas fa-fw fa-user-plus"></i>
                     <span>Upload Dataset Wajah</span></a>
             </li>
+            {% endif %}
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -167,7 +168,6 @@
                         </li>
                         {% if user.is_authenticated %}
                         <div class="topbar-divider d-none d-sm-block"></div>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -188,11 +188,13 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
+                                {% if perms.perusahaan %}
                                 <a class="dropdown-item" href="{% url 'edituser' pk=user.company.pk %}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
                                 <div class="dropdown-divider"></div>
+                                {% endif %}
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout

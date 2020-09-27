@@ -168,7 +168,7 @@ class ImageFieldView(CreateView):
     model = models.users
     context_object_name = 'listkaryawans'
     template_name = 'upload.html'
-    success_url = reverse_lazy('upload')
+    success_url = reverse_lazy('index')
 
     def get_context_data(self, **kwargs):
         context = super(ImageFieldView, self).get_context_data(**kwargs)
