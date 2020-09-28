@@ -193,6 +193,7 @@ def UserListView(request):
             data['data'] = list(user)
             # data['user_profile'] = list(user_profile)
         else:
+            data['api_status'] = 0
             data["api_message"] = "password salah"
 
         return JsonResponse(data, safe=False)
