@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -31,12 +32,22 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer,UploadFaceSerializer, VacationSerializer
+from django.core.mail import send_mail
 
 #face recognition
 import numpy as np
 import os
 import cv2
 # end of vendor
+
+def sendmail(request):
+    send_mail('Halo dari anlosia',
+    'Ini Pesan Otomatis',
+    'satriotol69@gmail.com',
+    ['dogev84205@qatw.net'],
+    fail_silently=False,
+    )
+    return render(request, 'send.html')
 
 
 def change_password(request):
@@ -184,26 +195,21 @@ class ProfileKaryawan(DetailView):
 def UserListView(request):
     if request.method == 'POST':
         user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__telp","users__profile_pic","users__location","users__start_work","users__end_work")
-        # user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values("name","id_company")
-        data = {}
-        data['api_status'] = 1
-        data['api_message'] = 'success'
-
-        if(check_password(request.POST.get('password'),list(user)[0]["password"])):
-            data['data'] = list(user)
-            # data['user_profile'] = list(user_profile)
+        if user:
+            data = {}
+            data['api_status'] = 1
+            data['api_message'] = 'success'
+            if(check_password(request.POST.get('password'),list(user)[0]["password"])):
+                data['data'] = list(user)
+            else:
+                data['api_status'] = 0
+                data["api_message"] = "password salah"
         else:
+            data = {}
             data['api_status'] = 0
-            data["api_message"] = "password salah"
-
+            data["api_message"] = "username salah"
         return JsonResponse(data, safe=False)
-    # elif request.method == 'GET':
-    #     user = User.objects.filter(username=request.POST.get('username')).values("username","password","email", "id")
-    #     user_profile = users.objects.filter(user_id=list(user)[0]["id"]).values()
-    #     data = {}
-    #     data['data'] = list(user)
-    #     data['user_profile'] = list(user_profile)
-    #     return JsonResponse(data)
+
         
 
 class UserDetail(generics.RetrieveAPIView):

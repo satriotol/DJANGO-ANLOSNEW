@@ -63,6 +63,7 @@ urlpatterns = [
     path("api/facerecognition/",main_views.prediksiWajah),
 
     path("password/", main_views.change_password,name="change_password"),
+    path("send/", main_views.sendmail),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
