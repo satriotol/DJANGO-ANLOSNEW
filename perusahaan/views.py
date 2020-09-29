@@ -195,7 +195,7 @@ class ProfileKaryawan(DetailView):
 @api_view(['GET','POST'])
 def UserListView(request):
     if request.method == 'POST':
-        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__telp","users__profile_pic","users__id_company__location","users__id_company__start_work","users__id_company__end_work")
+        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","users__id_company__name","username","password","email","users__name","users__telp","users__profile_pic","users__id_company__location","users__id_company__start_work","users__id_company__end_work")
         if user:
             data = {}
             data['api_status'] = 1
