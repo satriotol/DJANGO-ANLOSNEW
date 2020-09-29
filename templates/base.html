@@ -191,10 +191,14 @@
                                 {% if perms.perusahaan %}
                                 <a class="dropdown-item" href="{% url 'edituser' pk=user.company.pk %}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Pengaturan
+                                </a>
+                                {% endif %}
+                                <a class="dropdown-item" href="{% url 'change_password' %}">
+                                    <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Ganti Password
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                {% endif %}
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout

@@ -51,7 +51,9 @@ urlpatterns = [
     path("cuti/",main_views.ListVacation.as_view(),name="cuti_pending"),
     path("cuti/acc",main_views.ListVacationAccepted.as_view(),name="cuti_acc"),
     path("cuti/rejected",main_views.ListVacationRejected.as_view(),name="cuti_rejected"),
-    path("cuti/<int:pk>/",main_views.UpdateVacation.as_view(),name="update_cuti"),
+    # path("cuti/<int:pk>/",main_views.UpdateVacation.as_view(),name="update_cuti"),
+    path("cuti/<int:id>/",main_views.UpdateVacationNew,name="update_cuti"),
+
 
     # auth
     path('login/',main_views.user_login,name='user_login'),
@@ -63,7 +65,8 @@ urlpatterns = [
     path("api/facerecognition/",main_views.prediksiWajah),
 
     path("password/", main_views.change_password,name="change_password"),
-    path("send/", main_views.sendmail),
+    # path("send/", main_views.sendmail),
+    path("email/", main_views.UpdateVacationEmail)
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

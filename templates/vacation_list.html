@@ -25,7 +25,10 @@
                 <td>{{vacationpending.vacation_type}}</td>
                 <td class="alert-warning">{{vacationpending.vacation_status}}</td>
                 <td>
-                    <a class="btn btn-primary" href="{% url 'update_cuti' pk=vacationpending.pk %}" role="button">Detail</a>
+                    {% comment %} <a class="btn btn-primary" href="{% url 'update_cuti' pk=vacationpending.pk %}"
+                        role="button">Detail</a> {% endcomment %}
+                    <a class="btn btn-primary" href="{% url 'update_cuti' id=vacationpending.id %}"
+                        role="button">Detail</a>
                 </td>
             </tr>
             {% endif %}

@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (View,TemplateView,ListView,DetailView,
@@ -8,7 +8,7 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
 from perusahaan import models
 from .models import users,company,ImageDatasetModel,FaceRecognitionModel, PresenceModel, VacationModel
 from django.views.generic.edit import FormView
-from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform,ImageDatasetForm, VacationForm
+from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompanyprofileform,ImageDatasetForm, VacationForm, ContactForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -32,7 +32,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer,UploadFaceSerializer, VacationSerializer
-from django.core.mail import send_mail
+from django.core.mail import send_mail,BadHeaderError
 
 #face recognition
 import numpy as np
@@ -40,14 +40,14 @@ import os
 import cv2
 # end of vendor
 
-def sendmail(request):
-    send_mail('Halo dari anlosia',
-    'Ini Pesan Otomatis',
-    'satriotol69@gmail.com',
-    ['dogev84205@qatw.net'],
-    fail_silently=False,
-    )
-    return render(request, 'send.html')
+# def sendmail(request):
+#     send_mail('Halo dari anlosia',
+#     'Ini Pesan Otomatis',
+#     'satriotol69@gmail.com',
+#     ['satriotol69@gmail.com'],
+#     fail_silently=False,
+#     )
+#     return render(request, 'send.html')
 
 
 def change_password(request):
@@ -203,11 +203,11 @@ def UserListView(request):
                 data['data'] = list(user)
             else:
                 data['api_status'] = 0
-                data["api_message"] = "password salah"
+                data["api_message"] = "Password Anda Salah"
         else:
             data = {}
             data['api_status'] = 0
-            data["api_message"] = "username salah"
+            data["api_message"] = "Username Anda Tidak Ditemukan"
         return JsonResponse(data, safe=False)
 
         
@@ -482,6 +482,53 @@ class UpdateVacation(LoginRequiredMixin,UpdateView):
     template_name = 'vacation_update.html'
     form_class = VacationForm
     success_url = reverse_lazy('cuti_pending')
+
+def UpdateVacationNew(request,id):
+    instance = get_object_or_404(VacationModel,id=id)
+    form = VacationForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return redirect('cuti_pending')
+    return render (request, 'vacation_update.html',{'form':form})
+
+def UpdateVacationNew(request,id):
+    instance = get_object_or_404(VacationModel,id=id)
+    p_form = VacationForm(request.POST or None, instance=instance)
+    form = ContactForm(request.POST)
+    if form.is_valid():
+        to_email = form.cleaned_data['to_email']
+        subject = form.cleaned_data['subject']
+        from_email = form.cleaned_data['from_email']
+        message = form.cleaned_data['message']
+        p_form.save()
+        try:
+            send_mail(subject,message,from_email,[to_email])
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        return redirect('cuti_pending')
+    return render (request, 'vacation_update.html',{'p_form':p_form,'form':form,'instance':instance})
+
+def UpdateVacationEmail(request):
+    if not request.user.is_authenticated:
+        return render(request,'login.html')
+    else:
+        if request.method == 'GET':
+            usersobj = users.objects.all()
+            form = ContactForm()
+        else:
+            form = ContactForm(request.POST)
+            if form.is_valid():
+                to_email = form.cleaned_data['to_email']
+                subject = form.cleaned_data['subject']
+                from_email = form.cleaned_data['from_email']
+                message = form.cleaned_data['message']
+                try:
+                    send_mail(subject,message,from_email,[to_email])
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found.')
+                return redirect('cuti_pending')
+    return render(request, "email.html", {'form': form,'usersobj':usersobj})
+
 
 class VacationViewSet(viewsets.ModelViewSet):
     queryset = VacationModel.objects.all()

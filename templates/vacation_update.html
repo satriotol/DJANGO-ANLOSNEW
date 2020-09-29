@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="text-center">
                         <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 10rem;"
-                            src="{{vacationmodel.id_user.users.profile_pic.url}}" alt="">
+                            src="{{instance.id_user.users.profile_pic.url}}" alt="">
                     </div>
                     <br>
                     <div class="row">
@@ -18,7 +18,7 @@
                             <h5 class="font-weight-bold">Nama</h5>
                         </div>
                         <div class="col">
-                            <h5>{{vacationmodel.id_user.users.name}}</h5>
+                            <h5>{{instance.id_user.users.name}}</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -26,7 +26,7 @@
                             <h5 class="font-weight-bold">Perusahaan</h5>
                         </div>
                         <div class="col">
-                            <h5>{{vacationmodel.id_user.users.id_company}}</h5>
+                            <h5>{{instance.id_user.users.id_company}}</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -34,7 +34,7 @@
                             <h5 class="font-weight-bold">Alamat Perusahaan</h5>
                         </div>
                         <div class="col">
-                            <h5>{{vacationmodel.id_user.users.id_company.address}}</h5>
+                            <h5>{{instance.id_user.users.id_company.address}}</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -42,7 +42,7 @@
                             <h5 class="font-weight-bold">Jam Masuk</h5>
                         </div>
                         <div class="col">
-                            <h5>{{vacationmodel.id_user.users.start_work}}</h5>
+                            <h5>{{instance.id_user.users.start_work}}</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -50,7 +50,7 @@
                             <h5 class="font-weight-bold">Jam Masuk</h5>
                         </div>
                         <div class="col">
-                            <h5>{{vacationmodel.id_user.users.end_work}}</h5>
+                            <h5>{{instance.id_user.users.end_work}}</h5>
                         </div>
                     </div>
                 </div>
@@ -64,11 +64,11 @@
                 <div class="card-body">
                     <div class="text-center">
                         <h5 class="font-weight-bold">Lama Cuti</h5>
-                        <p>{{vacationmodel.start_day}} - {{vacationmodel.end_day}}</p>
+                        <p>{{instance.start_day}} - {{instance.end_day}}</p>
                         <h5 class="font-weight-bold">Jenis Cuti</h5>
-                        <p>{{vacationmodel.vacation_type}}</p>
+                        <p>{{instance.vacation_type}}</p>
                         <h5 class="font-weight-bold">Pesan</h5>
-                        <p>"{{vacationmodel.message}}"</p>
+                        <p>"{{instance.message}}"</p>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,18 @@
                 </div>
                 <div class="card-body">
                     <form method="post">{% csrf_token %}
-                        {{ form.as_p }}
+                        {% comment %} <input type="text" value={{vacationmodel.id_user.email}}> {% endcomment %}
+                        {% comment %} {{instance.id_user.email}} {% endcomment %}
+                        {{p_form.as_p}}
+                        {% comment %} {{ form.as_p }} {% endcomment %}
+                        <input style="display:none;" type="email" name="to_email" required="" id="id_to_email"
+                            value="{{instance.id_user.email}}">
+                        <input style="display:none;" type="email" name="from_email" required="" id="id_from_email"
+                            value="satriotol69@gmail.com">
+                        <input style="display:none;" type="text" name="subject" required="" id="id_subject"
+                            value="[ANLOSIA] RESPON PENGAJUAN CUTI">
+                        <textarea name="message" cols="40" rows="10" required="" id="id_message" style="display:none;"
+                            value="">Segera Cek Smartphone Anda Untuk Melihat Cuti</textarea>
                         <input class="btn btn-primary" type="submit" value="Submit">
                     </form>
                 </div>
