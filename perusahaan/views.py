@@ -12,6 +12,7 @@ from perusahaan.forms import companyprofileform,CompanyForm,usersform,usercompan
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -194,7 +195,7 @@ class ProfileKaryawan(DetailView):
 @api_view(['GET','POST'])
 def UserListView(request):
     if request.method == 'POST':
-        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__telp","users__profile_pic","users__location","users__start_work","users__end_work")
+        user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","username","password","email","users__name","users__telp","users__profile_pic","users__id_company__location","users__id_company__start_work","users__id_company__end_work")
         if user:
             data = {}
             data['api_status'] = 1
@@ -388,12 +389,15 @@ def record_location(request):
     
     return HttpResponse(data)
 
-class EditUser(UpdateView):
+class EditUser(SuccessMessageMixin,UpdateView):
     context_object_name = 'listusers'
     model = models.company
     fields = ['name','address','start_work','end_work','profile_pic']
     template_name = 'user_update.html'
     success_url = reverse_lazy('index')
+    success_message = 'List successfully saved!!!!'
+
+    
 
 class ProfilePerusahaan(LoginRequiredMixin,ListView):
     login_url = '/login/'

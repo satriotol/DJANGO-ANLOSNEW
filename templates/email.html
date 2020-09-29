@@ -3,11 +3,12 @@
 <div class="container">
     <div class="row">
         <div class="col">
+            <h1>Send Email</h1>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <div class="form-actions">
-                    <button type="submit">Send</button>
+                    <button class="btn btn-primary" type="submit">Send</button>
                 </div>
             </form>
         </div>

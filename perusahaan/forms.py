@@ -41,12 +41,12 @@ class companyprofileform(forms.ModelForm):
 class usersform(forms.ModelForm):
     class Meta():
         model = users
-        fields = ('id_company','is_company','name','telp','profile_pic','location','start_work','end_work')
+        fields = ('id_company','is_company','name','telp','profile_pic')
 
 class usercompanyprofileform(forms.ModelForm):
     class Meta():
         model = users
-        fields = ('is_company','name','telp','location','start_work','end_work')
+        fields = ('is_company','name','telp')
 
 class ContactForm(forms.Form):
     to_email = forms.EmailField(required=True)

@@ -24,9 +24,9 @@ class users(models.Model):
     name = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
-    location = models.TextField(default="")
-    start_work = models.TimeField(null=True)
-    end_work = models.TimeField(null=True)
+    # location = models.TextField(default="")
+    # start_work = models.TimeField(null=True)
+    # end_work = models.TimeField(null=True)
 
     def __str__(self):
         return self.name
