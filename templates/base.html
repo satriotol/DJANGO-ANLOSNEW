@@ -58,21 +58,13 @@
                     <span>Rekap Presensi</span></a>
             </li>
             <li class="nav-item">
-                <a class="
-                {% if request.resolver_match.url_name == 'cuti_pending' %} 
-                nav-link
-                {% else %}
-                nav-link collapsed
-                {% endif %} " href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                    aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="false" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-plane"></i>
                     <span>Cuti</span>
                 </a>
-                <div id="collapseTwo" class="{% if request.resolver_match.url_name == 'cuti_pending' %} 
-                collapse show
-                {% else %}
-                collapse
-                {% endif %} " aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+                    style="">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Status</h6>
                         <a class="collapse-item" href="{% url 'cuti_pending' %}">Pending</a>
@@ -193,6 +185,11 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Pengaturan
                                 </a>
+                                {% else %}
+                                <a class="dropdown-item" href="{% url 'edituser' pk=user.users.pk %}">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Pengaturan
+                                </a>
                                 {% endif %}
                                 <a class="dropdown-item" href="{% url 'change_password' %}">
                                     <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -258,9 +255,11 @@
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
                 </div>
+
             </div>
         </div>
     </div>
+
     {% block body_block %}
     {% endblock body_block %}
     <!-- Optional JavaScript -->
@@ -333,9 +332,24 @@
             $('#table_id').DataTable({
                 responsive: true,
                 dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
+                buttons: ['copy', 'csv', 'excel', 'pdf', {
+                    extend: 'print',
+                    title:'',
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt')
+                            .prepend(
+                                '<h6>{{user.company.name}}</h6>',
+                                '<h6>{{user.email}}</h6>',
+                                '<h6>{{user.company.telp}}</h6>',
+                                '<h6>{{user.company.address}}</h6>',
+                                '<img src="{{user.company.profile_pic.url}}" style="position:absolute; top:0; left:0;" />'
+                            );
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }],
             });
         });
     </script>

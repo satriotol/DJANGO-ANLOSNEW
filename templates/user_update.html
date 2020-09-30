@@ -31,10 +31,11 @@
                             {% endif %}
                             Change:
                             <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic"></p>
-                        <p><label for="id_name">Nama</label> <br><input style="width:100%" type="text" name="name" value="{{user.company.name}}"
-                                maxlength="254" required="" id="id_name"></p>
-                        <p><label for="id_address">Alamat</label><br> <input style="width:100%" type="text" name="address"
-                                value="{{user.company.address}}" maxlength="254" required="" id="id_address"></p>
+                        <p><label for="id_name">Nama</label> <br><input style="width:100%" type="text" name="name"
+                                value="{{user.company.name}}" maxlength="254" required="" id="id_name"></p>
+                        <p><label for="id_address">Alamat</label><br> <input style="width:100%" type="text"
+                                name="address" value="{{user.company.address}}" maxlength="254" required=""
+                                id="id_address"></p>
 
                 </div>
             </div>
@@ -49,10 +50,47 @@
                 <div class="card-body">
                     <p><label for="id_start_work">Start work:</label> <input type="time" name="start_work"
                             value="{{user.company.start_work|time:"H:i:s"}}" required="" id="id_start_work"></p>
-                    <p><label for="id_end_work">End work:</label> <input type="time" name="end_work" value="{{user.company.end_work|time:"H:i:s"}}"
-                            required="" id="id_end_work"></p>
+                    <p><label for="id_end_work">End work:</label> <input type="time" name="end_work"
+                            value="{{user.company.end_work|time:"H:i:s"}}" required="" id="id_end_work"></p>
                     <input class="btn btn-primary" type="submit" value="Save">
                     </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col">
+                            {% if user.users.profile_pic %}
+                            <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 25rem;"
+                                src="{{user.users.profile_pic.url}}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <form method="post" action='' enctype="multipart/form-data">{% csrf_token %}
+                        <p>
+                            {% if user.company.profile_pic %}
+                            <label for="id_profile_pic">Profile pic:</label> Currently: <a
+                                href="/media/{{user.company.profile_pic}}">{{user.company.profile_pic}}</a>
+                            <input type="checkbox" name="profile_pic-clear" id="profile_pic-clear_id">
+                            <label for="profile_pic-clear_id">Clear</label><br>
+                            {% endif %}
+                            Change:
+                            <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic"></p>
+                        <p><label for="id_name">Nama</label> <br><input style="width:100%" type="text" name="name"
+                                value="{{user.company.name}}" maxlength="254" required="" id="id_name"></p>
+                        <p><label for="id_address">Alamat</label><br> <input style="width:100%" type="text"
+                                name="address" value="{{user.company.address}}" maxlength="254" required=""
+                                id="id_address"></p>
                 </div>
             </div>
         </div>
