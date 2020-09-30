@@ -191,8 +191,23 @@ class ProfileKaryawan(DetailView):
     model = models.User
     template_name = 'profile_karyawan.html'
 
+@api_view(['POST'])
+def userPresence(request):
+    if request.method == 'POST':
+        # presence = PresenceModel.objects.raw("SELECT * FROM perusahaan_presencemodel WHERE id_user_id = %s AND date_presence = %s AND end_presence IS NULL", [request.POST.get('id_user'), request.POST.get('date_presence')]).values('id')
+        presence = PresenceModel.objects.filter(id_user_id=request.POST.get('id_user'), date_presence=request.POST.get('date_presence')).exists()
+        if presence: 
+            data = {}
+            data['api_status'] = 0
+            data["api_message"] = "Failed"
+            return JsonResponse(data, safe=False)
+        else :
+            data = {}
+            data['api_status'] = 1
+            data["api_message"] = "Success"
+            return JsonResponse(data, safe=False)
 
-@api_view(['GET','POST'])
+@api_view(['POST'])
 def UserListView(request):
     if request.method == 'POST':
         user = User.objects.filter(username=request.POST.get('username')).values("id","users__id_company","users__id_company__name","username","password","email","users__name","users__telp","users__profile_pic","users__id_company__location","users__id_company__start_work","users__id_company__end_work")
@@ -210,9 +225,6 @@ def UserListView(request):
             data['api_status'] = 0
             data["api_message"] = "Username Anda Tidak Ditemukan"
         return JsonResponse(data, safe=False)
-
-        
-
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -397,7 +409,6 @@ class EditUser(SuccessMessageMixin,UpdateView):
     success_url = reverse_lazy('index')
     success_message = 'List successfully saved!!!!'
 
-    
 
 class ProfilePerusahaan(LoginRequiredMixin,ListView):
     login_url = '/login/'

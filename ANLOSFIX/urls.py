@@ -46,6 +46,7 @@ urlpatterns = [
     path('profile/<int:pk>',main_views.ProfilePerusahaan.as_view(),name='profile_perusahaan'),
     # presensce
     path("presence/",main_views.RekapPresensiList.as_view(), name="presence"),
+    path("api/p/",main_views.userPresence, name="p"),
 
     # cuti
     path("cuti/",main_views.ListVacation.as_view(),name="cuti_pending"),
