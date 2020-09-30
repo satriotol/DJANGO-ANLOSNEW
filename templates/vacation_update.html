@@ -23,6 +23,14 @@
                     </div>
                     <div class="row">
                         <div class="col">
+                            <h5 class="font-weight-bold">E-mail</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{instance.id_user.email}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <h5 class="font-weight-bold">Perusahaan</h5>
                         </div>
                         <div class="col">
@@ -69,6 +77,8 @@
                         <p>{{instance.vacation_type}}</p>
                         <h5 class="font-weight-bold">Pesan</h5>
                         <p>"{{instance.message}}"</p>
+                        <h5 class="font-weight-bold">Lampiran</h5>
+                        <a target="_blank" href="{{instance.attachment.url}}">lihat disini</a>
                     </div>
                 </div>
             </div>

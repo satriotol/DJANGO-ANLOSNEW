@@ -24,9 +24,6 @@ class users(models.Model):
     name = models.CharField(max_length=254)
     telp = models.CharField(max_length=12)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
-    # location = models.TextField(default="")
-    # start_work = models.TimeField(null=True)
-    # end_work = models.TimeField(null=True)
 
     def __str__(self):
         return self.name
@@ -66,6 +63,7 @@ class VacationModel (models.Model):
     vacation_type = models.CharField(choices=VACATION_CHOICE,max_length=5)
     message = models.TextField(max_length=500)
     vacation_status = models.CharField(choices=STATUS_CHOICE,max_length=8,default="PENDING")
+    attachment = models.ImageField(upload_to='attachment',blank=True)
 
 def get_upload_path(instance, filename):
     return os.path.join(
