@@ -36,7 +36,7 @@
                         <p><label for="id_address">Alamat</label><br> <input style="width:100%" type="text"
                                 name="address" value="{{user.company.address}}" maxlength="254" required=""
                                 id="id_address"></p>
-
+                        <p>Jika Ingin Merubah Lokasi Perusahaanmu <a href="{% url 'editlocation' pk=user.company.pk %}">Disini!</a></p>
                 </div>
             </div>
         </div>
@@ -64,6 +64,7 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
                 </div>
+
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="row">
@@ -77,20 +78,9 @@
                         <div class="col"></div>
                     </div>
                     <form method="post" action='' enctype="multipart/form-data">{% csrf_token %}
-                        <p>
-                            {% if user.company.profile_pic %}
-                            <label for="id_profile_pic">Profile pic:</label> Currently: <a
-                                href="/media/{{user.company.profile_pic}}">{{user.company.profile_pic}}</a>
-                            <input type="checkbox" name="profile_pic-clear" id="profile_pic-clear_id">
-                            <label for="profile_pic-clear_id">Clear</label><br>
-                            {% endif %}
-                            Change:
-                            <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic"></p>
-                        <p><label for="id_name">Nama</label> <br><input style="width:100%" type="text" name="name"
-                                value="{{user.company.name}}" maxlength="254" required="" id="id_name"></p>
-                        <p><label for="id_address">Alamat</label><br> <input style="width:100%" type="text"
-                                name="address" value="{{user.company.address}}" maxlength="254" required=""
-                                id="id_address"></p>
+                        {{form.as_p}}
+                        <input class="btn btn-primary" type="submit" value="Save">
+                    </form>
                 </div>
             </div>
         </div>

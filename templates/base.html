@@ -186,7 +186,7 @@
                                     Pengaturan
                                 </a>
                                 {% else %}
-                                <a class="dropdown-item" href="{% url 'edituser' pk=user.users.pk %}">
+                                <a class="dropdown-item" href="{% url 'editkaryawan' pk=user.users.pk %}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Pengaturan
                                 </a>
@@ -343,7 +343,6 @@
                                 '<h6>{{user.email}}</h6>',
                                 '<h6>{{user.company.telp}}</h6>',
                                 '<h6>{{user.company.address}}</h6>',
-                                '<img src="{{user.company.profile_pic.url}}" style="position:absolute; top:0; left:0;" />'
                             );
                         $(win.document.body).find('table')
                             .addClass('compact')

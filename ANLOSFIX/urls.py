@@ -35,6 +35,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',main_views.IndexPerusahaan.as_view(),name='index'),
     path('pengaturan/<int:pk>/',main_views.EditUser.as_view(),name='edituser'),
+    path('pengaturan/lokasi/<int:pk>/',main_views.EditLocation.as_view(),name='editlocation'),
+    path('pengaturan/karyawan/<int:pk>/',main_views.EditKaryawan.as_view(),name='editkaryawan'),
     path('register/',main_views.registercompany,name='create'),
     path('registerkaryawan/',main_views.registeruser,name='create_karyawan'),
     # path('profile/',main_views.ProfilePerusahaan.as_view(),name='profile'),

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block index_block %}
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">PERINGATAN !!</h6>
+                </div>
+                <div class="card-body">
+                    <ul>1. Pastikan Anda Yakin Untuk Melakukan Perubahan Ini</ul>
+                    <ul>2. Jika Anda Berubah Pikiran Tekan <a href="/">Batal</a></ul>
+                    <ul>3. Jika Anda Merasa Sudah Benar Anda Dapat Menekan Simpan</ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Radius Perusahaan</h6>
+                </div>
+                <div class="card-body">
+                    <div class="tab">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div id="tool">
+                                <div id="map_canvas" style="width: 100%; border: 2px solid #3872ac;"></div> <br>
+                            </div>
+                            <textarea name="location" id="info" cols="30" rows="10" required=""
+                                style="display:none;"></textarea>
+                            <div class="d-flex justify-content-center mt-3">
+                                <input class="btn btn-primary mx-5" type="submit">
+                                <a href="/" class="btn btn-danger mx-5">Batal</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

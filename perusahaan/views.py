@@ -407,8 +407,22 @@ class EditUser(SuccessMessageMixin,UpdateView):
     fields = ['name','address','start_work','end_work','profile_pic']
     template_name = 'user_update.html'
     success_url = reverse_lazy('index')
-    success_message = 'List successfully saved!!!!'
+    success_message = 'Data Berhasil Di Update'
 
+class EditKaryawan(SuccessMessageMixin,UpdateView):
+    context_object_name = 'listusers'
+    model = models.users
+    fields = ['name','telp','profile_pic']
+    template_name = 'user_update.html'
+    success_url = reverse_lazy('index')
+    success_message = 'Data Berhasil Di Update'
+
+class EditLocation(SuccessMessageMixin,UpdateView):
+    model = models.company
+    fields = ['location']
+    template_name = 'user_updatelocation.html'
+    success_url = reverse_lazy('index')
+    success_message = 'Data Berhasil Di Update'
 
 class ProfilePerusahaan(LoginRequiredMixin,ListView):
     login_url = '/login/'
