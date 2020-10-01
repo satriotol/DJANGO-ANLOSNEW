@@ -15,7 +15,7 @@ class company(models.Model):
     end_work = models.TimeField(null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.name
 
 class users(models.Model):
     user = models.OneToOneField(User,related_name="users",on_delete=models.CASCADE,default="")
@@ -33,7 +33,7 @@ class PresenceModel(models.Model):
     date_presence = models.DateField()
     start_presence = models.TimeField(null=True)
     end_presence = models.TimeField(null=True)
-    durasi_kerja = models.DurationField(null=True)
+    # durasi_kerja = models.DurationField(null=True)
     def __str__(self):
         return self.id_user.username
 

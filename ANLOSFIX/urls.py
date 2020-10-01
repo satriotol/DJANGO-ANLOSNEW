@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path,include
 from perusahaan import views as main_views
 from django.conf import settings
@@ -26,6 +27,9 @@ router.register(r'upload', main_views.UploadFaceView),
 router.register(r'vacation', main_views.VacationViewSet),
 
 urlpatterns = [
+    # password reset
+    path("forget/",include('django.contrib.auth.urls')),
+
     # api
     path('api/',include(router.urls)),
     path('api/location/',main_views.record_location_list),
