@@ -41,16 +41,6 @@ import os
 import cv2
 # end of vendor
 
-# def sendmail(request):
-#     send_mail('Halo dari anlosia',
-#     'Ini Pesan Otomatis',
-#     'satriotol69@gmail.com',
-#     ['satriotol69@gmail.com'],
-#     fail_silently=False,
-#     )
-#     return render(request, 'send.html')
-
-
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -195,16 +185,18 @@ class ProfileKaryawan(DetailView):
 def userPresence(request):
     if request.method == 'POST':
         # presence = PresenceModel.objects.raw("SELECT * FROM perusahaan_presencemodel WHERE id_user_id = %s AND date_presence = %s AND end_presence IS NULL", [request.POST.get('id_user'), request.POST.get('date_presence')]).values('id')
-        presence = PresenceModel.objects.filter(id_user_id=request.POST.get('id_user'), date_presence=request.POST.get('date_presence')).exists()
-        if presence: 
-            data = {}
+        presence = PresenceModel.objects.filter(id_user_id=request.POST.get('id_user'), date_presence=request.POST.get('date_presence')).values("id")
+        if len(presence) != 0: 
+            data = {
+                "id": list(presence)[0]["id"]
+            }
             data['api_status'] = 0
-            data["api_message"] = "Failed"
+            data["api_message"] = "Anda sudah presensi"
             return JsonResponse(data, safe=False)
         else :
             data = {}
             data['api_status'] = 1
-            data["api_message"] = "Success"
+            data["api_message"] = "Anda bisa presensi"
             return JsonResponse(data, safe=False)
 
 @api_view(['POST'])
