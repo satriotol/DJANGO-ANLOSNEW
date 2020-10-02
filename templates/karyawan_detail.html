@@ -1,6 +1,7 @@
 <!doctype html>
 {% extends 'base.html' %}
 {% block index_block %}
+{% load static %}
 <div class="container">
     <div class="row">
         <div class="col-xl-5 col-lg-6">
@@ -14,8 +15,13 @@
                     <div class="row">
                         <div class="col"></div>
                         <div class="col">
+                            {% if users.profile_pic %}
                             <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 25rem;"
                                 src="{{users.profile_pic.url}}" alt="">
+                            {% else %}
+                            <img class="img-fluid mt-3 mb-4 rounded-circle" style="width: 25rem;"
+                                src="{% static 'user.jpg' %}" alt="">
+                            {% endif %}
                         </div>
                         <div class="col"></div>
                     </div>

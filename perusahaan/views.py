@@ -42,20 +42,29 @@ import cv2
 # end of vendor
 
 def change_password(request):
+    # instance = get_object_or_404(VacationModel,id=id)
+    form = ContactForm(request.POST)
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
+        pass_form = PasswordChangeForm(request.user, request.POST)
+        if pass_form.is_valid():
+            if form.is_valid():
+                to_email = form.cleaned_data['to_email']
+                subject = form.cleaned_data['subject']
+                from_email = form.cleaned_data['from_email']
+                message = form.cleaned_data['message']
+                try:
+                    send_mail(subject,message,from_email,[to_email])
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found.')
+            user = pass_form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
             return redirect('user_login')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'change_password.html', {
-        'form': form
-    })
+        pass_form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {'pass_form': pass_form,'form':form})
 
 # # face recognition
 # pelatihan
@@ -528,27 +537,6 @@ def UpdateVacationNew(request,id):
             return HttpResponse('Invalid header found.')
         return redirect('cuti_pending')
     return render (request, 'vacation_update.html',{'p_form':p_form,'form':form,'instance':instance})
-
-def UpdateVacationEmail(request):
-    if not request.user.is_authenticated:
-        return render(request,'login.html')
-    else:
-        if request.method == 'GET':
-            usersobj = users.objects.all()
-            form = ContactForm()
-        else:
-            form = ContactForm(request.POST)
-            if form.is_valid():
-                to_email = form.cleaned_data['to_email']
-                subject = form.cleaned_data['subject']
-                from_email = form.cleaned_data['from_email']
-                message = form.cleaned_data['message']
-                try:
-                    send_mail(subject,message,from_email,[to_email])
-                except BadHeaderError:
-                    return HttpResponse('Invalid header found.')
-                return redirect('cuti_pending')
-    return render(request, "email.html", {'form': form,'usersobj':usersobj})
 
 
 class VacationViewSet(viewsets.ModelViewSet):

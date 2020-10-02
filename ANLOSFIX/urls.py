@@ -28,7 +28,6 @@ router.register(r'vacation', main_views.VacationViewSet),
 
 urlpatterns = [
     # password reset
-    path("forget/",include('django.contrib.auth.urls')),
 
     # api
     path('api/',include(router.urls)),
@@ -43,14 +42,14 @@ urlpatterns = [
     path('pengaturan/karyawan/<int:pk>/',main_views.EditKaryawan.as_view(),name='editkaryawan'),
     path('register/',main_views.registercompany,name='create'),
     path('registerkaryawan/',main_views.registeruser,name='create_karyawan'),
-    # path('profile/',main_views.ProfilePerusahaan.as_view(),name='profile'),
     path('record_location/',main_views.record_location,name='record_location'),
     path('delete/<int:pk>/',main_views.ListKaryawanDeleteView.as_view(),name="delete"),
     path('<int:pk>/update/',main_views.ListKaryawanUpdateView.as_view(),name='update'),
     path('list/',main_views.ListKaryawan.as_view(),name='listkaryawan'),
     path('list/<int:pk>/',main_views.DetailKaryawan.as_view(),name='detail'),
     path('profile/<int:pk>',main_views.ProfilePerusahaan.as_view(),name='profile_perusahaan'),
-    # presensce
+
+    # presence
     path("presence/",main_views.RekapPresensiList.as_view(), name="presence"),
     path("api/p/",main_views.userPresence, name="p"),
 
@@ -65,6 +64,8 @@ urlpatterns = [
     # auth
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),
+    path("forget/",include('django.contrib.auth.urls')),
+
 
     path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
 
@@ -72,8 +73,6 @@ urlpatterns = [
     path("api/facerecognition/",main_views.prediksiWajah),
 
     path("password/", main_views.change_password,name="change_password"),
-    # path("send/", main_views.sendmail),
-    path("email/", main_views.UpdateVacationEmail)
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

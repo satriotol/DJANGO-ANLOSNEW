@@ -19,14 +19,12 @@
             {% if user.company.id == vacationpending.id_company_id %}
             {% if vacationpending.vacation_status == "PENDING" %}
             <tr class="text-center">
-                <td>{{vacationpending.id_user.users.name}}</td>
+                <td><a href="/list/{{vacationpending.id_user.users.id}}" target="_blank">{{vacationpending.id_user.users.name}}</a></td>
                 <td>{{vacationpending.start_day}}</td>
                 <td>{{vacationpending.end_day}}</td>
                 <td>{{vacationpending.vacation_type}}</td>
                 <td class="alert-warning">{{vacationpending.vacation_status}}</td>
                 <td>
-                    {% comment %} <a class="btn btn-primary" href="{% url 'update_cuti' pk=vacationpending.pk %}"
-                        role="button">Detail</a> {% endcomment %}
                     <a class="btn btn-primary" href="{% url 'update_cuti' id=vacationpending.id %}"
                         role="button">Detail</a>
                 </td>
