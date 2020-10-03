@@ -125,7 +125,7 @@ def prediksiWajah(namaBerkas):
         (255,0,0),2)
         wajah = abuAbu[y:y+h, x:x+w]
         labelId, konfiden = pengenalWajah.predict(wajah)
-        if konfiden <75:
+        if konfiden <100:
             cv2.putText(citra,"(%s) %.0f"%
                 (labelId,konfiden),
                 (x,y-2),

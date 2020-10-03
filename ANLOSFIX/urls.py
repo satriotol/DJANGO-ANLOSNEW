@@ -62,9 +62,9 @@ urlpatterns = [
 
 
     # auth
+    path("forget/",include('django.contrib.auth.urls')),
     path('login/',main_views.user_login,name='user_login'),
     path('logout/',main_views.user_logout,name='logout'),
-    path("forget/",include('django.contrib.auth.urls')),
 
 
     path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
