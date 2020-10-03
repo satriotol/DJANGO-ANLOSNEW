@@ -68,6 +68,7 @@ urlpatterns = [
 
 
     path("upload/",main_views.ImageFieldView.as_view(),name='upload'),
+    path("upload/<int:pk>",main_views.ImageFieldUpdate.as_view(),name='upload_update'),
 
     #face_recognition
     path("api/facerecognition/",main_views.prediksiWajah),

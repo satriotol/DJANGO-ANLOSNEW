@@ -1,0 +1,36 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block index_block %}
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% for hidden_field in form.hidden_fields %}
+                        {{ hidden_field }}
+                        {% endfor %}
+                        {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

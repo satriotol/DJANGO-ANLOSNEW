@@ -93,6 +93,16 @@
             {% else %}
             <!-- Divider -->
             {% if user.imagedatasetmodel %}
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                Addons
+            </div>
+            <!-- Nav Item - Tambah Karyawan -->
+            <li class="nav-item {% if request.resolver_match.url_name == 'upload_update' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'upload_update' pk=user.pk %}">
+                    <i class="fas fa-fw fa-user-plus"></i>
+                    <span>Ganti Dataset Wajah</span></a>
+            </li>
             {% else %}
             <hr class="sidebar-divider">
             <div class="sidebar-heading">
@@ -334,7 +344,7 @@
                 dom: 'Bfrtip',
                 buttons: ['copy', 'csv', 'excel', 'pdf', {
                     extend: 'print',
-                    title:'',
+                    title: '',
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt')

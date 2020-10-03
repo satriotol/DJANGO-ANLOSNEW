@@ -10,6 +10,7 @@ class VacationForm(forms.ModelForm):
 
 class ImageDatasetForm(forms.ModelForm):
     # ImageField = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    user = forms.CharField(widget=forms.HiddenInput())
 
     class Meta():
         model = ImageDatasetModel

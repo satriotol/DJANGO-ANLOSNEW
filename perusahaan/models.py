@@ -72,21 +72,21 @@ def get_upload_path(instance, filename):
 
 class ImageDatasetModel (models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default="")
-    file = ResizedImageField(size=[500, 500], upload_to=get_upload_path,default="")
-    file2 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,default="")
-    file3 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,default="")
-    file4 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,null=True,blank=True)
-    file5 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,null=True,blank=True)
-    file6 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,null=True,blank=True)
-    file7 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,null=True,blank=True)
-    file8 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,null=True,blank=True)
-    file9 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,null=True,blank=True)
-    file10 = ResizedImageField(size=[500, 500], upload_to=get_upload_path,null=True,blank=True)
+    file = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,default="")
+    file2 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,default="")
+    file3 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,default="")
+    file4 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,null=True,blank=True)
+    file5 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,null=True,blank=True)
+    file6 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,null=True,blank=True)
+    file7 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,null=True,blank=True)
+    file8 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,null=True,blank=True)
+    file9 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,null=True,blank=True)
+    file10 = ResizedImageField(size=[500, 500],quality=75, upload_to=get_upload_path,null=True,blank=True)
 
     def __str__(self):
         return self.user.username
 
 
 class FaceRecognitionModel (models.Model):
-    image = ResizedImageField(size=[500, 500],upload_to='FaceRecognition_Dataset')
+    image = ResizedImageField(size=[500, 500],quality=75,upload_to='FaceRecognition_Dataset')
     created_at = models.DateTimeField(auto_now_add=True)

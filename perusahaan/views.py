@@ -174,7 +174,8 @@ class UploadFaceView(viewsets.ModelViewSet):
 
 
         
-class ImageFieldView(CreateView):
+class ImageFieldView(LoginRequiredMixin,CreateView):
+    login_url = '/login/'
     form_class = ImageDatasetForm
     model = models.users
     context_object_name = 'listkaryawans'
@@ -185,6 +186,13 @@ class ImageFieldView(CreateView):
         context = super(ImageFieldView, self).get_context_data(**kwargs)
         context['userslist'] = users.objects.all()
         return context
+
+class ImageFieldUpdate(LoginRequiredMixin,UpdateView):
+    login_url = '/login/'
+    form_class = ImageDatasetForm
+    model = models.ImageDatasetModel
+    template_name = 'datawajah_update.html'
+    success_url = reverse_lazy('index')
 
 class ProfileKaryawan(DetailView):
     model = models.User
