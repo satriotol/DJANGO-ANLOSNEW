@@ -479,6 +479,14 @@ class RekapPresensiList(LoginRequiredMixin,ListView):
     model = models.PresenceModel
     template_name = 'presence_list.html'
 
+class RekapPresensiDelete(LoginRequiredMixin,DeleteView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = models.PresenceModel
+    template_name = 'presence_delete.html'
+    success_url = reverse_lazy('presence')
+
+
 class ListKaryawanDeleteView(LoginRequiredMixin,DeleteView):
     context_object_name = 'listkaryawans'
     model = models.User

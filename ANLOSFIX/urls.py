@@ -51,6 +51,7 @@ urlpatterns = [
 
     # presence
     path("presence/",main_views.RekapPresensiList.as_view(), name="presence"),
+    path("presence/<int:pk>",main_views.RekapPresensiDelete.as_view(), name="presence_delete"),
     path("api/p/",main_views.userPresence, name="p"),
 
     # cuti

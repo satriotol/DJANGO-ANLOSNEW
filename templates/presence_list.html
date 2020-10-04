@@ -25,6 +25,7 @@
                 <th scope="col">Tanggal</th>
                 <th scope="col">Jam Masuk</th>
                 <th scope="col">Jam Pulang</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +36,8 @@
                 <td>{{presence.date_presence}}</td>
                 <td>{{presence.start_presence}}</td>
                 <td>{{presence.end_presence}}</td>
+                <td><a class="btn btn-danger" href="{% url 'presence_delete' pk=presence.pk %}" role="button">Delete</a>
+                </td>
             </tr>
             {% endif %}
             {% endfor %}
