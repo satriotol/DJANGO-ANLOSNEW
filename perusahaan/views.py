@@ -35,6 +35,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from perusahaan.serializers import UserSerializer,UserProfileSerializer,UsersLocationSerializer,PresenceSerializer,UploadFaceSerializer, VacationSerializer
 from django.core.mail import send_mail,BadHeaderError
 
+
 #face recognition
 import numpy as np
 import os
@@ -172,20 +173,33 @@ class UploadFaceView(viewsets.ModelViewSet):
 
 # end of face recognition
 
+class ImageFieldView(View):
+    def get(self, request):
+        photos_list = ImageDatasetModel.objects.all()
+        return render(self.request, 'upload.html', {'photos': photos_list})
 
-        
-class ImageFieldView(LoginRequiredMixin,CreateView):
-    login_url = '/login/'
-    form_class = ImageDatasetForm
-    model = models.users
-    context_object_name = 'listkaryawans'
-    template_name = 'upload.html'
-    success_url = reverse_lazy('index')
+    def post(self, request):
+        form = ImageDatasetForm(self.request.POST, self.request.FILES)
+        if form.is_valid():
+            photo = form.save()
+            data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
 
-    def get_context_data(self, **kwargs):
-        context = super(ImageFieldView, self).get_context_data(**kwargs)
-        context['userslist'] = users.objects.all()
-        return context
+
+# class ImageFieldView(LoginRequiredMixin,CreateView):
+#     login_url = '/login/'
+#     form_class = ImageDatasetForm
+#     model = models.users
+#     context_object_name = 'listkaryawans'
+#     template_name = 'upload.html'
+#     success_url = reverse_lazy('index')
+
+#     def get_context_data(self, **kwargs):
+#         context = super(ImageFieldView, self).get_context_data(**kwargs)
+#         context['userslist'] = users.objects.all()
+#         return context
 
 class ImageFieldUpdate(LoginRequiredMixin,UpdateView):
     login_url = '/login/'
@@ -309,6 +323,7 @@ class IndexPerusahaan(LoginRequiredMixin,ListView):
         context = super(IndexPerusahaan, self).get_context_data(**kwargs)
         context['presencelist'] = PresenceModel.objects.all()
         context['vacationlist'] = VacationModel.objects.all()
+        context['imagelist'] = ImageDatasetModel.objects.all()
         return context
 
 

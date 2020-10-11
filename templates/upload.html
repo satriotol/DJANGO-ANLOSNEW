@@ -15,6 +15,20 @@
 {% else %}
 <div class="container">
     <div class="row">
+        <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Uploading...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-xl-5 col-lg-6">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -81,38 +95,50 @@
                     <h6 class="m-0 font-weight-bold text-primary">Data Akun</h6>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    {# 1. BUTTON TO TRIGGER THE ACTION #}
+                    <button type="button" class="btn btn-primary js-upload-photos">
+                        <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
+                    </button>
+
+                    {# 2. FILE INPUT TO BE USED BY THE PLUG-IN #}
+                    <form action="" method="post" enctype="multipart/form-data"
+                        data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
                         {% csrf_token %}
-                        <div>
-                            <div>
-                                <input type="text" name="user" id="id_user" value="{{user.id}}"
-                                    style="display: none; color:red;">
-                                <p><label for="id_file" style="font-weight: bold;">*File:</label> <input type="file"
-                                        name="file" required="" id="id_file"></p>
-                                <p><label for="id_file2" style="font-weight: bold;">*File2:</label> <input type="file"
-                                        name="file2" required="" id="id_file2"></p>
-                                <p><label for="id_file3" style="font-weight: bold;">*File3:</label> <input type="file"
-                                        name="file3" required="" id="id_file3"></p>
-                                <p><label for="id_file4">File4:</label> <input type="file" name="file4" id="id_file4">
-                                </p>
-                                <p><label for="id_file5">File5:</label> <input type="file" name="file5" id="id_file5">
-                                </p>
-                                <p><label for="id_file6">File6:</label> <input type="file" name="file6" id="id_file6">
-                                </p>
-                                <p><label for="id_file7">File7:</label> <input type="file" name="file7" id="id_file7">
-                                </p>
-                                <p><label for="id_file8">File8:</label> <input type="file" name="file8" id="id_file8">
-                                </p>
-                                <p><label for="id_file9">File9:</label> <input type="file" name="file9" id="id_file9">
-                                </p>
-                                <p><label for="id_file10">File10:</label> <input type="file" name="file10"
-                                        id="id_file10"></p>
+                        <input id="fileupload" type="file" name="file" multiple style="display: none;">
+                        <input type="text" name="user" id="id_user" value="{{user.id}}" style="display: none;">
+                    </form>
+                    <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Uploading...</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <input class="btn btn-primary" type="submit" value="Submit">
-                        </div>
-                    </form>
+                    </div>
+
+                    {# 3. TABLE TO DISPLAY THE UPLOADED PHOTOS #}
+                    <table id=" gallery" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for photo in photos %}
+                            {% if photo.user_id == user.id %}
+                            <tr>
+                                <td><a href="{{ photo.file.url }}">{{ photo.file.name }}</a></td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

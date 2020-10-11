@@ -10,11 +10,11 @@ class VacationForm(forms.ModelForm):
 
 class ImageDatasetForm(forms.ModelForm):
     # ImageField = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    user = forms.CharField(widget=forms.HiddenInput())
+    # user = forms.CharField(widget=forms.HiddenInput())
 
     class Meta():
         model = ImageDatasetModel
-        fields = ('user','file','file2','file3','file4','file5','file6','file7','file8','file9','file10')
+        fields = ('user','file')
 
 class CompanyForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

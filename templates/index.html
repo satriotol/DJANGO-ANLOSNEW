@@ -314,58 +314,15 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    {% if user.imagedatasetmodel %}
                     <div class="row">
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file2.url}}" alt="">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file3.url}}" alt="">
-                        </div>
-                        {% if user.imagedatasetmodel.file4 %}
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file4.url}}" alt="">
+                        {% for image in imagelist %}
+                        {% if image.user_id  == user.id %}
+                        <div class="col-sm-3">
+                            <img class="img-thumbnail" src="{{image.file.url}}" alt="">
                         </div>
                         {% endif %}
-                        {% if user.imagedatasetmodel.file5 %}
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file5.url}}" alt="">
-                        </div>
-                        {% endif %}
+                        {% endfor %}
                     </div>
-                    <div class="row">
-                        {% if user.imagedatasetmodel.file6 %}
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file6.url}}" alt="">
-                        </div>
-                        {% endif %}
-                        {% if user.imagedatasetmodel.file7 %}
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file7.url}}" alt="">
-                        </div>
-                        {% endif %}
-                        {% if user.imagedatasetmodel.file8 %}
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file8.url}}" alt="">
-                        </div>
-                        {% endif %}
-                        {% if user.imagedatasetmodel.file9 %}
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file9.url}}" alt="">
-                        </div>
-                        {% endif %}
-                        {% if user.imagedatasetmodel.file10 %}
-                        <div class="col">
-                            <img class="img-fluid" src="{{user.imagedatasetmodel.file10.url}}" alt="">
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% else %}
-                    <h6>Belum ada dataset yang diunggah</h6>
-                    {% endif %}
                 </div>
             </div>
             <div class="card shadow mb-4">
